@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+
+:root {
+  /* --- The Royal Heritage Palette --- */
+  --royal-maroon: #630000;
+  --royal-gold:   #D4AF37;
+  --royal-cream:  #FAF9F6;
+  --royal-grey:   #333333;
+  --royal-white:  #FFFFFF;
+}
+
+/* 1. Main Layout Background */
+body {
+  background-color: var(--royal-cream);
+  color: var(--royal-grey);
+  font-family: 'Georgia', 'Times New Roman', serif; /* Serif fonts look more traditional */
+  margin: 0;
+  padding: 0;
+}
+
+/* 2. Headers (Deep Maroon) */
+.royal-heading {
+  color: var(--royal-maroon);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* 3. Text & Paragraphs */
+.royal-text {
+  color: var(--royal-grey);
+  line-height: 1.6;
+}
+
+/* 4. Gold Accents (for Borders, Icons, or Prices) */
+.royal-accent-gold {
+  color: var(--royal-gold);
+}
+
+.royal-border-gold {
+  border: 1px solid var(--royal-gold);
+}
+
+/* 5. Primary Button (The "Add to Cart" or "Buy Now") */
+.royal-btn-primary {
+  background-color: var(--royal-maroon);
+  color: var(--royal-white);
+  border: 1px solid var(--royal-maroon);
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 4px; /* Slight curve, not fully round */
+  text-transform: uppercase;
+}
+
+/* Button Hover Effect: Darker Maroon with Gold Border */
+.royal-btn-primary:hover {
+  background-color: #4a0000; /* Slightly darker maroon */
+  border-color: var(--royal-gold);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* 6. Secondary Button (Ghost button for "View Details") */
+.royal-btn-secondary {
+  background-color: transparent;
+  color: var(--royal-maroon);
+  border: 1px solid var(--royal-maroon);
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.royal-btn-secondary:hover {
+  background-color: var(--royal-maroon);
+  color: var(--royal-white);
+}
+
+/* 7. Card / Product Container (White bg to make product pop against Cream body) */
+.royal-card {
+  background-color: var(--royal-white);
+  border: 1px solid #e5e5e5;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
