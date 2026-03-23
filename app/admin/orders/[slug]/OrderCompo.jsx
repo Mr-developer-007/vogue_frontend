@@ -14,12 +14,13 @@ import {
 } from 'react-icons/fi'
 import Link from 'next/link'
 import { toast } from 'react-toastify'
+import { useRouter } from 'next/navigation'
 
 const OrderCompo = ({ slug }) => {
   const [loading, setLoading] = useState(true)
   const [order, setOrder] = useState(null)
   const [trackingNumber,setTrackingNumber]=useState("")
-
+ const route = useRouter()
   const fetchOrder = async () => {
     try {
       setLoading(true)
@@ -149,7 +150,23 @@ const OrderCompo = ({ slug }) => {
     }
   }
 
+const handelDeleteOrder = async()=>{
+const isConfirmed = confirm("Are you sure you want to delete this order?");
+if (!isConfirmed) return;
+try {
+  const response = await axios.delete(`${base_url}/order/deleteorder/${slug}`);
+  const data = await response.data;
+  if(data.success){
+    toast.success(data.message)
+    route.back()
+  }
+} catch (error) {
+      toast.error(error.response.data.message)
 
+}
+
+
+}
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 font-sans">
       
@@ -172,7 +189,9 @@ const OrderCompo = ({ slug }) => {
           <div> {order?.trackingid ? `Tracking No :${order?.trackingid}`:""} </div>
           {getPaymentBadge(order.paymentStatus)}
           {getStatusBadge(order.orderStatus)}
+<button className='bg-red-500 px-3 py-1 cursor-pointer text-white ' onClick={()=>handelDeleteOrder()}>Delete Order</button>
         </div>
+        
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

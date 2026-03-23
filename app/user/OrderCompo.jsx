@@ -140,16 +140,18 @@ const OrderCompo = () => {
 
                 {/* Order Summary & Address */}
                 <div className="space-y-6">
-                  {/* Address */}
+                  {
+                    console.log(order,"sss")
+                  }
                   <div>
                     <h3 className="font-semibold text-gray-800 border-b pb-2 mb-3 flex items-center gap-2">
                       <FiMapPin className="text-gray-500" /> Shipping
                     </h3>
                     <div className="text-sm text-gray-600 space-y-1 bg-gray-50 p-4 rounded-lg">
                       <p className="font-medium text-gray-800">
-                        {order.address.firstName} {order.address.lastName}
+                        {order.address?.firstName} {order.address?.lastName}
                       </p>
-                      <p>{order.address.street1}, {order.address.street2}</p>
+                      <p>{order.address?.street1}, {order.address.street2}</p>
                       <p>
                         {order.address.city}, {order.address.state} {order.address.zipCode}
                       </p>
