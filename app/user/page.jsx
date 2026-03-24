@@ -7,16 +7,27 @@ import Link from 'next/link';
 import OrderCompo from './OrderCompo';
 import AddressCompo from '../components/AddressCompo';
 import DashBoard from './DashBoard';
+import axios from 'axios';
+import { base_url } from '../components/urls';
+import { toast } from 'react-toastify';
 
 const UserPage = () => {
 const [detail,setDetail]=useState("dashboard")
 
-  const recentOrders = [
-    { id: '#ORD-7721', date: 'Feb 12, 2026', total: '$129.99', status: 'Delivered' },
-    { id: '#ORD-8832', date: 'Feb 15, 2026', total: '$45.50', status: 'Processing' },
-    { id: '#ORD-9910', date: 'Feb 18, 2026', total: '$299.00', status: 'In Transit' },
-  ];
 
+const handelLogout = async (e)=>{
+  e.preventDefault();
+  try {
+    const response = await axios.get(`${base_url}/user/user/logout`);
+    const data = await response.data;
+    if(data.success){
+      toast.success(data.message)
+      location.href="/"
+    }
+  } catch (error) {
+    toast.error(error.response.data.message)
+  }
+}
 
 
   return (
@@ -59,7 +70,7 @@ const [detail,setDetail]=useState("dashboard")
                   </button>
                 </li>
                 <li className="border-t border-gray-100 mt-2">
-                  <button className="w-full flex items-center gap-3 px-6 py-4 text-red-600 hover:bg-red-50 transition-colors">
+                  <button onClick={handelLogout} className="w-full flex items-center gap-3 px-6 py-4 text-red-600 hover:bg-red-50 transition-colors">
                     <FiLogOut size={20} /> Sign Out
                   </button>
                 </li>

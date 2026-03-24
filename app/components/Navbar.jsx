@@ -151,9 +151,7 @@ const Navbar = () => {
             <Link href={user ? "/cart" : "/login"} className="relative hover:text-indigo-600 hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2 border-l-2 border-gray-100 pl-6">
               <HiOutlineShoppingBag size={22} />
               {/* Vibrant Notification Badge */}
-              <span className="absolute -top-1.5 right-1.5 bg-indigo-600 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-black shadow-sm shadow-indigo-600/40">
-                2
-              </span>
+              
             </Link>
           </div>
 
