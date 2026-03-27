@@ -38,7 +38,7 @@ const UserCompo = ({ id }) => {
 
     const { user, addresses, orders } = userData;
 
-    // Helper function for order status styling
+    
     const getStatusColor = (status) => {
         switch (status?.toLowerCase()) {
             case 'delivered': return 'bg-green-100 text-green-700';

@@ -109,12 +109,12 @@ const SignupPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-rose-50 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-xl w-full space-y-8 bg-white p-8 rounded-xl shadow-lg border border-rose-100">
+    <div className="min-h-screen flex items-center justify-center bg-indigo-50 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-xl w-full space-y-8 bg-white p-8 rounded-xl shadow-lg border border-indigo-100">
 
         {!verifyOtp && <>
           <div className="text-center">
-            <h2 className="mt-6 text-3xl font-extrabold text-rose-800">
+            <h2 className="mt-6 text-3xl font-extrabold text-indigo-800">
               Create an account
             </h2>
             <p className="mt-2 text-sm text-gray-600">
@@ -149,7 +149,7 @@ const SignupPage = () => {
                 <label htmlFor="name" className="sr-only">Full Name</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <HiOutlineUser className="h-5 w-5 text-rose-800" />
+                    <HiOutlineUser className="h-5 w-5 text-indigo-800" />
                   </div>
                   <input
                     id="name"
@@ -158,7 +158,7 @@ const SignupPage = () => {
                     required
                     onChange={(e) => setLoginDetails(prev => ({ ...prev, name: e.target.value }))}
                     value={loginDetails.name}
-                    className="appearance-none rounded-lg relative block w-full pl-10 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-rose-800 focus:border-rose-800 focus:z-10 sm:text-sm"
+                    className="appearance-none rounded-lg relative block w-full pl-10 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-800 focus:border-indigo-800 focus:z-10 sm:text-sm"
                     placeholder="Full Name"
                   />
                 </div>
@@ -169,7 +169,7 @@ const SignupPage = () => {
                 <label htmlFor="email-address" className="sr-only">Email address</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <HiOutlineMail className="h-5 w-5 text-rose-800" />
+                    <HiOutlineMail className="h-5 w-5 text-indigo-800" />
                   </div>
                   <input
                     id="email-address"
@@ -177,7 +177,7 @@ const SignupPage = () => {
                     type="email"
                     autoComplete="email"
                     required
-                    className="appearance-none rounded-lg relative block w-full pl-10 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-rose-800 focus:border-rose-800 focus:z-10 sm:text-sm"
+                    className="appearance-none rounded-lg relative block w-full pl-10 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-800 focus:border-indigo-800 focus:z-10 sm:text-sm"
                     placeholder="Email address"
                     onChange={(e) => setLoginDetails(prev => ({ ...prev, email: e.target.value }))}
                     value={loginDetails.email}
@@ -190,7 +190,7 @@ const SignupPage = () => {
                 <label htmlFor="password" className="sr-only">Password</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <HiOutlineLockClosed className="h-5 w-5 text-rose-800" />
+                    <HiOutlineLockClosed className="h-5 w-5 text-indigo-800" />
                   </div>
                   <input
                     id="password"
@@ -198,7 +198,7 @@ const SignupPage = () => {
                     type="password"
                     autoComplete="current-password"
                     required
-                    className="appearance-none rounded-lg relative block w-full pl-10 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-rose-800 focus:border-rose-800 focus:z-10 sm:text-sm"
+                    className="appearance-none rounded-lg relative block w-full pl-10 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-800 focus:border-indigo-800 focus:z-10 sm:text-sm"
                     placeholder="Password"
                     onChange={(e) => setLoginDetails(prev => ({ ...prev, password: e.target.value }))}
                     value={loginDetails.password}
@@ -213,10 +213,10 @@ const SignupPage = () => {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 text-rose-800 focus:ring-rose-800 border-gray-300 rounded"
+                  className="h-4 w-4 text-indigo-800 focus:ring-indigo-800 border-gray-300 rounded"
                 />
                 <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                  I agree to the <a href="#" className="text-rose-800 hover:text-rose-700 underline">Terms</a>
+                  I agree to the <a href="#" className="text-indigo-800 hover:text-indigo-700 underline">Terms</a>
                 </label>
               </div>
             </div>
@@ -225,7 +225,7 @@ const SignupPage = () => {
             <div>
               <button
                 type="submit"
-                className="group relative w-full flex justify-center py-2.5 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-rose-800 hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-800 transition-colors duration-200"
+                className="group relative w-full flex justify-center py-2.5 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-800 hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-800 transition-colors duration-200"
               >
                 Sign up
               </button>
@@ -236,7 +236,7 @@ const SignupPage = () => {
           <div className="text-center text-sm">
             <p className="text-gray-600">
               Already have an account?{' '}
-              <a href="/login" className="font-medium text-rose-800 hover:text-rose-700">
+              <a href="/login" className="font-medium text-indigo-800 hover:text-indigo-700">
                 Sign in
               </a>
             </p>
@@ -247,7 +247,7 @@ const SignupPage = () => {
         {verifyOtp &&
           <div className='flex flex-col items-center gap-4'>
             <div className="text-center">
-              <h2 className="mt-6 text-3xl font-extrabold text-rose-800">
+              <h2 className="mt-6 text-3xl font-extrabold text-indigo-800">
                 Verify Otp
               </h2>
               <p className="mt-2 text-sm text-gray-600">
@@ -269,13 +269,13 @@ const SignupPage = () => {
                   onKeyDown={(e) => handleKeyDown(e, index)}
                   className="w-12 h-14 sm:w-14 sm:h-16 text-center text-2xl font-semibold border-2 rounded-xl 
                        bg-white border-slate-300 text-slate-800 transition-all
-                       focus:border-rose-800 focus:ring-2 focus:ring-indigo-100 outline-none"
+                       focus:border-indigo-800 focus:ring-2 focus:ring-indigo-100 outline-none"
                 />
               ))}
             </div>
             <button
-              className="mt-8 w-full py-3 px-6 bg-rose-800 text-white font-medium rounded-xl 
-                   hover:bg-rose-800 transition-colors focus:ring-4 focus:ring-indigo-200"
+              className="mt-8 w-full py-3 px-6 bg-indigo-800 text-white font-medium rounded-xl 
+                   hover:bg-indigo-800 transition-colors focus:ring-4 focus:ring-indigo-200"
               onClick={SubmitverifyOtp}
             >
               Verify Code
@@ -283,7 +283,7 @@ const SignupPage = () => {
 
             <p className="mt-4 text-sm text-slate-500">
               Didn’t receive a code?{" "}
-              <button className="text-rose-800 font-semibold hover:underline">
+              <button className="text-indigo-800 font-semibold hover:underline">
                 Resend
               </button>
             </p>

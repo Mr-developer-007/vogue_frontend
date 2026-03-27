@@ -29,15 +29,14 @@ const num = Math.floor( Math.random() *20);
 const totalPrice = Math.round(checkoutData.totalPrice - (checkoutData.totalPrice *num)/100)
 const discount = Math.round(checkoutData.totalPrice *num/100)
 setInterval(() => {
-  setCheckoutData(prev=>({...prev,totalPrice,discountPrice:discount}))
+  setCheckoutData(prev=>({...prev,discountPrice:discount}))
 setHandelSpin(false);
 setAllreadyspin(true)
 const todayDate= new Date(Date.now()).getDate()
-localStorage.setItem("spin",todayDate)
+// localStorage.setItem("spin",todayDate)
 }, 1000);
-
-
 }
+
 
 
 useEffect(()=>{
@@ -66,9 +65,10 @@ const handelCheckout=async()=>{
 toast.error("Address not found")
 return
     }
-    const response = await axios.post(`${base_url}/order/create`,checkoutData)
+    const lastData= {...checkoutData,totalPrice: checkoutData.totalPrice - checkoutData.discountPrice}
+    const response = await axios.post(`${base_url}/order/create`,lastData)
     const data = await response.data;
-    console.log(data)
+  
      const options = {
     key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
     amount: data.order.amount,
@@ -77,7 +77,6 @@ return
     order_id: data.order.id,
 
     handler: async function (response) {
-      console.log(response,"essssssss")
       const verifyresponse =  await axios.post(`${base_url}/order/verify-payment`, {
         ...response,
         orderId: data.createProductOrder._id,
@@ -105,7 +104,7 @@ router.push("/");
     <div className='flex flex-col  md:flex-row container mx-auto gap-4 p-4 md:p-5 relative'>
 
       <AddressCompo  setCheckoutData={setCheckoutData}   />
-      <CartCompo  setCheckoutData={setCheckoutData} checkoutData={checkoutData} handelCheckout={handelCheckout}/>
+      <CartCompo  setCheckoutData={setCheckoutData} checkoutData={checkoutData}  handelAddDiscount={(amount)=>setCheckoutData(prev=>({...prev,discountPrice:amount}))} handelCheckout={handelCheckout}/>
       {!allreadyspin && 
 <div className='absolute bottom-8  right-2 md:right-0'>
    

@@ -4,6 +4,8 @@ import React from 'react'
 import { img_url } from './urls'; // Ensure this path is correct
 import { HiOutlineEye, HiOutlineHeart, HiShoppingBag, HiStar } from 'react-icons/hi';
 import { TbGenderMale, TbGenderFemale, TbGenderBigender } from "react-icons/tb";
+import { useDispatch, useSelector } from 'react-redux';
+import { addToWishlist, removeFromWishlist } from './Store/slices/WishlistSlice';
 
 const calculateDiscount = (sellingPrice, compareAtPrice) => {
     if (!compareAtPrice || compareAtPrice <= sellingPrice) return 0;
@@ -11,6 +13,8 @@ const calculateDiscount = (sellingPrice, compareAtPrice) => {
 };
 
 const ProductCart = ({ product }) => {
+    const dispatch = useDispatch()
+const state = useSelector(state=>state.wishlist.items)
 
     const discount = calculateDiscount(product.sellingPrice, product.compareAtPrice);
 
@@ -81,8 +85,10 @@ const ProductCart = ({ product }) => {
                 {/* Side Actions (Wishlist/View) */}
                 <div className="absolute top-12 right-3 flex flex-col gap-2 translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 ease-out">
                     <button 
-                        onClick={(e) => handleActionClick(e, 'Wishlist')}
-                        className="bg-white p-2 rounded-full text-gray-600 hover:bg-rose-500 hover:text-white transition-colors shadow-md"
+                                       onClick={(e) => { e.stopPropagation(); 
+    e.preventDefault(); state.includes(product._id) ? dispatch(removeFromWishlist(product._id)) :dispatch(addToWishlist(product._id)) }}
+                       
+                        className={`p-2 rounded-full    transition-colors shadow-md ${state.includes(product._id)? "bg-rose-500 text-white" : "bg-white text-gray-600" }`}
                         title="Add to Wishlist"
                     >
                         <HiOutlineHeart size={18} />
@@ -99,11 +105,11 @@ const ProductCart = ({ product }) => {
                 {/* 'Proper' Add to Cart Overlay */}
                 <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
                     <button 
-                        onClick={handleAddToCart}
+                       
                         className="w-full bg-gray-900/95 backdrop-blur hover:bg-black text-white py-3 rounded-xl flex items-center justify-center gap-2 font-medium text-sm shadow-lg hover:shadow-xl transition-all active:scale-95"
                     >
-                        <HiShoppingBag size={16} className="mb-0.5" /> 
-                        Add to Cart
+                        <HiOutlineEye size={16} className="mb-0.5" /> 
+                        View Product
                     </button>
                 </div>
             </div>

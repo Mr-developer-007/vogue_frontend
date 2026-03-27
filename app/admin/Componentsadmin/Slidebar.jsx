@@ -17,8 +17,10 @@ import {
   RiArrowRightSLine
 } from "react-icons/ri";
 import { GiTatteredBanner } from "react-icons/gi";
-import { MdOutlineCategory } from "react-icons/md";
+import { MdOutlineCategory, MdOutlineQueryBuilder } from "react-icons/md";
 import { BsCollectionFill } from "react-icons/bs";
+import { RiCoupon3Fill } from "react-icons/ri";
+
 
 import axios from "axios";
 import { base_url } from "@/app/components/urls";
@@ -46,6 +48,9 @@ const [isCollapsed,setIsCollapsed]=useState(false)
     { name: "Create Product", icon: <RiAddCircleLine size={22} />, path: "/admin/products/create" },
     { name: "Orders", icon: <RiShoppingBag3Line size={22} />, path: "/admin/orders" },
     { name: "Customers", icon: <RiUserHeartLine size={22} />, path: "/admin/customers" },
+     { name: "Query", icon: <MdOutlineQueryBuilder size={22} />, path: "/admin/contacts" },
+          { name: "Coupon Code", icon: <RiCoupon3Fill size={22} />, path: "/admin/coupon-code" },
+
     { name: "Settings", icon: <RiSettings4Line size={22} />, path: "/admin/settings" },
   ];
 

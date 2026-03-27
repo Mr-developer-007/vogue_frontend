@@ -1,5 +1,6 @@
 'use client';
 
+import axios from 'axios';
 import React, { useState } from 'react';
 import { 
   FaPhoneAlt, 
@@ -12,6 +13,8 @@ import {
   FaChevronDown,
   FaChevronUp
 } from 'react-icons/fa';
+import { base_url } from '../components/urls';
+import { toast } from 'react-toastify';
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -36,15 +39,31 @@ const ContactPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =  async(e) => {
     e.preventDefault();
     setIsSubmitting(true);
     // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitted(true);
-      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-    }, 1500);
+    // setTimeout(() => {
+    //   setIsSubmitting(false);
+    //   setSubmitted(true);
+    //   setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+    // }, 1500);
+try {
+  const response = await axios.post(`${base_url}/contact/add`,formData)
+  const data = await response.data;
+  if(data.success){
+    toast.success(data.message)
+    setSubmitted(true);
+    setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+  }
+  
+} catch (error) {
+  toast.error(error.response.data.message)
+}finally{
+   setIsSubmitting(false);
+}
+
+
   };
 
   const faqs = [

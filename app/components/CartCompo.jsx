@@ -16,14 +16,12 @@ const formatPrice = (price) => {
   }).format(price);
 };
 
-const CartSummary = ({ setCheckoutData,checkoutData ,handelCheckout}) => {
+const CartSummary = ({ setCheckoutData,checkoutData ,handelCheckout,handelAddDiscount}) => {
   const router = useRouter();
   const [cartData, setCartData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [couponCode,setCouponCode]=useState("")
 
-  // Assuming your images are served from the root of your backend
-  // You might need to adjust this depending on your setup (e.g., http://localhost:5000/)
-  const IMG_BASE_URL = base_url.replace('/api', ''); 
 
   const fetchCart = async () => {
     try {
@@ -33,9 +31,7 @@ const CartSummary = ({ setCheckoutData,checkoutData ,handelCheckout}) => {
       if (data.success) {
         setCartData(data.items);
 
-        // --- CRITICAL FIX ---
-        // Prepare the order items array first, then set state ONCE.
-        // Doing this inside a forEach loop causes multiple re-renders and potential duplicates.
+    
         const orderItemsPayload = data.items.items.map(pdata => ({
           product: pdata.product._id,
           quantity: pdata.quantity,
@@ -64,6 +60,9 @@ const CartSummary = ({ setCheckoutData,checkoutData ,handelCheckout}) => {
     fetchCart();
   }, []);
 
+
+
+
   if (loading) {
     return (
       <div className="animate-pulse bg-white p-6 rounded-2xl h-64 w-full border border-gray-100 flex items-center justify-center text-gray-400">
@@ -75,6 +74,25 @@ const CartSummary = ({ setCheckoutData,checkoutData ,handelCheckout}) => {
   if (!cartData || cartData.items.length === 0) {
     return null;
   }
+
+const handelAddCouponCode = async()=>{
+try {
+  const response = await axios.post(`${base_url}/couponcode/apply`,{ couponcode:couponCode,cartTotal:checkoutData.totalPrice})
+  const data = await response.data;
+  if(data.success){
+handelAddDiscount(data.discount)
+toast.success(data.message)
+setCouponCode("")
+  }
+
+
+
+} catch (error) {
+  toast.error(error.response.data.message)
+}
+}
+
+
 
   return (
     <div className="w-full bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden sticky top-6">
@@ -147,10 +165,28 @@ const CartSummary = ({ setCheckoutData,checkoutData ,handelCheckout}) => {
         </div>
 }
 
+<div className="flex w-full gap-3">
+  <input
+    type="text"
+    placeholder="ENTER CODE"
+    value={couponCode}
+    onChange={(e) => setCouponCode(e.target.value)}
+    className="w-full rounded-l-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium uppercase text-gray-800 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+  />
+  <button
+    onClick={handelAddCouponCode}
+    disabled={!couponCode.trim()}
+    className="rounded-r-md bg-blue-600 px-6 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 disabled:cursor-not-allowed disabled:bg-gray-400"
+  >
+    Apply
+  </button>
+</div>
+
+
         <div className="border-t border-gray-200 my-2 pt-3 flex justify-between items-center">
           <span className="text-base font-bold text-gray-900">Total</span>
           <div className="text-right">
-            <span className="text-xl font-bold text-blue-600">{formatPrice(checkoutData.totalPrice)}</span>
+            <span className="text-xl font-bold text-blue-600">{formatPrice(checkoutData.totalPrice-checkoutData.discountPrice)}</span>
             <p className="text-[10px] text-gray-400">Including all taxes</p>
           </div>
         </div>

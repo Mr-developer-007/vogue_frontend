@@ -11,36 +11,14 @@ import {
 import axios from 'axios';
 import { base_url, img_url } from '../components/urls';
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeFromWishlist } from '../components/Store/slices/WishlistSlice';
 
 const WishlistPage = () => {
-  const [wishlistItems, setWishlistItems] = useState([ ]);
-  const fetchWist= async()=>{
-    try {
-      const response = await axios.get(`${base_url}/wishlist/get`)
-      const data = await response.data;
+  const dispatch = useDispatch()
+const state = useSelector(state=>state.wishlist.items)
+ const [products,setProducts]=useState([ ])
 
-      if(data.success){
-        setWishlistItems(data.data.items)
-      }
-    } catch (error) {
-      setWishlistItems([ ])
-    }
-  }
-
-  const removeFromWishlist =  async(id) => {
-    try {
-  const response = await axios.put(`${base_url}/wishlist/remove/${id}`);
-  const data = await response.data;
-  if(data.success){
-    toast.success(data.message)
-    fetchWist()
-  }
-      
-    } catch (error) {
-          toast.error(error.response.data.message)
-
-    }
-  };
 
 
 
@@ -52,15 +30,36 @@ const WishlistPage = () => {
     }).format(amount);
   };
 
+  const fetchWishlist = async (state)=>{
+    try {
+      const response = await axios.post(`${base_url}/wishlist/get`,{wishlistids:state})
+      const data = await response.data;
+      if(data.success){
+setProducts(data.data)
+      }
+      console.log(data)
+    } catch (error) {
+      setProducts( [ ])
+    }
+  }
 
 
   
+// useEffect(()=>{
+//  dispatch()
+// },[ ])
+
 useEffect(()=>{
-  fetchWist()
-},[ ])
+  if(state.length > 0){
+fetchWishlist(state)
+
+  }else{
+    setProducts([ ])
+  }
+},[state])
 
 
-  if (wishlistItems.length === 0) {
+  if (products.length === 0) {
     return (
       <div className="min-h-screen bg-stone-50 flex flex-col items-center justify-center p-4 text-center font-sans">
         <div className="w-20 h-20 bg-stone-200 rounded-full flex items-center justify-center mb-6 text-stone-400">
@@ -84,7 +83,8 @@ useEffect(()=>{
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 border-b border-stone-200 pb-4">
           <h1 className="text-3xl font-serif text-indigo-900">
-            My Wishlist <span className="text-lg font-sans text-stone-500 font-normal">({wishlistItems.length})</span>
+            My Wishlist
+             <span className="text-lg font-sans text-stone-500 font-normal">({products.length})</span>
           </h1>
           <Link href="/" className="text-stone-500 hover:text-indigo-900 text-sm flex items-center gap-1 mt-2 md:mt-0 transition-colors">
             <FaArrowLeft /> Back to Shop
@@ -93,19 +93,19 @@ useEffect(()=>{
 
         {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {wishlistItems.map((item) => (
+          {products?.map((item) => (
             <div key={item.id} className="bg-white rounded-xl overflow-hidden shadow-sm border border-stone-100 group hover:shadow-lg transition-all duration-300 relative flex flex-col">
               
-              {/* Remove Button (Absolute) */}
+            
               <button 
-                onClick={() => removeFromWishlist(item._id)}
+                onClick={() => dispatch(removeFromWishlist(item._id))}
                 className="absolute top-3 right-3 z-10 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-stone-400 hover:text-red-600 hover:bg-white transition-all shadow-sm"
                 title="Remove from Wishlist"
               >
                 <FaTrash size={12} />
               </button>
 
-              {/* Image */}
+           
               <div className="relative h-64 overflow-hidden bg-stone-200">
                 <img 
                   src={`${img_url}/${item.images[0]}`} 
@@ -132,7 +132,7 @@ useEffect(()=>{
                   </span>
                 </div>
 
-                {/* Action Button */}
+               
                 <div className="mt-auto">
                    {item.quantity ? (
                      <Link 
@@ -153,7 +153,7 @@ useEffect(()=>{
               </div>
             </div>
           ))}
-        </div>
+        </div> 
 
       </div>
     </div>
