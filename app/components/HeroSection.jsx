@@ -30,8 +30,8 @@ const allBanners =[
 ]
 
   return (
-    <div className="w-full h-[80vh] min-h-[500px] max-h-[700px] relative overflow-hidden ">
-      <Swiper
+    <div className="w-full  relative overflow-hidden ">
+      {/* <Swiper
         spaceBetween={0}
      
         loop={true}
@@ -74,7 +74,7 @@ const allBanners =[
         ))}
       </Swiper>
 
-      {/* Custom Pagination Styles */}
+     
       <style jsx global>{`
         .swiper-pagination-bullet {
           background: white;
@@ -94,7 +94,36 @@ const allBanners =[
         .swiper-pagination {
           bottom: 20px !important;
         }
-      `}</style>
+      `}</style> */}
+
+
+
+<div className="relative w-full h-[95vh] overflow-hidden bg-black">
+  {/* Dark overlay to make your premium glassmorphism navbar and text pop */}
+  <div className="absolute inset-0 bg-black/30 z-10 pointer-events-none"></div>
+
+  <video 
+    autoPlay 
+    loop 
+    muted 
+    playsInline 
+    className="absolute top-0 left-0 w-full h-full object-cover z-0"
+  >
+    <source src="https://video.ralphlauren.com/v2/2026/03/20260317-homepage/HP_VIDEO_1440x900_DSK_LOGO.mp4" type="video/mp4" />
+    <track kind="captions" />
+    Your browser does not support the video tag.
+  </video>
+  
+  {/* Hero Content */}
+  <div className="h-full flex flex-col justify-end pb-10  items-center text-white text-center px-4">
+   
+    <button className=" relative z-20  px-10 py-4 bg-white/10 backdrop-blur-md border border-white/40 hover:bg-white hover:text-black transition-all duration-500 font-bold uppercase tracking-widest text-sm shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+      Explore Collection
+    </button>
+  </div>
+</div>
+
+
     </div>
   );
 };
