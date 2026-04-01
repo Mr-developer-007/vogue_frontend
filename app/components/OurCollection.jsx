@@ -81,6 +81,7 @@ useEffect(()=>{
 },[])
 
   return (
+    <> {allCollection.length > 0 && 
     <section className="py-20 bg-stone-50">
       
       <TagLineCompo 
@@ -155,6 +156,8 @@ useEffect(()=>{
 
       </div>
     </section>
+}
+    </>
   );
 };
 
