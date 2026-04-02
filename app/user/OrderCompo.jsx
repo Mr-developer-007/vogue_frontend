@@ -103,7 +103,19 @@ const OrderCompo = () => {
                     {order.orderStatus === "confirmed" ? <FiCheckCircle /> : <FiClock />}
                     {order.orderStatus}
                   </span>
+
+
+                  
+
+                  {order?.trackingid  && <div>
+                    
+                    <p>Track your order</p>
+                    <p className="text-blue-600">{order?.trackingid}</p>
+                    </div>}
+             
                 </div>
+
+               
               </div>
 
               {/* Order Body */}

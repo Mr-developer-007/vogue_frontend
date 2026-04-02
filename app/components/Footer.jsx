@@ -6,104 +6,115 @@ import Image from 'next/image';
 import { 
   FaFacebookF, 
   FaInstagram, 
-  FaTiktok, // Swapped Pinterest for TikTok (more relevant for streetwear)
+  FaTiktok,
   FaTwitter,
   FaCcVisa,
   FaCcMastercard,
   FaCcPaypal,
   FaCcApplePay
 } from "react-icons/fa";
+import { HiArrowRight } from "react-icons/hi";
 import { useSelector } from 'react-redux';
 
 const Footer = () => {
-    const { categories, loading } = useSelector(state => state.category);
+  const { categories } = useSelector(state => state.category);
 
   return (
-    <footer className="bg-gray-950 text-gray-400 font-sans border-t-[8px] border-indigo-600 selection:bg-indigo-500 selection:text-white">
+    <footer className="bg-[#0a0a0a] text-stone-400 font-sans border-t border-white/10 selection:bg-stone-700 selection:text-white">
       
       {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
+      <div className="max-w-7xl mx-auto px-4 lg:px-8 py-20">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16">
           
-          {/* 1. Brand & Bio */}
-          <div className="space-y-6">
-            {/* Logo Wrapper */}
-            <div className="relative bg-white p-4 w-fit rounded-sm shadow-[4px_4px_0px_0px_rgba(79,70,229,1)]">
-               {/* Replace with your actual logo */}
+          {/* 1. Brand & Bio (Spans 4 columns on desktop) */}
+          <div className="md:col-span-4 flex flex-col items-start">
+            
+            {/* Logo - Inverted for Dark Background */}
+            <Link href="/" className="inline-block opacity-90 hover:opacity-100 transition-opacity duration-300 mb-6">
                <Image 
                 src="/logo.webp" 
                 alt="Brand Logo" 
-                width={180} 
-                height={60} 
-                className="object-contain" 
+                width={160} 
+                height={50} 
+                className="object-contain brightness-0 invert" 
                />
-            </div>
+            </Link>
             
-            <p className="text-gray-400 text-sm leading-relaxed font-medium mt-4">
-              Premium everyday essentials crafted for comfort and built for the streets. Heavyweight fabrics, perfect drops, and timeless fits.
+            <p className="text-sm leading-relaxed font-light mb-8 max-w-sm">
+              Premium everyday essentials crafted for comfort and built to last. Exceptional fabrics, perfect drops, and timeless silhouettes.
             </p>
 
-            {/* Social Icons - Edgy & Clean */}
-            <div className="flex gap-3 pt-2">
-              <SocialIcon icon={<FaInstagram />} />
-              <SocialIcon icon={<FaTiktok />} />
-              <SocialIcon icon={<FaTwitter />} />
-              <SocialIcon icon={<FaFacebookF />} />
+            {/* Elegant Social Icons */}
+            <div className="flex gap-6 items-center">
+              <SocialIcon href="#" icon={<FaInstagram size={18} />} />
+              <SocialIcon href="#" icon={<FaTiktok size={18} />} />
+              <SocialIcon href="#" icon={<FaTwitter size={18} />} />
+              <SocialIcon href="#" icon={<FaFacebookF size={18} />} />
             </div>
           </div>
 
-          {/* 2. Navigation Links (Streetwear Categories) */}
-          <div className="flex gap-12 sm:gap-20">
+          {/* 2. Navigation Links (Spans 4 columns on desktop) */}
+          <div className="md:col-span-4 flex gap-12 sm:gap-20">
             {/* Shop Links */}
             <div>
-              <h4 className="text-white font-black text-lg mb-6 tracking-widest uppercase">Shop</h4>
-              <ul className="space-y-4 text-sm font-medium">
-
-{categories.length > 0 && categories.map((item)=><FooterLink key={item._id} href={`/products?category=${item._id}`}>{item.title}</FooterLink>)}
-
-{/*                 
-                <FooterLink href="/graphic">Graphic Tees</FooterLink>
-                <FooterLink href="/hoodies">Hoodies & Sweats</FooterLink>
-                <FooterLink href="/bottoms">Bottoms</FooterLink>
-                <FooterLink href="/new">Latest Drops</FooterLink> */}
+              <h4 className="text-white font-serif text-sm mb-6 tracking-[0.15em] uppercase">Shop</h4>
+              <ul className="space-y-4">
+                {categories?.length > 0 ? (
+                  categories.map((item) => (
+                    <FooterLink key={item._id} href={`/products?category=${item._id}`}>
+                      {item.title}
+                    </FooterLink>
+                  ))
+                ) : (
+                  <>
+                    <FooterLink href="/products">All Collections</FooterLink>
+                    <FooterLink href="/new">New Arrivals</FooterLink>
+                  </>
+                )}
               </ul>
             </div>
 
             {/* Help Links */}
             <div>
-              <h4 className="text-white font-black text-lg mb-6 tracking-widest uppercase">Support</h4>
-              <ul className="space-y-4 text-sm font-medium">
+              <h4 className="text-white font-serif text-sm mb-6 tracking-[0.15em] uppercase">Support</h4>
+              <ul className="space-y-4">
                 <FooterLink href="/track">Track Order</FooterLink>
                 <FooterLink href="/shipping">Shipping Policy</FooterLink>
-                <FooterLink href="/returns">Returns & Exchanges</FooterLink>
+                <FooterLink href="/returns">Returns</FooterLink>
                 <FooterLink href="/size-guide">Size Guide</FooterLink>
-                <FooterLink href="/contact">Contact Us</FooterLink>
+                <FooterLink href="/contact">Contact</FooterLink>
               </ul>
             </div>
           </div>
 
-          {/* 3. Newsletter & Contact */}
-          <div>
-            <h4 className="text-white font-black text-lg mb-4 tracking-widest uppercase">Join The Club</h4>
-            <p className="text-gray-400 text-sm mb-6 font-medium">
-              Subscribe for early access to new drops, exclusive discounts, and community events.
+          {/* 3. Newsletter & Contact (Spans 4 columns on desktop) */}
+          <div className="md:col-span-4">
+            <h4 className="text-white font-serif text-sm mb-6 tracking-[0.15em] uppercase">The Newsletter</h4>
+            <p className="text-sm font-light mb-6">
+              Subscribe to receive updates, access to exclusive deals, and more.
             </p>
             
-            {/* Edgy Form */}
-            <form className="flex flex-col gap-3">
+            {/* Minimalist Premium Form */}
+            <form className="relative group mb-8">
               <input 
                 type="email" 
-                placeholder="EMAIL ADDRESS" 
-                className="w-full px-4 py-3 bg-gray-900 border-2 border-gray-800 rounded-sm focus:outline-none focus:border-indigo-500 text-white placeholder-gray-600 transition-colors uppercase tracking-wide text-sm font-bold"
+                placeholder="Enter your email address" 
+                className="w-full bg-transparent border-b border-stone-700 py-3 pr-10 text-sm text-white placeholder-stone-500 focus:outline-none focus:border-white transition-colors duration-300"
+                required
               />
-              <button className="w-full bg-indigo-600 text-white px-6 py-3.5 rounded-sm hover:bg-indigo-500 hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] transition-all duration-300 uppercase tracking-widest text-sm font-black">
-                Subscribe
+              <button 
+                type="submit"
+                className="absolute right-0 top-1/2 -translate-y-1/2 text-stone-500 hover:text-white transition-colors duration-300"
+              >
+                <HiArrowRight size={20} />
               </button>
             </form>
 
-            <div className="mt-8 text-xs font-bold tracking-widest text-gray-500 uppercase">
+            <div className="text-[11px] font-medium tracking-[0.1em] text-stone-500 uppercase space-y-2">
               <p>Creative District, Sector 17, CH</p>
-              <p className="hover:text-indigo-400 cursor-pointer mt-2 transition-colors">support@yourbrand.com</p>
+              <a href="mailto:support@yourbrand.com" className="block hover:text-white transition-colors duration-300">
+                support@yourbrand.com
+              </a>
             </div>
           </div>
 
@@ -111,19 +122,20 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar: Copyright & Payment */}
-      <div className="bg-black border-t border-gray-900">
-        <div className="max-w-7xl mx-auto px-4 py-6">
+      <div className="border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-4 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             
-            <p className="text-xs text-gray-500 font-bold tracking-wider uppercase">
-              &copy; {new Date().getFullYear()} Your Brand Name. All rights reserved.
+            <p className="text-[11px] text-stone-500 font-medium tracking-widest uppercase">
+              &copy; {new Date().getFullYear()} Your Brand. All rights reserved.
             </p>
 
-            <div className="flex gap-4 text-2xl text-gray-700">
-              <FaCcVisa className="hover:text-white transition-colors cursor-pointer" />
-              <FaCcMastercard className="hover:text-white transition-colors cursor-pointer" />
-              <FaCcPaypal className="hover:text-white transition-colors cursor-pointer" />
-              <FaCcApplePay className="hover:text-white transition-colors cursor-pointer" />
+            {/* Subtle Payment Icons */}
+            <div className="flex gap-4 text-xl text-stone-600">
+              <FaCcVisa className="hover:text-white transition-colors duration-300 cursor-pointer" />
+              <FaCcMastercard className="hover:text-white transition-colors duration-300 cursor-pointer" />
+              <FaCcPaypal className="hover:text-white transition-colors duration-300 cursor-pointer" />
+              <FaCcApplePay className="hover:text-white transition-colors duration-300 cursor-pointer" />
             </div>
 
           </div>
@@ -134,22 +146,27 @@ const Footer = () => {
   );
 };
 
-// ==================== Simple Helper Components ====================
+// ==================== Premium Helper Components ====================
 
 const FooterLink = ({ href, children }) => (
   <li>
-    <Link href={href} className="group flex items-center gap-3 hover:text-indigo-400 transition-colors duration-300">
-       {/* Animated square bullet point */}
-       <span className="h-1.5 w-1.5 bg-gray-800 group-hover:bg-indigo-500 transition-colors duration-300"></span>
-       <span className="uppercase tracking-wide">{children}</span>
+    <Link 
+      href={href} 
+      className="group relative inline-block text-[13px] text-stone-400 hover:text-white transition-colors duration-300"
+    >
+       <span className="uppercase tracking-widest">{children}</span>
+       {/* Elegant Animated Underline */}
+       <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-white transition-all duration-300 ease-out group-hover:w-full"></span>
     </Link>
   </li>
 );
 
-const SocialIcon = ({ icon }) => (
+const SocialIcon = ({ href, icon }) => (
   <a 
-    href="#" 
-    className="w-10 h-10 flex items-center justify-center border-2 border-gray-800 bg-gray-900 hover:bg-indigo-600 hover:border-indigo-600 text-gray-400 hover:text-white hover:-translate-y-1 transition-all duration-300"
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-stone-500 hover:text-white hover:-translate-y-1 transition-all duration-300"
   >
     {icon}
   </a>

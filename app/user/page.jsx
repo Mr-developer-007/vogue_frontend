@@ -31,7 +31,7 @@ const handelLogout = async (e)=>{
 
 
   return (
-    <div className="min-h-screen container mx-auto bg-red-500 py-8 px-4">
+    <div className="min-h-screen container mx-auto  py-8 px-4">
       <div className="maxxl mx-auto">
         
         <h1 className="text-3xl font-bold text-gray-900 mb-8">My Account</h1>

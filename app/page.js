@@ -15,9 +15,10 @@ export default function page() {
  <>
 <HeroSection />
 <OurCollection />
-<Category />
+
 <OurProducts />
 <HeritageStory />
+<Category />
 {/* <HappyClients /> */}
 <FeaturesStrip />
 <VideoReviews />

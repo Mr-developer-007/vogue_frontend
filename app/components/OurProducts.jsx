@@ -1,45 +1,65 @@
-"use client"
-import React, { useEffect, useState } from 'react';
-import TagLineCompo from './TagLineCompo';
+"use client";
+import React, { useEffect, useState, useCallback } from "react";
+import TagLineCompo from "./TagLineCompo";
 import { HiOutlineEye, HiArrowRight } from "react-icons/hi";
-import axios from 'axios';
-import { base_url } from './urls';
-import ProductCart from './ProductCart';
+import axios from "axios";
+import { base_url } from "./urls";
+import ProductCart from "./ProductCart";
 
 const OurProducts = () => {
   const [activeTab, setActiveTab] = useState("isNewArrival");
-  const [products, setProduct] = useState([]);
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const fetchProduct = async (params) => {
+  const fetchProducts = useCallback(async (tabKey) => {
     try {
       setLoading(true);
-      const response = await axios.get(`${base_url}/products/get/${params}`);
-      const data = await response.data;
+      setError(null);
+      const response = await axios.get(`${base_url}/products/get/${tabKey}`);
+      const data = response.data;
       if (data.success) {
-        setProduct(data.data);
+        setProducts(data.data);
       } else {
-        setProduct([]);
+        setProducts([]);
+        setError(data.message || "Failed to load products.");
       }
-    } catch (error) {
-      console.error("Error fetching products:", error);
-      setProduct([]);
+    } catch (err) {
+      console.error("Error fetching products:", err);
+      setProducts([]);
+      setError(err.response?.data?.message || err.message || "Network error.");
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    fetchProduct(activeTab);
-  }, [activeTab]);
+    fetchProducts(activeTab);
+  }, [activeTab, fetchProducts]);
 
+  const tabs = [
+    { key: "isNewArrival", label: "New Arrivals" },
+    { key: "isBestSeller", label: "Best Sellers" },
+    { key: "isFeatured", label: "Featured" },
+  ];
+
+  // Classic Skeleton Loading State
   if (loading) {
     return (
-      <div className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-center items-center h-64">
-            {/* Funky Black & White Loader */}
-            <div className="animate-spin h-12 w-12 border-4 border-black border-t-transparent border-b-transparent border-dashed"></div>
+      <div className="py-24 bg-white">
+        <TagLineCompo tag="Explore Us" heading="Our Featured Products" />
+        <div className="container mx-auto px-4 mt-8">
+          <div className="flex justify-center border-b border-gray-200 mb-12">
+             <div className="w-64 h-8 bg-gray-100 animate-pulse rounded mb-4"></div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="animate-pulse flex flex-col gap-4">
+                <div className="w-full aspect-[4/5] bg-gray-100 rounded-sm"></div>
+                <div className="w-3/4 h-4 bg-gray-100 rounded"></div>
+                <div className="w-1/4 h-4 bg-gray-100 rounded"></div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -47,67 +67,81 @@ const OurProducts = () => {
   }
 
   return (
-    <div className="py-20 bg-white">
-      {/* Header Section */}
-      <TagLineCompo 
-        tag="Explore Us"
-        heading="Our Featured Products"
-      />
-      
-      <div className="container mx-auto px-4 mt-8">
-        {/* Funky Tabs */}
-        <div className="flex flex-wrap gap-4 mb-12 justify-center">
-          {[{key:"isNewArrival",val:"New Arrival"}, {key:"isBestSeller",val:"Best Seller"}, {key:"isFeatured",val:"Featured"}].map((tab, index) => (
+    <div className="py-24 bg-white">
+      <TagLineCompo tag="Explore Us" heading="Our Featured Products" />
+
+      <div className="container mx-auto px-4 mt-8 lg:px-8">
+        
+        {/* Classic Underline Tabs */}
+        <div className="flex flex-wrap gap-8 mb-12 justify-center border-b border-gray-200">
+          {tabs.map((tab) => (
             <button
-              key={index}
+              key={tab.key}
               onClick={() => setActiveTab(tab.key)}
+              aria-pressed={activeTab === tab.key}
               className={`
-                px-6 py-3 font-mono text-sm md:text-base font-bold uppercase tracking-widest transition-all duration-200 border-2 border-black
-                ${activeTab === tab.key
-                  ? "bg-black text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] -translate-y-1 -translate-x-1" 
-                  : "bg-white text-black hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:-translate-x-1"
+                pb-4 text-xs md:text-sm font-medium uppercase tracking-widest transition-all duration-300 border-b-2 
+                ${
+                  activeTab === tab.key
+                    ? "border-black text-black"
+                    : "border-transparent text-gray-400 hover:text-gray-800 hover:border-gray-300"
                 }
               `}
             >
-              {tab.val}
+              {tab.label}
             </button>
           ))}
         </div>
 
-        {/* Products Grid - Card View */}
-        {products.length > 0 ? (
+        {/* Clean Error state */}
+        {error && (
+          <div className="text-center py-10 max-w-lg mx-auto bg-gray-50 rounded-lg">
+            <p className="text-gray-600 text-sm tracking-wide">{error}</p>
+            <button
+              onClick={() => fetchProducts(activeTab)}
+              className="mt-6 px-6 py-2 border border-black text-black text-xs uppercase tracking-widest hover:bg-black hover:text-white transition-colors duration-300"
+            >
+              Try Again
+            </button>
+          </div>
+        )}
+
+        {/* Products Grid or Empty State */}
+        {!error && products.length > 0 ? (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {products.map((product, index) => <ProductCart key={index} product={product} />)}
+              {products.map((product) => (
+                <ProductCart key={product._id} product={product} />
+              ))}
             </div>
 
-            {/* View All Link */}
             <div className="mt-16 text-center">
-              <a 
-                href="/products" 
-                className="inline-flex items-center gap-3 bg-white text-black font-mono font-bold uppercase tracking-wider px-8 py-4 border-2 border-black hover:bg-black hover:text-white transition-all duration-300 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.2)]"
+              <a
+                href="/products"
+                className="inline-flex items-center gap-3 px-8 py-4 border border-black bg-white text-black text-xs font-semibold uppercase tracking-widest hover:bg-black hover:text-white transition-colors duration-300"
               >
-                View All Products <HiArrowRight size={20} />
+                View All Products <HiArrowRight size={16} aria-hidden="true" />
               </a>
             </div>
           </>
         ) : (
-          // Funky Empty State
-          <div className="text-center py-16 border-4 border-black border-dashed max-w-2xl mx-auto bg-gray-50 p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-            <div className="mx-auto w-24 h-24 border-2 border-black bg-white flex items-center justify-center mb-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rotate-3">
-              <HiOutlineEye size={40} className="text-black" />
+          !error && (
+            <div className="text-center py-20 max-w-lg mx-auto flex flex-col items-center">
+              <HiOutlineEye size={48} className="text-gray-300 mb-6" aria-hidden="true" />
+              <h3 className="text-xl font-serif text-gray-900 mb-2">
+                No products found
+              </h3>
+              <p className="text-gray-500 text-sm mb-8">
+                We're currently updating our catalog for this category. Please check back later or browse other collections.
+              </p>
+              <button
+                onClick={() => setActiveTab("isNewArrival")}
+                className="px-8 py-3 border border-black text-black text-xs font-semibold uppercase tracking-widest hover:bg-black hover:text-white transition-colors duration-300"
+              >
+                Back to New Arrivals
+              </button>
             </div>
-            <h3 className="text-2xl font-black font-mono uppercase tracking-widest text-black mb-4">Nothing Here!</h3>
-            <p className="text-black font-mono mb-8 max-w-md mx-auto text-sm leading-relaxed">
-              We couldn't find any products for this category. Try poking around somewhere else!
-            </p>
-            <button 
-              onClick={() => setActiveTab("isNewArrival")}
-              className="px-8 py-3 bg-black text-white font-mono font-bold uppercase tracking-widest border-2 border-black hover:bg-white hover:text-black transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-            >
-              Back to New Arrivals
-            </button>
-          </div>
+          )
         )}
       </div>
     </div>
