@@ -81,7 +81,7 @@ const ProductCart = ({ product }) => {
       className="group relative block bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-rose-200 hover:shadow-2xl transition-all duration-500"
     >
       {/* --- IMAGE SECTION --- */}
-      <div className="relative h-[280px] w-full overflow-hidden bg-gray-50">
+      <div className="relative md:h-[280px] w-full overflow-hidden bg-gray-50">
         {/* Product Image */}
         {product?.images?.length > 0 ? (
           <img
