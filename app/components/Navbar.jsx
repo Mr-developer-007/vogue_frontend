@@ -69,7 +69,7 @@ const Navbar = () => {
   let navBackgroundClass = "";
   if (isHomePage) {
     navBackgroundClass = isScrolled 
-      ? 'fixed top-0 bg-black/70 backdrop-blur-xl saturate-150 border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)]' 
+      ? 'fixed top-0 bg-black backdrop-blur-xl saturate-150 border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)]' 
       : 'fixed top-0 bg-transparent border-b border-transparent';
   } else {
     // Other pages: Solid white, sticky so it doesn't cover top page content

@@ -36,6 +36,7 @@ import {
 } from 'react-icons/hi'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { MdOutlineColorLens } from 'react-icons/md'
 
 const ViewProductCompo = ({slug}) => {
   const [productData, setProductData] = useState(null)
@@ -448,6 +449,15 @@ const ViewProductCompo = ({slug}) => {
                 </div>
               </div>
             </div>
+
+             <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+               <div className="p-6 border-b border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                  <MdOutlineColorLens /> Color Details
+                </h3>
+                <input type="color" value={productData.color} disabled className='w-full h-16' name="" id="" />
+              </div>
+             </div>
 
             {/* Product Details Card */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200">

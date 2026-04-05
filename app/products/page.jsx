@@ -11,11 +11,12 @@ const page = () => {
 
   return (
     <div className='flex gap-5 '>
-        <Suspense fallback={null} >
+        {/* <Suspense fallback={null} >
         <FilterCompo />
-    </Suspense>
+    </Suspense> */}
         
-        <div className='w-full min-h-screen'>
+        <div className='w-full min-h-screen container mx-auto'>
+          
       <Suspense fallback={null}>
         <ProductCompo />
       </Suspense>

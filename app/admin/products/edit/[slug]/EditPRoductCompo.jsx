@@ -27,7 +27,8 @@ import {
   MdWidthFull,
   MdSquareFoot,
   MdOutlineSearch,
-  MdSearch
+  MdSearch,
+  MdOutlineColorLens
 } from "react-icons/md";
 import { 
   FaBox, 
@@ -237,6 +238,7 @@ const EditProductCompo = ({ slug }) => {
       "shortDescription",
       "productfor",
       "status",
+      "color",
     ];
 
     simpleFields.forEach((field) => {
@@ -770,6 +772,40 @@ const EditProductCompo = ({ slug }) => {
 
             {/* Size Management */}
             <div className="space-y-6">
+              <div className="flex items-center gap-3 border-b pb-4">
+                <MdOutlineColorLens className="text-yellow-600 text-xl" />
+                <h2 className="text-xl font-bold text-gray-900">Available Color</h2>
+              </div>
+              
+             
+              <div className="flex gap-3">
+                <input
+                  type="color"
+                  name='color'
+                  value={productData.color}
+                   onChange={InputChange}
+                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg h-16 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                  placeholder="Add a new size (xs, s, m, l, xl)"
+                  // onKeyPress={(e) => e.key === 'Enter' && handelAddSize(e)}
+                />
+              
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <div className="space-y-6">
               <div className="flex items-center gap-3 border-b pb-4">
                 <FaRulerHorizontal className="text-red-600 text-xl" />
                 <h2 className="text-xl font-bold text-gray-900">Available Sizes</h2>

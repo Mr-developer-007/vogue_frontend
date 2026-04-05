@@ -35,6 +35,7 @@ const ProductForm = () => {
     quantity: 0,
     description: '',
     shortDescription: '',
+    color:"#000",
     specifications: {},
     features: [],
     categories: [],
@@ -59,6 +60,7 @@ const ProductForm = () => {
         height: 0,
       },
       isFreeShipping: false,
+
     }
   })
   const route = useRouter()
@@ -242,6 +244,8 @@ const handleRemoveSize = (index) => {
   formData.append("description", productData.description);
   formData.append("shortDescription", productData.shortDescription);
   formData.append("productfor", productData.productfor);
+    formData.append("color", productData.color);
+
   formData.append("status", productData.status);
 
   // booleans
@@ -733,6 +737,26 @@ getCategory()
                 </div>
 
 
+ <div className="bg-white border border-gray-200 rounded-xl p-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <SiZendesk className="text-orange-600 text-xl" />
+                    <h2 className="text-lg font-bold text-gray-800">Color</h2>
+                  </div>
+                  <div className="flex gap-2 mb-3">
+                    <input
+                      type="color"
+                      name='color'
+                       value={productData.color}
+                          onChange={handleInputChange}
+
+                    
+                      className="flex-1 px-3 py-2 h-16 border border-gray-300 rounded-lg text-sm"
+                    
+                    />
+                   
+                  </div>
+                 
+                </div>
 
                 {/* Product For */}
                 <div className="bg-white border border-gray-200 rounded-xl p-6">

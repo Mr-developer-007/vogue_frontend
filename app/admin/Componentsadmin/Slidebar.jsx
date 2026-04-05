@@ -20,6 +20,7 @@ import { GiTatteredBanner } from "react-icons/gi";
 import { MdOutlineCategory, MdOutlineQueryBuilder } from "react-icons/md";
 import { BsCollectionFill } from "react-icons/bs";
 import { RiCoupon3Fill } from "react-icons/ri";
+import { ImBlogger2 } from "react-icons/im";
 
 
 import axios from "axios";
@@ -51,7 +52,7 @@ const [isCollapsed,setIsCollapsed]=useState(false)
      { name: "Query", icon: <MdOutlineQueryBuilder size={22} />, path: "/admin/contacts" },
           { name: "Coupon Code", icon: <RiCoupon3Fill size={22} />, path: "/admin/coupon-code" },
 
-    { name: "Settings", icon: <RiSettings4Line size={22} />, path: "/admin/settings" },
+    { name: "Blog", icon: <ImBlogger2 size={22} />, path: "/admin/blog" },
   ];
 
 

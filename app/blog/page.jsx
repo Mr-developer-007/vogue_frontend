@@ -1,24 +1,21 @@
 import React from 'react';
 import Link from 'next/link';
 import { HiArrowRight } from "react-icons/hi";
-import TagLineCompo from './TagLineCompo';
+
 import axios from 'axios';
-import { base_url, img_url } from './urls';
+import { base_url,img_url } from '../components/urls';
 
 const BlogSection = async () => {
 
-  const response = await axios.get(`${base_url}/blog/get?limit=3`);
+  const response = await axios.get(`${base_url}/blog/get`);
   const { data } = response.data;
 
   return (
-    <section className="py-28 bg-gradient-to-b from-white via-stone-50 to-white border-b border-stone-200">
+    <section className="py-10 bg-gradient-to-b from-white via-stone-50 to-white border-b border-stone-200">
       
-      <TagLineCompo 
-        tag="The Journal" 
-        heading="Culture & Editorials" 
-      />
+    
 
-      <div className="max-w-7xl mx-auto px-4 mt-16">
+      <div className="container mx-auto px-4 ">
         
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
@@ -85,16 +82,7 @@ const BlogSection = async () => {
           ))}
         </div>
 
-        {/* CTA */}
-        <div className="mt-20 text-center">
-          <Link 
-            href="/blog"
-            className="inline-flex items-center gap-3 px-10 py-4 text-sm tracking-[0.25em] uppercase border border-black text-black hover:bg-black hover:text-white transition-all duration-500 rounded-full shadow-sm hover:shadow-lg"
-          >
-            View All Editorials
-            <HiArrowRight />
-          </Link>
-        </div>
+      
 
       </div>
     </section>

@@ -12,17 +12,21 @@ import BlogSection from "./components/BlogSection";
 
 export default function page() {
   return (
- <>
+ <div className="">
 <HeroSection />
 <OurCollection />
 
 <OurProducts />
 <HeritageStory />
-<Category />
+{/* <Category /> */}
 {/* <HappyClients /> */}
+<div className="relative">
+  <div className="absolute top-0 left-0 h-full w-full bg-black/20"></div>
+  <img src="/banner/homebannner.webp" className="w-full" />
+  </div>
 <FeaturesStrip />
 <VideoReviews />
 <BlogSection />
- </>
+ </div>
   );
 } 
