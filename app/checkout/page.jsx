@@ -105,13 +105,13 @@ router.push("/");
 
       <AddressCompo  setCheckoutData={setCheckoutData}   />
       <CartCompo  setCheckoutData={setCheckoutData} checkoutData={checkoutData}  handelAddDiscount={(amount)=>setCheckoutData(prev=>({...prev,discountPrice:amount}))} handelCheckout={handelCheckout}/>
-      {!allreadyspin && 
+      {/* {!allreadyspin && 
 <div className='absolute bottom-8  right-2 md:right-0'>
    
         <img src="/roulette.png" alt="" onClick={()=>handelSpinWhile()} className={`  h-14 md:h-20   ${handelSpin?"animate-spin":""}`} />
 
       </div>
-}
+} */}
     </div>
   )
 }

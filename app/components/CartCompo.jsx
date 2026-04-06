@@ -1,11 +1,10 @@
-"use client"
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import { toast } from 'react-toastify'
-import { useRouter } from 'next/navigation'
-import { FiShoppingBag, FiPackage, FiClock } from 'react-icons/fi'
-import { base_url, img_url } from './urls'
-import { CiDiscount1 } from "react-icons/ci";
+"use client";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
+import { FiShoppingBag, FiClock, FiTag } from 'react-icons/fi';
+import { base_url, img_url } from './urls';
 
 // Helper to format currency
 const formatPrice = (price) => {
@@ -13,15 +12,14 @@ const formatPrice = (price) => {
     style: 'currency',
     currency: 'INR',
     maximumFractionDigits: 0
-  }).format(price);
+  }).format(price || 0);
 };
 
-const CartSummary = ({ setCheckoutData,checkoutData ,handelCheckout,handelAddDiscount}) => {
+const CartSummary = ({ setCheckoutData, checkoutData, handelCheckout, handelAddDiscount }) => {
   const router = useRouter();
   const [cartData, setCartData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [couponCode,setCouponCode]=useState("")
-
+  const [couponCode, setCouponCode] = useState("");
 
   const fetchCart = async () => {
     try {
@@ -30,21 +28,20 @@ const CartSummary = ({ setCheckoutData,checkoutData ,handelCheckout,handelAddDis
 
       if (data.success) {
         setCartData(data.items);
-
     
         const orderItemsPayload = data.items.items.map(pdata => ({
           product: pdata.product._id,
           quantity: pdata.quantity,
           price: pdata.price,
           size: pdata.size,
-          image: pdata.product.images[0] // Useful to save snapshot of image in order model
+          image: pdata.product.images[0]
         }));
 
         setCheckoutData(prev => ({
           ...prev,
           orderItems: orderItemsPayload,
           itemsPrice: data.items.totalPrice,
-          totalPrice: data.items.totalPrice+99 // You can add shipping logic here later
+          totalPrice: data.items.totalPrice + 99 // Shipping logic
         }));
       }
     } catch (error) {
@@ -60,13 +57,29 @@ const CartSummary = ({ setCheckoutData,checkoutData ,handelCheckout,handelAddDis
     fetchCart();
   }, []);
 
-
-
+  const handelAddCouponCode = async () => {
+    try {
+      const response = await axios.post(`${base_url}/couponcode/apply`, { 
+        couponcode: couponCode, 
+        cartTotal: checkoutData.totalPrice 
+      });
+      const data = await response.data;
+      
+      if (data.success) {
+        handelAddDiscount(data.discount);
+        toast.success(data.message);
+        setCouponCode("");
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Invalid or expired code");
+    }
+  };
 
   if (loading) {
     return (
-      <div className="animate-pulse bg-white p-6 rounded-2xl h-64 w-full border border-gray-100 flex items-center justify-center text-gray-400">
-        Loading cart details...
+      <div className="w-full bg-white rounded-3xl p-10 shadow-[0_4px_20px_rgb(0,0,0,0.02)] border border-gray-100 flex flex-col items-center justify-center space-y-4 h-96 sticky top-10">
+        <div className="w-10 h-10 border-2 border-gray-200 border-t-[#B5945C] rounded-full animate-spin"></div>
+        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">Securing Order...</p>
       </div>
     );
   }
@@ -75,69 +88,56 @@ const CartSummary = ({ setCheckoutData,checkoutData ,handelCheckout,handelAddDis
     return null;
   }
 
-const handelAddCouponCode = async()=>{
-try {
-  const response = await axios.post(`${base_url}/couponcode/apply`,{ couponcode:couponCode,cartTotal:checkoutData.totalPrice})
-  const data = await response.data;
-  if(data.success){
-handelAddDiscount(data.discount)
-toast.success(data.message)
-setCouponCode("")
-  }
-
-
-
-} catch (error) {
-  toast.error(error.response.data.message)
-}
-}
-
-
+  // Calculate final display totals
+  const discountAmount = checkoutData?.discountPrice || 0;
+  const finalTotal = checkoutData?.totalPrice - discountAmount;
 
   return (
-    <div className="w-full bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden sticky top-6">
+    <div 
+      className="w-full bg-white rounded-3xl shadow-[0_4px_20px_rgb(0,0,0,0.02)] border border-gray-100 overflow-hidden sticky top-10"
+      style={{ '--primary': '#B5945C' }}
+    >
       
-      {/* Header */}
-      <div className="p-6 border-b border-gray-100 bg-gray-50/50">
-        <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-          <FiShoppingBag className="text-blue-600" /> Order Summary
+      {/* --- HEADER --- */}
+      <div className="p-8 pb-6 border-b border-gray-100">
+        <h2 className="text-2xl font-serif font-light text-gray-900 tracking-tight flex items-center gap-3">
+          <FiShoppingBag className="text-[var(--primary)]" /> Order Summary
         </h2>
-        <p className="text-sm text-gray-500 mt-1">Check your items before proceeding</p>
+        <p className="text-sm text-gray-400 font-light mt-2">Review your selections before completion.</p>
       </div>
 
-      {/* Items List */}
-      <div className="p-6 space-y-6  overflow-y-auto custom-scrollbar">
+      {/* --- ITEMS LIST --- */}
+      <div className="p-8 space-y-6 max-h-[400px] overflow-y-auto custom-scrollbar">
         {cartData.items.map((item) => (
-          <div key={item._id} className="flex gap-4">
+          <div key={item._id} className="flex gap-5 group">
+            
             {/* Product Image */}
-            <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+            <div className="relative h-24 w-20 flex-shrink-0 rounded-xl bg-[#FBFBFA] border border-gray-100 overflow-hidden">
               <img
                 src={item.product.images?.[0] ? `${img_url}/${item.product.images[0]}` : '/placeholder.jpg'}
                 alt={item.product.title}
-                className="h-full w-full object-cover object-center"
+                className="h-full w-full object-contain p-2 mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
               />
-              <span className="absolute bottom-0 right-0 bg-gray-900 text-white text-[10px] px-1.5 py-0.5 rounded-tl-md">
+              <div className="absolute top-0 right-0 bg-white/90 backdrop-blur-sm border-b border-l border-gray-100 text-[10px] font-bold text-gray-900 px-2 py-1 rounded-bl-xl shadow-sm">
                 x{item.quantity}
-              </span>
+              </div>
             </div>
 
             {/* Product Details */}
-            <div className="flex flex-1 flex-col justify-between">
-              <div>
-                <h3 className="text-sm font-medium text-gray-900 line-clamp-2 leading-snug">
-                  {item.product.title}
-                </h3>
-                <div className="mt-1 flex items-center gap-2 text-xs text-gray-500">
+            <div className="flex flex-1 flex-col justify-center">
+              <h3 className="text-sm font-medium text-gray-900 line-clamp-2 leading-relaxed group-hover:text-[var(--primary)] transition-colors">
+                {item.product.title}
+              </h3>
+              
+              <div className="mt-2 flex justify-between items-end">
+                <div className="flex items-center gap-2">
                   {item.size && (
-                    <span className="uppercase bg-gray-100 px-1.5 py-0.5 rounded">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-gray-500 bg-gray-50 px-2 py-1 rounded-sm border border-gray-100">
                       Size: {item.size}
                     </span>
                   )}
                 </div>
-              </div>
-              
-              <div className="flex justify-between items-end">
-                <p className="text-sm font-semibold text-gray-900">
+                <p className="text-sm font-medium text-gray-900">
                   {formatPrice(item.product.sellingPrice)}
                 </p>
               </div>
@@ -146,69 +146,59 @@ setCouponCode("")
         ))}
       </div>
 
-      {/* Pricing Breakdown */}
-      <div className="bg-gray-50 p-6 space-y-3 border-t border-gray-100">
-        <div className="flex justify-between text-sm text-gray-600">
-          <span>Subtotal</span>
-          <span className="font-medium">{formatPrice(cartData.totalPrice)}</span>
-        </div>
+      {/* --- PRICING BREAKDOWN --- */}
+      <div className="bg-[#FCFBFA] p-8 space-y-8 border-t border-gray-100">
         
-        <div className="flex justify-between text-sm text-gray-600">
-          <span className="flex items-center gap-1"><FiPackage /> Shipping</span>
-          <span className="text-green-600 font-medium">99</span>
-        </div>
+      
 
-
-         {checkoutData.discountPrice > 0 &&  <div className="flex justify-between text-sm text-gray-600">
-          <span className="flex items-center gap-1"><CiDiscount1 /> Discount</span>
-          <span className="text-green-600 font-medium">-{checkoutData.discountPrice}</span>
-        </div>
-}
-
-<div className="flex w-full gap-3">
-  <input
-    type="text"
-    placeholder="ENTER CODE"
-    value={couponCode}
-    onChange={(e) => setCouponCode(e.target.value)}
-    className="w-full rounded-l-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium uppercase text-gray-800 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-  />
-  <button
-    onClick={handelAddCouponCode}
-    disabled={!couponCode.trim()}
-    className="rounded-r-md bg-blue-600 px-6 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 disabled:cursor-not-allowed disabled:bg-gray-400"
-  >
-    Apply
-  </button>
-</div>
-
-
-        <div className="border-t border-gray-200 my-2 pt-3 flex justify-between items-center">
-          <span className="text-base font-bold text-gray-900">Total</span>
-          <div className="text-right">
-            <span className="text-xl font-bold text-blue-600">{formatPrice(checkoutData.totalPrice-checkoutData.discountPrice)}</span>
-            <p className="text-[10px] text-gray-400">Including all taxes</p>
+        <div className="space-y-4 pt-2">
+          <div className="flex justify-between text-sm text-gray-500 font-light">
+            <span>Subtotal</span>
+            <span className="text-gray-900 font-medium">{formatPrice(cartData.totalPrice)}</span>
           </div>
+          
+          <div className="flex justify-between text-sm text-gray-500 font-light">
+            <span>Standard Shipping</span>
+            <span className="text-gray-900 font-medium">₹99</span>
+          </div>
+
+          {discountAmount > 0 && (
+            <div className="flex justify-between text-sm text-[var(--primary)] font-medium">
+              <span className="flex items-center gap-1.5"><FiTag size={14} /> Discount Applied</span>
+              <span>-{formatPrice(discountAmount)}</span>
+            </div>
+          )}
+        </div>
+
+        <div className="border-t border-gray-200 pt-6 flex justify-between items-end">
+          <div>
+            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Total</span>
+            <p className="text-[10px] text-gray-400 font-light mt-1">Includes all taxes</p>
+          </div>
+          <span className="text-3xl font-serif text-gray-900 tracking-tight">
+            {formatPrice(finalTotal)}
+          </span>
+        </div>
+
+        {/* --- CHECKOUT ACTION --- */}
+        <div className="pt-2">
+          <button  
+            onClick={handelCheckout} 
+            className="w-full h-14 bg-gray-900 text-white rounded-full text-xs font-bold uppercase tracking-widest shadow-[0_4px_14px_0_rgb(0,0,0,0.1)] transition-all duration-300 hover:bg-[var(--primary)] hover:shadow-[0_6px_20px_rgb(181,148,92,0.3)] hover:-translate-y-0.5"
+          >
+            Proceed to Checkout
+          </button>
         </div>
       </div>
-      <div className='flex items-center justify-between'>
-        {/* <div>
-{checkoutData.discountPrice}
-        </div> */}
-
-
-      </div>
-<div className='flex items-center justify-center my-4'>
-    <button  onClick={handelCheckout} className='px-4 py-1 bg-indigo-500 rounded-2xl text-white cursor-pointer'>Checkout</button>
-</div>
       
-      <div className="px-6 py-3 bg-blue-50/50 border-t border-blue-100 text-xs text-blue-700 flex items-center justify-center gap-2">
-         <FiClock /> Items are reserved for 15 minutes
+      {/* --- FOOTER NOTE --- */}
+      <div className="px-6 py-4 bg-white border-t border-gray-100 text-[10px] font-bold uppercase tracking-[0.1em] text-gray-400 flex items-center justify-center gap-2">
+         <FiClock size={12} className="text-[var(--primary)]" /> 
+         <span>Pieces reserved for 15 minutes</span>
       </div>
 
-      
     </div>
-  )
-}
+  );
+};
 
-export default CartSummary
+export default CartSummary;

@@ -19,6 +19,9 @@ const Navbar = () => {
   
   const path = usePathname();
   const { categories, loading } = useSelector(state => state.category);
+    const wishlist = useSelector(state => state.wishlist.items);
+   
+
   const dispatch = useDispatch();
 
   const toggleMenu = () => {
@@ -70,7 +73,7 @@ const Navbar = () => {
   if (isHomePage) {
     navBackgroundClass = isScrolled 
       ? 'fixed top-0 bg-black backdrop-blur-xl saturate-150 border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)]' 
-      : 'fixed top-0 bg-transparent border-b border-transparent';
+      : 'fixed top-2 bg-transparent border-b border-transparent';
   } else {
     // Other pages: Solid white, sticky so it doesn't cover top page content
     navBackgroundClass = 'sticky top-0 bg-white border-b border-gray-100 shadow-sm';
@@ -79,7 +82,7 @@ const Navbar = () => {
   // 2. Text, Logo, and Icon Colors
   const textColorClass = isHomePage ? 'text-white' : 'text-gray-900';
   const hoverColorClass = isHomePage ? 'hover:text-indigo-400' : 'hover:text-indigo-600';
-  const borderDividerClass = isHomePage ? 'border-white/20' : 'border-gray-200';
+  const borderDividerClass = isHomePage ? 'border-white/20 ' : 'border-gray-200';
   const logoClass = isHomePage ? 'brightness-0 invert opacity-90 hover:opacity-100' : 'opacity-100';
 
   return (
@@ -88,9 +91,9 @@ const Navbar = () => {
       {searchToggle &&  <SearchSection onClose={() => setSearchToggle(false)} />}
       
       {/* Top Banner - Keeps the dark premium feel globally */}
-      <div className="bg-gradient-to-r from-gray-950 via-black to-gray-950 text-white/90 text-[10px] lg:text-xs py-2.5 px-2 text-center tracking-[0.25em] font-medium uppercase shadow-sm whitespace-nowrap overflow-hidden text-ellipsis border-b border-white/5">
+      {/* <div className="bg-gradient-to-r from-gray-950 via-black to-gray-950 text-white/90 text-[10px] lg:text-xs py-2.5 px-2 text-center tracking-[0.25em] font-medium uppercase shadow-sm whitespace-nowrap overflow-hidden text-ellipsis border-b border-white/5">
         Free Shipping on all pre-paid orders
-      </div>
+      </div> */}
 
       <div className="container mx-auto px-4 ">
         <div className="flex justify-between items-center h-20">
@@ -179,8 +182,14 @@ const Navbar = () => {
             <button onClick={() => setSearchToggle(true)} className={`${hoverColorClass} hover:scale-110 transition-all duration-300`}>
               <HiOutlineSearch size={22} strokeWidth={1.5} />
             </button>
-            <Link href={user ? "/wishlist" : "/login"} className={`${hoverColorClass} hover:scale-110 transition-all duration-300`}>
+            <Link href={user ? "/wishlist" : "/login"} className={`${hoverColorClass} relative hover:scale-110 transition-all duration-300`}>
               <HiOutlineHeart size={22} strokeWidth={1.5} />
+              { wishlist.length >0 &&
+               
+                 <span className="absolute -top-1.5 -right-1.5 bg-purple-500 text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-black shadow-[0_0_10px_rgba(99,102,241,0.8)]">
+                {wishlist.length}
+                </span>
+              }
             </Link>
             <Link href={user ? "/user" : "/login"} className={`${hoverColorClass} hover:scale-110 transition-all duration-300`}>
               <HiOutlineUser size={22} strokeWidth={1.5} />

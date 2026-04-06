@@ -2,20 +2,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { 
-  FiUser, 
-  FiSmartphone, 
-  FiMapPin, 
-  FiHash, 
-  FiFlag, 
   FiHome, 
   FiBriefcase, 
-  FiMap,
-  FiPhone, 
+  FiMapPin,
   FiTrash2,
-  FiPlus
+  FiPlus,
+  FiCheck
 } from 'react-icons/fi';
-import { MdOutlinePublic } from "react-icons/md";
-import { HiCheckCircle } from 'react-icons/hi';
 import { toast } from 'react-toastify';
 import { base_url } from './urls';
 import { useRouter } from 'next/navigation';
@@ -23,16 +16,17 @@ import { useRouter } from 'next/navigation';
 // --- Helper Component for Icons ---
 const getLabelIcon = (label) => {
   const l = label ? label.toLowerCase() : 'other';
-  if (l === 'home') return <FiHome />;
-  if (l === 'work' || l === 'office') return <FiBriefcase />;
-  return <FiMapPin />;
+  if (l === 'home') return <FiHome size={14} />;
+  if (l === 'work' || l === 'office') return <FiBriefcase size={14} />;
+  return <FiMapPin size={14} />;
 };
 
 const AddressCompo = ({ setCheckoutData }) => {
   const [allAddress, setAllAddress] = useState([]);
-  const route = useRouter()
+  const route = useRouter();
   const [showAddressForm, setShowAddressForm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [fetching, setFetching] = useState(true);
 
   const initialAddressState = {
     firstName: "",
@@ -51,7 +45,6 @@ const AddressCompo = ({ setCheckoutData }) => {
   const [address, setAddress] = useState(initialAddressState);
 
   // --- Handlers ---
-
   const handleInput = (e) => {
     const { name, value } = e.target;
     setAddress((prev) => ({ ...prev, [name]: value }));
@@ -66,6 +59,7 @@ const AddressCompo = ({ setCheckoutData }) => {
   };
 
   const fetchAddress = async () => {
+    setFetching(true);
     try {
       const response = await axios.get(`${base_url}/address/all`);
       const data = response.data;
@@ -73,24 +67,23 @@ const AddressCompo = ({ setCheckoutData }) => {
       if (data.success) {
         setAllAddress(data.addresses);
         
-        // If there are no addresses, force show the form
         if (data.addresses.length === 0) {
             setShowAddressForm(true);
         }
 
-        // Set default address for checkout
         const defaultAddr = data.addresses.find((item) => item.isDefault);
         if (defaultAddr && setCheckoutData) {
           setCheckoutData((prev) => ({ ...prev, address: defaultAddr._id }));
         }
       }
     } catch (error) {
-      console.log(error.status)
-      if(error.status >400){
-   route.push("/login")
+      if(error.status > 400){
+         route.push("/login");
       }
       console.error("Error fetching addresses", error);
       setAllAddress([]);
+    } finally {
+      setFetching(false);
     }
   };
 
@@ -103,9 +96,9 @@ const AddressCompo = ({ setCheckoutData }) => {
 
       if (data.success) {
         toast.success(data.message);
-        setAddress(initialAddressState); // Reset form
-        await fetchAddress(); // Refresh list
-        setShowAddressForm(false); // Go back to list view
+        setAddress(initialAddressState);
+        await fetchAddress();
+        setShowAddressForm(false);
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to add address");
@@ -115,7 +108,7 @@ const AddressCompo = ({ setCheckoutData }) => {
   };
 
   const deleteAddress = async (id) => {
-    if(!window.confirm("Are you sure you want to delete this address?")) return;
+    if(!window.confirm("Are you sure you want to remove this address?")) return;
     
     try {
       const response = await axios.delete(`${base_url}/address/delete/${id}`);
@@ -129,19 +122,16 @@ const AddressCompo = ({ setCheckoutData }) => {
     }
   };
 
-
   const handelDefaultAddress = async(id)=>{
     try {
       const response = await axios.put(`${base_url}/address/setdefault/${id}`);
       const data = await response.data;
       if(data.success){
-        toast.success(data.message)
-        fetchAddress()
+        toast.success(data.message);
+        fetchAddress();
       }
-      
     } catch (error) {
-              toast.error(error.response.data.message)
-
+      toast.error(error.response?.data?.message || "Failed to update default address");
     }
   }
 
@@ -149,83 +139,90 @@ const AddressCompo = ({ setCheckoutData }) => {
     fetchAddress();
   }, []);
 
-
+  if (fetching) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20 space-y-4">
+        <div className="w-10 h-10 border-2 border-gray-200 border-t-[#B5945C] rounded-full animate-spin"></div>
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Loading details...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="w-full  ">
+    <div className="w-full text-gray-900" style={{ '--primary': '#B5945C' }}>
       
+      {/* --- VIEW 1: SAVED ADDRESSES --- */}
       {(!showAddressForm && allAddress.length > 0) && (
-        <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-bold text-gray-800">Saved Addresses</h2>
+        <div className="bg-white p-8 md:p-12 rounded-3xl shadow-[0_4px_20px_rgb(0,0,0,0.02)] border border-gray-100">
+          <div className="flex justify-between items-end mb-8 border-b border-gray-100 pb-6">
+            <div>
+              <h2 className="text-3xl font-serif font-light tracking-tight text-gray-900">Saved Addresses</h2>
+              <p className="text-sm text-gray-400 font-light mt-2">Manage where your pieces are delivered.</p>
+            </div>
             <button 
               onClick={() => setShowAddressForm(true)}
-              className="flex items-center gap-2 text-sm font-semibold text-blue-600 bg-blue-50 px-4 py-2 rounded-lg hover:bg-blue-100 transition-colors"
+              className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-900 hover:text-[var(--primary)] transition-colors pb-1"
             >
-              <FiPlus size={18} /> Add New
+              <FiPlus size={16} /> New Address
             </button>
           </div>
 
-          <div className="space-y-4">
+          <div className="grid grid-cols-1  gap-6">
             {allAddress.map((item) => (
               <div
                 key={item._id}
-                className={`relative flex flex-col md:flex-row justify-between items-start gap-4 p-5 rounded-xl border transition-all duration-200 
+                className={`relative flex flex-col p-6 rounded-2xl transition-all duration-300 border h-full
                   ${item.isDefault
-                    ? 'border-blue-200 bg-blue-50/30 ring-1 ring-blue-100'
-                    : 'border-gray-100 bg-gray-50 hover:border-gray-300 hover:shadow-md'
+                    ? 'border-[var(--primary)] shadow-[0_8px_30px_rgb(181,148,92,0.08)] bg-white'
+                    : 'border-gray-100 bg-[#FCFBFA] hover:border-gray-300 hover:shadow-sm'
                   }`}
               >
-                {/* Left: Details */}
-                <div className="space-y-2 flex-1">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="font-bold text-gray-900 capitalize">
+                {/* Default Badge */}
+                {item.isDefault && (
+                  <div className="absolute -top-3 left-6 bg-[var(--primary)] text-white text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+                    <FiCheck size={10} /> Default
+                  </div>
+                )}
+
+                <div className="flex justify-between items-start mb-4 mt-2">
+                  <div className="flex items-center gap-3">
+                    <h3 className="text-lg font-medium text-gray-900 capitalize tracking-wide">
                       {item.firstName} {item.lastName}
                     </h3>
-                    
-                    <span className="flex items-center gap-1 px-2.5 py-0.5 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-full uppercase tracking-wider">
-                      {getLabelIcon(item.label)} {item.label}
-                    </span>
-
-                    {item.isDefault ? (
-                      <span className="flex items-center gap-1 px-2.5 py-0.5 text-xs font-semibold text-rose-700 bg-rose-100 border border-blue-200 rounded-full">
-                        <HiCheckCircle className="text-base" /> Default
-                      </span>
-                    ):
-                  (
-                      <span
-                      onClick={()=>handelDefaultAddress(item._id)}
-                      className="flex items-center gap-1 cursor-pointer px-2.5 py-0.5 text-xs font-semibold text-blue-700 bg-blue-100 border border-blue-200 rounded-full">
-                        <HiCheckCircle className="text-base" /> Set Default
-                      </span>
-                    )
-                  
-                  }
                   </div>
-
-                  <div className="text-sm text-gray-600 leading-relaxed pl-1">
-                    <p>{item.street1}{item.street2 && `, ${item.street2}`}</p>
-                    <p className="capitalize">
-                      {item.city}, {item.state} - <span className="font-medium text-gray-800">{item.zipCode}</span>
-                    </p>
-                    <p className="uppercase text-xs text-gray-400 font-semibold tracking-wide mt-1">
-                      {item.country}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-sm text-gray-700 font-medium pt-1 pl-1">
-                    <FiPhone className="text-gray-400" />
-                    <span>{item.phoneNumber}</span>
-                  </div>
+                  <span className="flex items-center gap-1.5 px-3 py-1 text-[10px] font-bold text-gray-400 bg-white border border-gray-200 rounded-full uppercase tracking-widest shadow-sm">
+                    {getLabelIcon(item.label)} {item.label}
+                  </span>
                 </div>
 
-                {/* Right: Actions */}
-                <div className="flex flex-row md:flex-col gap-2 shrink-0 w-full md:w-auto mt-2 md:mt-0 pt-3 md:pt-0 border-t md:border-t-0 border-gray-200 md:border-l md:pl-4">
+                <div className="text-sm text-gray-500 font-light leading-relaxed flex-grow">
+                  <p>{item.street1}</p>
+                  {item.street2 && <p>{item.street2}</p>}
+                  <p className="capitalize">
+                    {item.city}, {item.state} <span className="font-medium text-gray-900 ml-1">{item.zipCode}</span>
+                  </p>
+                  <p className="uppercase text-[11px] text-gray-400 font-semibold tracking-widest mt-2">
+                    {item.country}
+                  </p>
+                  <p className="text-gray-900 font-medium mt-4 tracking-wide">
+                    {item.phoneNumber}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-6 mt-6 pt-5 border-t border-gray-100">
+                  {!item.isDefault && (
+                    <button
+                      onClick={() => handelDefaultAddress(item._id)}
+                      className="text-[11px] font-bold uppercase tracking-widest text-gray-400 hover:text-[var(--primary)] transition-colors"
+                    >
+                      Make Default
+                    </button>
+                  )}
                   <button
                     onClick={() => deleteAddress(item._id)}
-                    className="flex-1 md:flex-none flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-red-500 bg-white border border-red-100 rounded-lg hover:bg-red-50 hover:border-red-200 transition-colors"
+                    className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-gray-400 hover:text-red-500 transition-colors ml-auto"
                   >
-                    <FiTrash2 size={16} /> <span className="md:hidden">Remove</span>
+                    <FiTrash2 size={14} /> Remove
                   </button>
                 </div>
               </div>
@@ -234,223 +231,100 @@ const AddressCompo = ({ setCheckoutData }) => {
         </div>
       )}
 
-      {/* VIEW 2: Add/Edit Form */}
+      {/* --- VIEW 2: ADD/EDIT FORM --- */}
       {(showAddressForm || allAddress.length === 0) && (
-        <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">
-            {allAddress.length === 0 ? "Add Shipping Address" : "New Address"}
-          </h2>
+        <div className="bg-white p-8 md:p-12 rounded-3xl shadow-[0_4px_20px_rgb(0,0,0,0.02)] border border-gray-100 max-w-4xl mx-auto">
+          <div className="mb-10 border-b border-gray-100 pb-6">
+            <h2 className="text-3xl font-serif font-light tracking-tight text-gray-900">
+              {allAddress.length === 0 ? "Shipping Details" : "New Address"}
+            </h2>
+            <p className="text-sm text-gray-400 font-light mt-2">Please enter your exact delivery details below.</p>
+          </div>
 
-          <form onSubmit={handleAddAddress} className="space-y-6">
+          <form onSubmit={handleAddAddress} className="space-y-8">
             
             {/* Contact Details */}
-            <div className="space-y-4">
-              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider">Contact Details</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                
-                {/* First Name */}
-                <div className="relative">
-                  <FiUser className="absolute top-3.5 left-3.5 text-gray-400 text-lg" />
-                  <input
-                    required
-                    type="text"
-                    name="firstName"
-                    placeholder="First Name"
-                    value={address.firstName}
-                    onChange={handleInput}
-                    className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
-                  />
-                </div>
-
-                {/* Last Name */}
-                <div className="relative">
-                  <FiUser className="absolute top-3.5 left-3.5 text-gray-400 text-lg" />
-                  <input
-                    required
-                    type="text"
-                    name="lastName"
-                    placeholder="Last Name"
-                    value={address.lastName}
-                    onChange={handleInput}
-                    className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
-                  />
-                </div>
-
-                {/* Phone */}
-                <div className="relative md:col-span-2">
-                  <FiSmartphone className="absolute top-3.5 left-3.5 text-gray-400 text-lg" />
-                  <input
-                    required
-                    type="tel"
-                    name="phoneNumber"
-                    placeholder="Phone Number"
-                    value={address.phoneNumber}
-                    onChange={handleInput}
-                    className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
-                  />
-                </div>
+            <div className="space-y-5">
+              <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Contact Information</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <input required type="text" name="firstName" placeholder="First Name" value={address.firstName} onChange={handleInput}
+                  className="w-full px-5 py-4 bg-[#FBFBFA] border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] transition-all font-light placeholder-gray-400" />
+                <input required type="text" name="lastName" placeholder="Last Name" value={address.lastName} onChange={handleInput}
+                  className="w-full px-5 py-4 bg-[#FBFBFA] border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] transition-all font-light placeholder-gray-400" />
+                <input required type="tel" name="phoneNumber" placeholder="Phone Number" value={address.phoneNumber} onChange={handleInput}
+                  className="w-full md:col-span-2 px-5 py-4 bg-[#FBFBFA] border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] transition-all font-light placeholder-gray-400" />
               </div>
             </div>
 
-            <hr className="border-gray-100" />
-
             {/* Address Details */}
-            <div className="space-y-4">
-              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider">Address Info</h3>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                
-                {/* Street 1 */}
-                <div className="relative md:col-span-2">
-                  <FiMapPin className="absolute top-3.5 left-3.5 text-gray-400 text-lg" />
-                  <input
-                    required
-                    type="text"
-                    name="street1"
-                    placeholder="Street Address, P.O. Box"
-                    value={address.street1}
-                    onChange={handleInput}
-                    className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
-                  />
-                </div>
-
-                {/* Street 2 */}
-                <div className="relative md:col-span-2">
-                  <input
-                    type="text"
-                    name="street2"
-                    placeholder="Apartment, Suite, Unit, etc. (Optional)"
-                    value={address.street2}
-                    onChange={handleInput}
-                    className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
-                  />
-                </div>
-
-                {/* City */}
-                <div className="relative">
-                  <MdOutlinePublic className="absolute top-3.5 left-3.5 text-gray-400 text-lg" />
-                  <input
-                    required
-                    type="text"
-                    name="city"
-                    placeholder="City"
-                    value={address.city}
-                    onChange={handleInput}
-                    className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
-                  />
-                </div>
-
-                {/* State */}
-                <div className="relative">
-                  <FiMap className="absolute top-3.5 left-3.5 text-gray-400 text-lg" />
-                  <input
-                    required
-                    type="text"
-                    name="state"
-                    placeholder="State / Province"
-                    value={address.state}
-                    onChange={handleInput}
-                    className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
-                  />
-                </div>
-
-                {/* Zip */}
-                <div className="relative">
-                  <FiHash className="absolute top-3.5 left-3.5 text-gray-400 text-lg" />
-                  <input
-                    required
-                    type="text"
-                    name="zipCode"
-                    placeholder="Zip / Postal Code"
-                    value={address.zipCode}
-                    onChange={handleInput}
-                    className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
-                  />
-                </div>
-
-                {/* Country */}
-                <div className="relative">
-                  <FiFlag className="absolute top-3.5 left-3.5 text-gray-400 text-lg" />
-                  <input
-                    required
-                    type="text"
-                    name="country"
-                    placeholder="Country"
-                    value={address.country}
-                    disabled
-                    onChange={handleInput}
-                    className="w-full pl-10 pr-4 py-3 bg-gray-100 border border-gray-200 rounded-lg text-gray-500 cursor-not-allowed"
-                  />
-                </div>
+            <div className="space-y-5 pt-4">
+              <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Delivery Address</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <input required type="text" name="street1" placeholder="Street Address, P.O. Box" value={address.street1} onChange={handleInput}
+                  className="w-full md:col-span-2 px-5 py-4 bg-[#FBFBFA] border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] transition-all font-light placeholder-gray-400" />
+                <input type="text" name="street2" placeholder="Apartment, Suite, Unit (Optional)" value={address.street2} onChange={handleInput}
+                  className="w-full md:col-span-2 px-5 py-4 bg-[#FBFBFA] border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] transition-all font-light placeholder-gray-400" />
+                <input required type="text" name="city" placeholder="City" value={address.city} onChange={handleInput}
+                  className="w-full px-5 py-4 bg-[#FBFBFA] border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] transition-all font-light placeholder-gray-400" />
+                <input required type="text" name="state" placeholder="State / Province" value={address.state} onChange={handleInput}
+                  className="w-full px-5 py-4 bg-[#FBFBFA] border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] transition-all font-light placeholder-gray-400" />
+                <input required type="text" name="zipCode" placeholder="Postal Code" value={address.zipCode} onChange={handleInput}
+                  className="w-full px-5 py-4 bg-[#FBFBFA] border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] transition-all font-light placeholder-gray-400" />
+                <input required type="text" name="country" placeholder="Country" value={address.country} disabled onChange={handleInput}
+                  className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-400 cursor-not-allowed uppercase tracking-widest text-sm font-medium" />
               </div>
             </div>
 
             {/* Settings */}
-            <div className="pt-2">
-              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Settings</h3>
+            <div className="pt-6 border-t border-gray-100 flex flex-col md:flex-row md:items-center justify-between gap-6">
               
-              <div className="flex flex-col gap-4">
-                {/* Type Selection */}
-                <div className="flex flex-wrap gap-3">
-                  {['Home', 'Work', 'Other'].map((item, index) => {
-                    const isActive = address.label === item;
-                    return (
-                      <button
-                        key={index}
-                        type="button"
-                        onClick={() => handleLabel(item)}
-                        className={`
-                          flex items-center gap-2 px-5 py-2.5 rounded-full border text-sm font-medium transition-all duration-200
-                          ${isActive
-                            ? 'bg-gray-800 text-white border-gray-800 shadow-md transform scale-105'
-                            : 'bg-white text-gray-600 border-gray-200 hover:border-gray-400'
-                          }
-                        `}
-                      >
-                        {item === 'Home' && <FiHome />}
-                        {item === 'Work' && <FiBriefcase />}
-                        {item === 'Other' && <FiMapPin />}
-                        {item}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Default Checkbox */}
-                <label className="flex items-center gap-3 cursor-pointer group w-fit">
-                  <div className="relative flex items-center">
-                    <input
-                      type="checkbox"
-                      checked={address.isDefault}
-                      onChange={handleDefault}
-                      className="peer h-5 w-5 cursor-pointer appearance-none rounded border border-gray-300 shadow-sm transition-all checked:border-blue-600 checked:bg-blue-600 hover:border-blue-400"
-                    />
-                    <svg className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none opacity-0 peer-checked:opacity-100 text-white" viewBox="0 0 14 10" fill="none">
-                      <path d="M1 5L4.5 8.5L13 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                  <span className="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">
-                    Make this my default address
-                  </span>
-                </label>
+              <div className="flex gap-3">
+                {['Home', 'Work', 'Other'].map((item) => (
+                  <button
+                    key={item}
+                    type="button"
+                    onClick={() => handleLabel(item)}
+                    className={`flex items-center gap-2 px-6 py-3 rounded-full border text-[11px] font-bold uppercase tracking-widest transition-all duration-300
+                      ${address.label === item
+                        ? 'bg-gray-900 text-white border-gray-900 shadow-md'
+                        : 'bg-white text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-900'
+                      }`}
+                  >
+                    {getLabelIcon(item)} <span className="hidden sm:inline">{item}</span>
+                  </button>
+                ))}
               </div>
+
+              <label className="flex items-center gap-3 cursor-pointer group">
+                <div className="relative flex items-center">
+                  <input type="checkbox" checked={address.isDefault} onChange={handleDefault}
+                    className="peer h-5 w-5 cursor-pointer appearance-none rounded border border-gray-300 transition-all checked:border-[var(--primary)] checked:bg-[var(--primary)]" />
+                  <svg className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none opacity-0 peer-checked:opacity-100 text-white" viewBox="0 0 14 10" fill="none">
+                    <path d="M1 5L4.5 8.5L13 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+                <span className="text-[11px] font-bold uppercase tracking-widest text-gray-500 group-hover:text-gray-900 transition-colors">
+                  Set as Default
+                </span>
+              </label>
+
             </div>
 
             {/* Action Buttons */}
-            <div className="flex items-center gap-4 pt-4 border-t border-gray-100">
+            <div className="flex flex-col sm:flex-row items-center gap-4 pt-6">
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold text-lg shadow-sm transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+                className="w-full sm:flex-1 h-14 bg-gray-900 text-white rounded-full text-xs font-bold uppercase tracking-widest shadow-sm transition-all duration-300 hover:bg-[var(--primary)] hover:shadow-xl hover:shadow-[var(--primary)]/20 disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                {loading ? 'Saving...' : 'Save Address'}
+                {loading ? 'Saving Details...' : 'Save Address'}
               </button>
 
               {allAddress.length > 0 && (
                 <button
                   type="button"
                   onClick={() => setShowAddressForm(false)}
-                  className="flex-1 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 py-3 rounded-lg font-semibold text-lg transition-all"
+                  className="w-full sm:w-auto px-10 h-14 bg-white border border-gray-200 text-gray-900 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 hover:border-gray-900 hover:bg-gray-50"
                 >
                   Cancel
                 </button>

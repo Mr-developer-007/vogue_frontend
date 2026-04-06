@@ -1,39 +1,39 @@
-"use client"
-import axios from 'axios'
-import { useSearchParams, useRouter, usePathname } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
-import { base_url } from '../components/urls'
-import ProductCart from '../components/ProductCart'
-import { HiArrowRight, HiArrowLeft, HiOutlineEye } from 'react-icons/hi'
-import { FiLoader } from 'react-icons/fi'
+'use client';
+
+import axios from 'axios';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import { base_url } from '../components/urls';
+import ProductCart from '../components/ProductCart';
+import { HiArrowRight, HiArrowLeft } from 'react-icons/hi';
+import { FiSearch } from 'react-icons/fi'; // Replaced Eye with Search for a cleaner empty state
 
 const ProductCompo = () => {
-  const [loader, setLoader] = useState(true)
-  const [products, setProducts] = useState([])
+  const [loader, setLoader] = useState(true);
+  const [products, setProducts] = useState([]);
   
-  // NEW: State to hold pagination info from the API
+  // State to hold pagination info from the API
   const [pagination, setPagination] = useState({
     currentPage: 1,
     totalPages: 1,
-  })
+  });
   
-  const queries = useSearchParams()
-  const router = useRouter()
-  const pathname = usePathname() // Needed to construct the new URL properly
+  const queries = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname(); 
 
   const fetchProduct = async (query) => {
     try {
-      setLoader(true)
+      setLoader(true);
       const endpoint = query 
         ? `${base_url}/products/get?${query}` 
-        : `${base_url}/products/get`
+        : `${base_url}/products/get`;
 
-      const response = await axios.get(endpoint)
+      const response = await axios.get(endpoint);
       const data = response.data;
       
       if (data.success) {
         setProducts(data.products || data.data || []); 
-        // NEW: Save the pagination data returned by your backend
         setPagination({
           currentPage: data.page || 1,
           totalPages: data.totalPages || 1,
@@ -43,103 +43,105 @@ const ProductCompo = () => {
         setPagination({ currentPage: 1, totalPages: 1 });
       }
     } catch (error) {
-      console.error("Failed to fetch products:", error)
-      setProducts([])
+      console.error("Failed to fetch products:", error);
+      setProducts([]);
     } finally {
-      setLoader(false)
+      setLoader(false);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchProduct(queries.toString())
-  }, [queries])
+    fetchProduct(queries.toString());
+  }, [queries]);
 
-  // NEW: Function to handle page changes by updating the URL
+  // Function to handle page changes by updating the URL
   const handlePageChange = (newPage) => {
-    // Prevent out of bounds clicking
     if (newPage < 1 || newPage > pagination.totalPages) return;
 
-    // Grab current parameters so we don't lose active filters (like category/price)
     const params = new URLSearchParams(queries.toString());
-    
-    // Set the new page
     params.set("page", newPage.toString());
 
-    // Push the new URL and scroll to the top of the product grid
-    router.push(`${pathname}?${params.toString()}`);
-  }
+    // Push the new URL and scroll to the top smoothly
+    router.push(`${pathname}?${params.toString()}`, { scroll: true });
+  };
 
-  // Loading state
+  // Loading state (Premium styling)
   if (loader) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 space-y-4">
-        <FiLoader className="animate-spin text-5xl text-black" />
-        <p className="font-mono font-bold uppercase tracking-widest text-black">Loading Drops...</p>
+      <div className="flex flex-col items-center justify-center py-32 space-y-6">
+        <div className="w-12 h-12 border-2 border-gray-200 border-t-[#B5945C] rounded-full animate-spin"></div>
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Curating Collection...</p>
       </div>
-    )
+    );
   }
 
   return (
-    <div className="w-full">
+    // Fallback variable in case a parent wrapper doesn't provide the theme color
+    <div className="w-full" style={{ '--primary': '#B5945C' }}>
       {products.length > 0 ? (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Product Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
             {products.map((product, index) => (
               <ProductCart key={product._id || index} product={product} />
             ))}
           </div>
 
-          {/* NEW: Funky Brutalist Pagination */}
+          {/* Premium Minimalist Pagination */}
           {pagination.totalPages > 1 && (
-            <div className="mt-16 flex items-center justify-center gap-6 font-mono">
+            <div className="mt-24 mb-10 flex items-center justify-center gap-6 sm:gap-10">
               
               {/* Previous Button */}
               <button 
                 onClick={() => handlePageChange(pagination.currentPage - 1)}
                 disabled={pagination.currentPage === 1}
-                className="flex items-center gap-2 px-6 py-3 border-2 border-black bg-white text-black font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-black"
+                className="flex items-center gap-3 px-6 py-3.5 rounded-full border border-gray-200 bg-white text-xs font-bold uppercase tracking-widest text-gray-500 transition-all duration-300 hover:border-[var(--primary)] hover:text-[var(--primary)] hover:shadow-sm disabled:opacity-40 disabled:hover:border-gray-200 disabled:hover:text-gray-500 disabled:cursor-not-allowed disabled:hover:shadow-none"
               >
-                <HiArrowLeft size={20} /> Prev
+                <HiArrowLeft size={16} /> <span className="hidden sm:inline">Previous</span>
               </button>
 
               {/* Page Indicator */}
-              <div className="px-6 py-3 border-2 border-black bg-rose-200 text-black font-black uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                {pagination.currentPage} / {pagination.totalPages}
+              <div className="text-sm font-medium text-gray-400 tracking-widest uppercase">
+                Page <span className="text-gray-900 mx-1">{pagination.currentPage}</span> of <span className="mx-1">{pagination.totalPages}</span>
               </div>
 
               {/* Next Button */}
               <button 
                 onClick={() => handlePageChange(pagination.currentPage + 1)}
                 disabled={pagination.currentPage === pagination.totalPages}
-                className="flex items-center gap-2 px-6 py-3 border-2 border-black bg-white text-black font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-black"
+                className="flex items-center gap-3 px-6 py-3.5 rounded-full border border-gray-200 bg-white text-xs font-bold uppercase tracking-widest text-gray-500 transition-all duration-300 hover:border-[var(--primary)] hover:text-[var(--primary)] hover:shadow-sm disabled:opacity-40 disabled:hover:border-gray-200 disabled:hover:text-gray-500 disabled:cursor-not-allowed disabled:hover:shadow-none"
               >
-                Next <HiArrowRight size={20} />
+                <span className="hidden sm:inline">Next</span> <HiArrowRight size={16} />
               </button>
 
             </div>
           )}
         </>
       ) : (
-        // Funky Empty State
-        <div className="text-center py-16 border-4 border-black border-dashed max-w-2xl mx-auto bg-gray-50 p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-          <div className="mx-auto w-24 h-24 border-2 border-black bg-white flex items-center justify-center mb-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rotate-3">
-            <HiOutlineEye size={40} className="text-black" />
+        // Elegant Empty State
+        <div className="text-center py-24 px-6 rounded-3xl bg-white border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.02)] max-w-2xl mx-auto flex flex-col items-center my-10">
+          <div className="w-20 h-20 rounded-full bg-[#FCFBFA] flex items-center justify-center mb-8 border border-gray-100 shadow-inner">
+            <FiSearch size={28} className="text-[var(--primary)] opacity-70" />
           </div>
-          <h3 className="text-2xl font-black font-mono uppercase tracking-widest text-black mb-4">Nothing Here!</h3>
-          <p className="text-black font-mono mb-8 max-w-md mx-auto text-sm leading-relaxed">
-            We couldn't find any products for these exact filters. Try poking around somewhere else!
+          
+          <h3 className="text-3xl sm:text-4xl font-serif font-light text-gray-900 mb-4 tracking-tight">
+            No Results Found
+          </h3>
+          
+          <p className="text-gray-500 font-light mb-10 max-w-md mx-auto text-base leading-relaxed">
+            We couldn't find any pieces matching your refined criteria. Please adjust your filters to explore more of our collection.
           </p>
           
           <button 
             onClick={() => router.push(pathname, { scroll: false })}
-            className="px-8 py-3 bg-black text-white font-mono font-bold uppercase tracking-widest border-2 border-black hover:bg-white hover:text-black transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+            className="px-8 py-4 bg-gray-900 text-white text-xs font-bold uppercase tracking-widest rounded-full transition-all duration-300 hover:bg-[var(--primary)] hover:shadow-xl hover:shadow-[var(--primary)]/20"
           >
             Clear Filters
           </button>
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ProductCompo
+export default ProductCompo;
