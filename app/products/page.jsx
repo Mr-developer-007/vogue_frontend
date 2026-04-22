@@ -15,7 +15,7 @@ const page = () => {
         <FilterCompo />
     </Suspense> */}
         
-        <div className='w-full min-h-screen container mx-auto'>
+        <div className='w-full min-h-screen container mx-auto pt-10'>
           
       <Suspense fallback={null}>
         <ProductCompo />

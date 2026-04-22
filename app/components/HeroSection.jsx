@@ -99,23 +99,45 @@ const allBanners =[
 
 
 <div className="relative w-full h-[95vh] overflow-hidden bg-black">
-  {/* Dark overlay to make your premium glassmorphism navbar and text pop */}
-  <div className="absolute inset-0 bg-black/30 z-10 pointer-events-none"></div>
+
+<div className="  hidden md:block absolute top-1/2 left-0 z-20 w-full -translate-y-1/2 px-4">
+  <p className=" text-center font-serif text-3xl font-light uppercase tracking-[0.3em] text-gray-900 opacity-80 md:text-5xl lg:text-7xl dark:text-white">
+    the vogue wardrobe
+  </p>
+</div>
+
+  <div className="absolute inset-0 bg-black/40 z-10 pointer-events-none"></div>
+
+
+
 
   <video 
     autoPlay 
     loop 
     muted 
     playsInline 
-    className="absolute top-0 left-0 w-full h-full object-cover z-0"
+    className="absolute top-0 left-0 w-full  z-0 hidden md:block"
   >
-    <source src="https://video.ralphlauren.com/v2/2026/03/20260317-homepage/HP_VIDEO_1440x900_DSK_LOGO.mp4" type="video/mp4" />
+    <source src="/video/video1.mp4" type="video/mp4" />
     <track kind="captions" />
     Your browser does not support the video tag.
   </video>
   
+  <video 
+    autoPlay 
+    loop 
+    muted 
+    playsInline 
+    className="absolute top-0 left-0 w-full  z-0  md:hidden"
+  >
+    <source src="/video/video2.mp4" type="video/mp4" />
+    <track kind="captions" />
+    Your browser does not support the video tag.
+  </video>
+
+
   {/* Hero Content */}
-  <div className="h-full flex flex-col justify-end pb-10  items-center text-white text-center px-4">
+  <div className="h-full  flex flex-col justify-end pb-10  items-center text-white text-center px-4">
    
     <button className=" relative z-20  px-10 py-4 bg-white/10 backdrop-blur-md border border-white/40 hover:bg-white hover:text-black transition-all duration-500 font-bold uppercase tracking-widest text-sm shadow-[0_0_20px_rgba(255,255,255,0.1)]">
       Explore Collection
