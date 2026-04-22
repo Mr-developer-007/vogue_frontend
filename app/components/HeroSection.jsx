@@ -98,7 +98,7 @@ const allBanners =[
 
 
 
-<div className="relative w-full h-[95vh] overflow-hidden bg-black">
+<div className="relative w-full   h-[80vh] md:h-[95vh] overflow-hidden bg-black">
 
 <div className="  hidden md:block absolute top-1/2 left-0 z-20 w-full -translate-y-1/2 px-4">
   <p className=" text-center font-serif text-3xl font-light uppercase tracking-[0.3em] text-gray-900 opacity-80 md:text-5xl lg:text-7xl dark:text-white">
