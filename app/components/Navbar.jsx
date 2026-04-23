@@ -60,8 +60,8 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: 'All T-Shirts', path: '/products' },
-    { name: 'The Journal', path: '/blog' },
+    // { name: 'All T-Shirts', path: '/products' },
+    { name: 'Blogs', path: '/blog' },
     { name: 'Contact', path: '/contact' },
   ];
 
@@ -114,7 +114,7 @@ const Navbar = () => {
               <img 
                 src="/logo.webp" 
                 alt="Brand Logo" 
-                className={`h-10 lg:h-12 object-contain cursor-pointer transition-all duration-500 ${logoClass}`} 
+                className={`  h-8 lg:h-10  object-contain cursor-pointer transition-all duration-500 ${logoClass}`} 
               />
             </Link>
           </div>
@@ -177,7 +177,7 @@ const Navbar = () => {
             ))}
           </nav>
 
-          {/* User Actions - Desktop */}
+     
           <div className={`hidden lg:flex justify-end items-center space-x-6 ${textColorClass} opacity-90`}>
             <button onClick={() => setSearchToggle(true)} className={`${hoverColorClass} hover:scale-110 transition-all duration-300`}>
               <HiOutlineSearch size={22} strokeWidth={1.5} />
@@ -199,7 +199,6 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Mobile/Tab Actions */}
           <div className={`flex justify-end lg:hidden ${textColorClass} space-x-4 opacity-90`}>
              <button onClick={() => setSearchToggle(true)} className={`${hoverColorClass} transition-colors`}>
               <HiOutlineSearch size={24} strokeWidth={1.5} />

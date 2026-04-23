@@ -11,7 +11,8 @@ import {
   FaCcVisa,
   FaCcMastercard,
   FaCcPaypal,
-  FaCcApplePay
+  FaCcApplePay,
+  FaYoutube
 } from "react-icons/fa";
 import { HiArrowRight } from "react-icons/hi";
 import { useSelector } from 'react-redux';
@@ -47,7 +48,7 @@ const Footer = () => {
             {/* Elegant Social Icons */}
             <div className="flex gap-6 items-center">
               <SocialIcon href="#" icon={<FaInstagram size={18} />} />
-              <SocialIcon href="#" icon={<FaTiktok size={18} />} />
+              <SocialIcon href="#" icon={<FaYoutube size={18} />} />
               <SocialIcon href="#" icon={<FaTwitter size={18} />} />
               <SocialIcon href="#" icon={<FaFacebookF size={18} />} />
             </div>

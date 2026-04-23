@@ -1,6 +1,5 @@
 'use client';
 
-import axios from 'axios';
 import React, { useState } from 'react';
 import { 
   FaPhoneAlt, 
@@ -9,61 +8,16 @@ import {
   FaWhatsapp, 
   FaInstagram, 
   FaFacebookF,
-  FaPaperPlane,
   FaChevronDown,
   FaChevronUp
 } from 'react-icons/fa';
-import { base_url } from '../components/urls';
-import { toast } from 'react-toastify';
 
 const ContactPage = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
-  });
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-
   // FAQ State
   const [openFaq, setOpenFaq] = useState(null);
 
   const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? null : index);
-  };
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit =  async(e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    // Simulate API call
-    // setTimeout(() => {
-    //   setIsSubmitting(false);
-    //   setSubmitted(true);
-    //   setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-    // }, 1500);
-try {
-  const response = await axios.post(`${base_url}/contact/add`,formData)
-  const data = await response.data;
-  if(data.success){
-    toast.success(data.message)
-    setSubmitted(true);
-    setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-  }
-  
-} catch (error) {
-  toast.error(error.response.data.message)
-}finally{
-   setIsSubmitting(false);
-}
-
-
   };
 
   const faqs = [
@@ -83,183 +37,94 @@ try {
         </p>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 mb-20">
-        <div className="bg-white rounded-xl shadow-xl overflow-hidden flex flex-col lg:flex-row border border-stone-200">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 mb-20">
+        
+        {/* --- Contact Info Card --- */}
+        <div className="bg-stone-900 text-stone-300 rounded-xl shadow-xl overflow-hidden relative border border-stone-800">
+          <div className="absolute top-0 right-0 -mr-10 -mt-10 w-64 h-64 bg-black rounded-full opacity-30 blur-3xl pointer-events-none"></div>
           
-          {/* --- LEFT: Contact Info --- */}
-          <div className="lg:w-2/5 bg-stone-900 text-stone-300 p-10 flex flex-col justify-between relative overflow-hidden">
-          
-            <div className="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-black rounded-full opacity-20 blur-3xl"></div>
-            
-            <div>
-              <h3 className="text-2xl font-serif text-white mb-8">Contact Information</h3>
+          <div className="p-10 md:p-14">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 relative z-10">
               
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="bg-black p-3 rounded-lg text-white shrink-0">
-                    <FaPhoneAlt />
-                  </div>
-                  <div>
-                    <p className="text-sm text-stone-400 uppercase tracking-wider mb-1">Phone</p>
-                    <p className="text-white hover:text-indigo-400 transition-colors">+91 98765 43210</p>
-                    <p className="text-white hover:text-indigo-400 transition-colors">+91 12345 67890</p>
-                  </div>
+              {/* Phone Info */}
+              <div className="flex flex-col items-center text-center gap-4">
+                <div className="bg-black p-4 rounded-full text-white shadow-lg">
+                  <FaPhoneAlt size={24} />
                 </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="bg-black p-3 rounded-lg text-white shrink-0">
-                    <FaEnvelope />
-                  </div>
-                  <div>
-                    <p className="text-sm text-stone-400 uppercase tracking-wider mb-1">Email</p>
-                    <p className="text-white hover:text-indigo-400 transition-colors">support@traditionalsite.com</p>
-                    <p className="text-white hover:text-indigo-400 transition-colors">custom@traditionalsite.com</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="bg-black p-3 rounded-lg text-white shrink-0">
-                    <FaMapMarkerAlt />
-                  </div>
-                  <div>
-                    <p className="text-sm text-stone-400 uppercase tracking-wider mb-1">Store Location</p>
-                    <p className="text-white">12, Heritage Market, Civil Lines,</p>
-                    <p className="text-white">Punjab, India - 147001</p>
-                  </div>
+                <div>
+                  <p className="text-sm text-stone-400 uppercase tracking-wider mb-2 font-medium">Phone</p>
+                  <p className="text-white hover:text-indigo-400 transition-colors text-lg">+91 98765 43210</p>
+                  <p className="text-white hover:text-indigo-400 transition-colors text-lg">+91 12345 67890</p>
                 </div>
               </div>
+
+              {/* Email Info */}
+              <div className="flex flex-col items-center text-center gap-4 md:border-x md:border-stone-800 px-4">
+                <div className="bg-black p-4 rounded-full text-white shadow-lg">
+                  <FaEnvelope size={24} />
+                </div>
+                <div>
+                  <p className="text-sm text-stone-400 uppercase tracking-wider mb-2 font-medium">Email</p>
+                  <p className="text-white hover:text-indigo-400 transition-colors text-lg">support@traditionalsite.com</p>
+                  <p className="text-white hover:text-indigo-400 transition-colors text-lg">custom@traditionalsite.com</p>
+                </div>
+              </div>
+
+              {/* Location Info */}
+              <div className="flex flex-col items-center text-center gap-4">
+                <div className="bg-black p-4 rounded-full text-white shadow-lg">
+                  <FaMapMarkerAlt size={24} />
+                </div>
+                <div>
+                  <p className="text-sm text-stone-400 uppercase tracking-wider mb-2 font-medium">Store Location</p>
+                  <p className="text-white text-lg">12, Heritage Market, Civil Lines,</p>
+                  <p className="text-white text-lg">Punjab, India - 147001</p>
+                </div>
+              </div>
+
             </div>
 
-            <div className="mt-12">
-              <p className="text-sm text-stone-400 mb-4">Connect with us:</p>
-              <div className="flex gap-4">
-                <a href="#" className="w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-black hover:text-white transition-all text-white"><FaInstagram /></a>
-                <a href="#" className="w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-black hover:text-white transition-all text-white"><FaFacebookF /></a>
-                <a href="#" className="w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-black hover:text-white transition-all text-white"><FaWhatsapp /></a>
+            {/* Social Links */}
+            <div className="mt-14 pt-8 border-t border-stone-800 flex flex-col items-center relative z-10">
+              <p className="text-sm text-stone-400 mb-6 uppercase tracking-wider font-medium">Connect with us on social media</p>
+              <div className="flex gap-6">
+                <a href="#" className="w-12 h-12 rounded-full bg-black flex items-center justify-center hover:bg-white hover:text-black transition-all text-white shadow-lg">
+                  <FaInstagram size={20} />
+                </a>
+                <a href="#" className="w-12 h-12 rounded-full bg-black flex items-center justify-center hover:bg-white hover:text-black transition-all text-white shadow-lg">
+                  <FaFacebookF size={20} />
+                </a>
+                <a href="#" className="w-12 h-12 rounded-full bg-black flex items-center justify-center hover:bg-white hover:text-black transition-all text-white shadow-lg">
+                  <FaWhatsapp size={20} />
+                </a>
               </div>
             </div>
-          </div>
-
-          {/* --- RIGHT: Contact Form --- */}
-          <div className="lg:w-3/5 p-10 bg-white">
-            {submitted ? (
-              <div className="h-full flex flex-col items-center justify-center text-center animate-fadeIn">
-                <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-6">
-                  <FaPaperPlane size={30} />
-                </div>
-                <h3 className="text-2xl font-serif text-stone-800 mb-2">Message Sent Successfully!</h3>
-                <p className="text-stone-500 max-w-sm">Thank you for reaching out. Our team will get back to you within 24 hours.</p>
-                <button 
-                  onClick={() => setSubmitted(false)}
-                  className="mt-8 text-indigo-500 font-semibold hover:underline"
-                >
-                  Send another message
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-stone-700 mb-2">Your Name</label>
-                    <input 
-                      type="text" 
-                      name="name"
-                      required
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg bg-stone-50 border border-stone-200 focus:border-indigo-900 focus:ring-1 focus:ring-indigo-900 outline-none transition-all"
-                      placeholder="John Doe"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-stone-700 mb-2">Phone Number</label>
-                    <input 
-                      type="tel" 
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg bg-stone-50 border border-stone-200 focus:border-indigo-900 focus:ring-1 focus:ring-indigo-900 outline-none transition-all"
-                      placeholder="+91 98765..."
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-2">Email Address</label>
-                  <input 
-                    type="email" 
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg bg-stone-50 border border-stone-200 focus:border-indigo-900 focus:ring-1 focus:ring-indigo-900 outline-none transition-all"
-                    placeholder="you@example.com"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-2">Select Subject</label>
-                  <div className="relative">
-                    <select 
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg bg-stone-50 border border-stone-200 focus:border-indigo-900 focus:ring-1 focus:ring-indigo-900 outline-none appearance-none transition-all"
-                    >
-                      <option value="">Choose a topic</option>
-                      <option value="Order Status">Order Status</option>
-                      <option value="Custom Order">Custom Order Inquiry</option>
-                      <option value="Returns">Returns & Exchanges</option>
-                      <option value="Other">Other</option>
-                    </select>
-                    <FaChevronDown className="absolute right-4 top-4 text-stone-400 pointer-events-none" />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-2">Message</label>
-                  <textarea 
-                    name="message"
-                    required
-                    rows="4"
-                    value={formData.message}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg bg-stone-50 border border-stone-200 focus:border-indigo-900 focus:ring-1 focus:ring-indigo-900 outline-none transition-all resize-none"
-                    placeholder="How can we help you today?"
-                  ></textarea>
-                </div>
-
-                <button 
-                  type="submit" 
-                  disabled={isSubmitting}
-                  className="w-full bg-black text-white font-bold py-3 rounded-lg hover:bg-indigo-800 transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-900/20 disabled:opacity-70"
-                >
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
-                </button>
-              </form>
-            )}
           </div>
         </div>
 
-      
-        <div className="max-w-3xl mx-auto mt-20">
-          <h2 className="text-3xl font-serif font-bold text-center text-indigo-900 mb-8">Frequently Asked Questions</h2>
+        {/* --- FAQ Section --- */}
+        <div className="max-w-3xl mx-auto mt-24">
+          <h2 className="text-3xl md:text-4xl font-serif font-bold text-center text-stone-900 mb-10">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="bg-white border border-stone-200 rounded-lg overflow-hidden">
+              <div key={index} className="bg-white border border-stone-200 rounded-lg shadow-sm overflow-hidden">
                 <button 
                   onClick={() => toggleFaq(index)}
-                  className="w-full flex justify-between items-center p-5 text-left bg-stone-50 hover:bg-white transition-colors"
+                  className="w-full flex justify-between items-center p-6 text-left bg-white hover:bg-stone-50 transition-colors"
                 >
-                  <span className="font-medium text-stone-800">{faq.question}</span>
-                  {openFaq === index ? <FaChevronUp className="text-indigo-900"/> : <FaChevronDown className="text-stone-400"/>}
+                  <span className="font-medium text-stone-800 text-lg pr-4">{faq.question}</span>
+                  {openFaq === index ? (
+                    <FaChevronUp className="text-indigo-900 flex-shrink-0" size={18}/>
+                  ) : (
+                    <FaChevronDown className="text-stone-400 flex-shrink-0" size={18}/>
+                  )}
                 </button>
                 <div 
                   className={`transition-all duration-300 ease-in-out overflow-hidden ${
                     openFaq === index ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'
                   }`}
                 >
-                  <div className="p-5 text-stone-600 text-sm leading-relaxed border-t border-stone-100">
+                  <div className="p-6 pt-0 text-stone-600 leading-relaxed border-t border-stone-100 mt-2">
                     {faq.answer}
                   </div>
                 </div>
@@ -270,9 +135,8 @@ try {
 
       </div>
 
- 
+      {/* --- Map Section --- */}
       <div className="w-full h-96 bg-stone-200 relative grayscale">
-     
         <img 
           src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=1600" 
           alt="Map Location" 
@@ -289,4 +153,4 @@ try {
   )
 }
 
-export default ContactPage
+export default ContactPage;
