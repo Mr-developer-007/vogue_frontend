@@ -32,8 +32,8 @@ export default function ProductCart({ product }) {
       <article className="relative bg-white rounded-3xl overflow-hidden transition-all duration-300 shadow-sm  border border-gray-100 flex flex-col h-full">
         
         {/* --- Image Section --- */}
-        <div className="relative w-full aspect-[4/5] bg-[#FBFBFA] rounded-t-3xl overflow-hidden">
-          <img src={imgPath} alt={product?.title} loading="lazy" className="w-full h-full object-contain p-8 mix-blend-multiply transition-transform duration-500 " />
+        <div className="relative w-full  bg-[#FBFBFA] rounded-t-3xl overflow-hidden">
+          <img src={imgPath} alt={product?.title} loading="lazy" className="w-full h-[350px] object-fit  mix-blend-multiply transition-transform duration-500 " />
           
           {discount > 0 && (
             <span className="absolute top-4 left-4 bg-[var(--primary)] text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-md uppercase">
