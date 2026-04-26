@@ -32,7 +32,7 @@ const Footer = () => {
             
             {/* Logo - Inverted for Dark Background */}
             <Link href="/" className="inline-block opacity-90 hover:opacity-100 transition-opacity duration-300 mb-6">
-               <Image 
+               <img 
                 src="/logo.webp" 
                 alt="Brand Logo" 
                 width={160} 

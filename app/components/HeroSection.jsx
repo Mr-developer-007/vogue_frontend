@@ -136,7 +136,7 @@ const allBanners =[
   <div className="h-full  flex flex-col justify-end pb-10  items-center text-white text-center px-4">
    
     <Link href={"/products"} className=" relative z-20  px-10 py-4 bg-white/10 backdrop-blur-md border border-white/40 hover:bg-white hover:text-black transition-all duration-500 font-bold uppercase tracking-widest text-sm shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-      Explore Collection
+      Explore Products
     </Link>
   </div>
 </div>

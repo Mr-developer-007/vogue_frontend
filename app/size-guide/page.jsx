@@ -5,13 +5,13 @@ import { HiOutlineScale, HiOutlineScissors, HiOutlineUser } from 'react-icons/hi
 const SizeGuide = () => {
   const [unit, setUnit] = useState('in') // 'in' or 'cm'
 
-  // Standard T-shirt sizing data (in inches)
+  // Sap Matty sizing data (in inches)
   const sizeData = [
-    { size: 'S', chest: 38, length: 28, sleeve: 8 },
-    { size: 'M', chest: 41, length: 29, sleeve: 8.5 },
-    { size: 'L', chest: 44, length: 30, sleeve: 9 },
-    { size: 'XL', chest: 48, length: 31, sleeve: 9.5 },
-    { size: '2XL', chest: 52, length: 32, sleeve: 10 },
+    { size: 'M', chest: 38, width: 19, length: 27 },
+    { size: 'L', chest: 40, width: 20, length: 28 },
+    { size: 'XL', chest: 42, width: 21, length: 29 },
+    { size: 'XXL', chest: 44, width: 22, length: 30 },
+    { size: 'XXXL', chest: 46, width: 23, length: 31 },
   ]
 
   // Helper function to convert inches to cm if needed
@@ -29,7 +29,7 @@ const SizeGuide = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Size Guide
+            Sap Matty | Size Guide
           </h1>
           <p className="text-gray-500">
             Find your perfect fit. Measurements are taken with the garment laying flat.
@@ -69,8 +69,8 @@ const SizeGuide = () => {
               <tr className="bg-gray-50 border-b border-gray-200">
                 <th className="p-5 text-sm font-semibold text-gray-600 uppercase tracking-wider">Size</th>
                 <th className="p-5 text-sm font-semibold text-gray-600 uppercase tracking-wider">Chest</th>
+                <th className="p-5 text-sm font-semibold text-gray-600 uppercase tracking-wider">Width</th>
                 <th className="p-5 text-sm font-semibold text-gray-600 uppercase tracking-wider">Length</th>
-                <th className="p-5 text-sm font-semibold text-gray-600 uppercase tracking-wider">Sleeve</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -84,10 +84,10 @@ const SizeGuide = () => {
                     {displayValue(row.chest)} {unit}
                   </td>
                   <td className="p-5 text-gray-600">
-                    {displayValue(row.length)} {unit}
+                    {displayValue(row.width)} {unit}
                   </td>
                   <td className="p-5 text-gray-600">
-                    {displayValue(row.sleeve)} {unit}
+                    {displayValue(row.length)} {unit}
                   </td>
                 </tr>
               ))}
@@ -119,9 +119,9 @@ const SizeGuide = () => {
             <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 mb-5">
               <HiOutlineScale size={24} />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">2. Length</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">2. Width</h3>
             <p className="text-gray-600 text-sm leading-relaxed">
-              Measure from the high point of your shoulder down to the bottom hem of the shirt.
+              Measure straight across the chest from armpit to armpit while the garment is laying flat.
             </p>
           </div>
 
@@ -130,9 +130,9 @@ const SizeGuide = () => {
             <div className="w-12 h-12 rounded-full bg-yellow-50 flex items-center justify-center text-yellow-600 mb-5">
               <HiOutlineScissors size={24} />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">3. Sleeve</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">3. Length</h3>
             <p className="text-gray-600 text-sm leading-relaxed">
-              Measure from the center back of your neck, across the shoulder, and down to the end of the sleeve.
+              Measure from the high point of your shoulder down to the bottom hem of the shirt.
             </p>
           </div>
         </div>
