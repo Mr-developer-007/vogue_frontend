@@ -60,7 +60,7 @@ const OurCollection = () => {
               {allCollection.map((item) => (
                 <Link
                   key={item._id}
-                  href={`/${item.slug || item._id}`} // Fixed dynamic href interpolation
+                  href={`/collection/${item.slug || item._id}`} // Fixed dynamic href interpolation
                   className="group block w-full relative overflow-hidden rounded-sm bg-stone-100"
                 >
                   <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] md:aspect-[4/5] overflow-hidden">

@@ -19,9 +19,8 @@ const Navbar = () => {
   
   const path = usePathname();
   const { categories, loading } = useSelector(state => state.category);
-    const wishlist = useSelector(state => state.wishlist.items);
+  const wishlist = useSelector(state => state.wishlist.items);
    
-
   const dispatch = useDispatch();
 
   const toggleMenu = () => {
@@ -60,7 +59,6 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    // { name: 'All T-Shirts', path: '/products' },
     { name: 'Blogs', path: '/blog' },
     { name: 'Contact', path: '/contact' },
   ];
@@ -90,16 +88,12 @@ const Navbar = () => {
       
       {searchToggle &&  <SearchSection onClose={() => setSearchToggle(false)} />}
       
-      {/* Top Banner - Keeps the dark premium feel globally */}
-      {/* <div className="bg-gradient-to-r from-gray-950 via-black to-gray-950 text-white/90 text-[10px] lg:text-xs py-2.5 px-2 text-center tracking-[0.25em] font-medium uppercase shadow-sm whitespace-nowrap overflow-hidden text-ellipsis border-b border-white/5">
-        Free Shipping on all pre-paid orders
-      </div> */}
+      <div className="container mx-auto px-4">
+        {/* Relative container ensures absolute positioned desktop elements stay aligned to container bounds */}
+        <div className="flex justify-between items-center h-20 relative w-full">
 
-      <div className="container mx-auto px-4 ">
-        <div className="flex justify-between items-center h-20">
-
-          {/* Mobile Menu Toggle */}
-          <div className="flex items-center lg:hidden">
+          {/* Mobile Menu Toggle (Only visible on mobile) */}
+          <div className="flex items-center lg:hidden z-10">
             <button 
               onClick={toggleMenu} 
               className={`${textColorClass} ${hoverColorClass} transition-colors duration-300 text-3xl focus:outline-none`}
@@ -108,19 +102,32 @@ const Navbar = () => {
             </button>
           </div>
 
-          {/* Logo Section */}
-          <div className="lg:flex-none flex justify-center lg:justify-start">
+          {/* LOGO SECTION 
+            Mobile: Normal flex item (centers nicely due to flex justify-between)
+            Desktop: Absolute positioned to swap places seamlessly
+          */}
+          <div className={`
+            flex items-center justify-center lg:justify-start z-50 transition-all duration-700 ease-in-out
+            lg:absolute lg:top-1/2 lg:-translate-y-1/2 
+            ${isScrolled ? 'lg:left-1/2 lg:-translate-x-1/2 scale-110' : 'lg:left-0 lg:translate-x-0'}
+          `}>
             <Link href="/" onClick={() => setIsMenuOpen(false)}>
               <img 
                 src="/logo.webp" 
                 alt="Brand Logo" 
-                className={`  h-8 lg:h-10  object-contain cursor-pointer transition-all duration-500 ${logoClass}`} 
+                className={`h-8 lg:h-10 object-contain cursor-pointer transition-all duration-500 ${logoClass}`} 
               />
             </Link>
           </div>
 
-          {/* Navigation Links - Desktop */}
-          <nav className="hidden lg:flex items-center justify-center space-x-10">
+          {/* NAVIGATION LINKS - DESKTOP 
+            Desktop: Absolute positioned to animate left when scrolled
+          */}
+          <nav className={`
+            hidden lg:flex items-center space-x-10 
+            absolute top-1/2 -translate-y-1/2 transition-all duration-700 ease-in-out z-40
+            ${isScrolled ? 'left-0 translate-x-0' : 'left-1/2 -translate-x-1/2'}
+          `}>
             
             <Link href="/" className={`${textColorClass} ${hoverColorClass} font-bold text-[13px] uppercase tracking-widest transition-all duration-300 relative group whitespace-nowrap opacity-80 hover:opacity-100`}>
               Home
@@ -134,7 +141,7 @@ const Navbar = () => {
               </span>
               <span className="absolute -bottom-2 left-1/2 w-0 h-[2px] bg-indigo-500 transition-all duration-300 group-hover:w-full group-hover:left-0 rounded-full shadow-[0_0_10px_rgba(99,102,241,0.5)]"></span>
 
-              {/* Glass Dropdown Box (Always white/glass so text is visible) */}
+              {/* Glass Dropdown Box */}
               <div className="absolute top-full -left-4 pt-6 w-auto min-w-[16rem] opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-out z-50">
                 <div className="bg-white/90 backdrop-blur-2xl border border-gray-200 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] overflow-hidden">
                   <div className="h-1 w-full bg-gradient-to-r from-indigo-500 to-purple-500"></div>
@@ -177,15 +184,17 @@ const Navbar = () => {
             ))}
           </nav>
 
-     
-          <div className={`hidden lg:flex justify-end items-center space-x-6 ${textColorClass} opacity-90`}>
+          {/* ICONS - DESKTOP (Always positioned strictly to the right) */}
+          <div className={`
+            hidden lg:flex justify-end items-center space-x-6 z-40 
+            absolute right-0 top-1/2 -translate-y-1/2 ${textColorClass} opacity-90
+          `}>
             <button onClick={() => setSearchToggle(true)} className={`${hoverColorClass} hover:scale-110 transition-all duration-300`}>
               <HiOutlineSearch size={22} strokeWidth={1.5} />
             </button>
             <Link href={user ? "/wishlist" : "/login"} className={`${hoverColorClass} relative hover:scale-110 transition-all duration-300`}>
               <HiOutlineHeart size={22} strokeWidth={1.5} />
               { wishlist.length >0 &&
-               
                  <span className="absolute -top-1.5 -right-1.5 bg-purple-500 text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-black shadow-[0_0_10px_rgba(99,102,241,0.8)]">
                 {wishlist.length}
                 </span>
@@ -199,7 +208,8 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <div className={`flex justify-end lg:hidden ${textColorClass} space-x-4 opacity-90`}>
+          {/* ICONS - MOBILE (Normal flex flow item) */}
+          <div className={`flex justify-end lg:hidden z-10 ${textColorClass} space-x-4 opacity-90`}>
              <button onClick={() => setSearchToggle(true)} className={`${hoverColorClass} transition-colors`}>
               <HiOutlineSearch size={24} strokeWidth={1.5} />
              </button>
@@ -214,7 +224,7 @@ const Navbar = () => {
         </div>
       </div>
 
-     {/* Mobile Menu (Always Solid/Glass Light so text is legible) */}
+     {/* Mobile Menu Dropdown... (Rest of your component remains identically intact) */}
      <div className={`lg:hidden absolute w-full bg-white/95 backdrop-blur-2xl border-b border-gray-200 shadow-[0_8px_32px_rgba(0,0,0,0.1)] overflow-hidden transition-all duration-500 ease-in-out origin-top ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}`}>
         <div className="px-6 py-8 flex flex-col h-[calc(100vh-100px)] overflow-y-auto">
           

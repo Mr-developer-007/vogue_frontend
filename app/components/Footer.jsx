@@ -47,10 +47,10 @@ const Footer = () => {
 
             {/* Elegant Social Icons */}
             <div className="flex gap-6 items-center">
-              <SocialIcon href="#" icon={<FaInstagram size={18} />} />
-              <SocialIcon href="#" icon={<FaYoutube size={18} />} />
-              <SocialIcon href="#" icon={<FaTwitter size={18} />} />
-              <SocialIcon href="#" icon={<FaFacebookF size={18} />} />
+              <SocialIcon href="https://instagram.com/thevoguewardrobe" icon={<FaInstagram size={18} />} />
+              <SocialIcon href="https://youtube.com/@voguewardrobeofficial" icon={<FaYoutube size={18} />} />
+              <SocialIcon href="https://pinterest.com/thevoguewardrobe" icon={<FaTwitter size={18} />} />
+              <SocialIcon href="https://facebook.com/thevoguewardrobe" icon={<FaFacebookF size={18} />} />
             </div>
           </div>
 
@@ -114,7 +114,7 @@ const Footer = () => {
             <div className="text-[11px] font-medium tracking-[0.1em] text-stone-500 uppercase space-y-2">
               <p>Creative District, Sector 17, CH</p>
               <a href="mailto:support@yourbrand.com" className="block hover:text-white transition-colors duration-300">
-                support@yourbrand.com
+                thevoguewardrobeofficial@gmail.com
               </a>
             </div>
           </div>
