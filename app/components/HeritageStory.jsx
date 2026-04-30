@@ -28,7 +28,7 @@ const BrandStory = () => {
                 <img
                   src="/siteimages/t1.webp"
                   alt="Vogue Wardrobe Premium Streetwear"
-                  className="object-cover  object-top-left  w-full h-full transition-transform duration-1000 hover:scale-110"
+                  className="object-cover w-full h-full transition-transform duration-1000 hover:scale-110"
                 />
               </div>
 

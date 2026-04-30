@@ -73,8 +73,18 @@ return
     key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
     amount: data.order.amount,
     currency: "INR",
-    name: "Your Store",
+    name: "Vogue Wardrobe",
+    image: "/logo.webp",
+    description: "Premium Fashion Collection ✨",
     order_id: data.order.id,
+     notes: {
+    brand: "Vogue Wardrobe",
+    category: "Fashion",
+  },
+
+  theme: {
+    color: "#000000",
+  },
 
     handler: async function (response) {
       const verifyresponse =  await axios.post(`${base_url}/order/verify-payment`, {
