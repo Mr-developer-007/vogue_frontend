@@ -55,7 +55,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* 2. Navigation Links (Spans 4 columns on desktop) */}
+         l
           <div className="md:col-span-4 flex gap-12 sm:gap-20">
             {/* Shop Links */}
             <div>

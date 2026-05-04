@@ -10,8 +10,8 @@ const SizeGuide = () => {
     { size: 'M', chest: 38, width: 19, length: 27 },
     { size: 'L', chest: 40, width: 20, length: 28 },
     { size: 'XL', chest: 42, width: 21, length: 29 },
-    { size: 'XXL', chest: 44, width: 22, length: 30 },
-    { size: 'XXXL', chest: 46, width: 23, length: 31 },
+    // { size: 'XXL', chest: 44, width: 22, length: 30 },
+    // { size: 'XXXL', chest: 46, width: 23, length: 31 },
   ]
 
   // Helper function to convert inches to cm if needed
