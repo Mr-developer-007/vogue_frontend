@@ -25,7 +25,7 @@ const Footer = () => {
     <footer className="bg-[#0a0a0a] text-stone-400 font-sans border-t border-white/10 selection:bg-stone-700 selection:text-white">
       
       {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 py-20">
+      <div className="container mx-auto px-4 lg:px-8 py-20">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16">
           
           {/* 1. Brand & Bio (Spans 4 columns on desktop) */}
@@ -55,7 +55,7 @@ const Footer = () => {
             </div>
           </div>
 
-         l
+         
           <div className="md:col-span-4 flex gap-12 sm:gap-20">
             {/* Shop Links */}
             <div>
