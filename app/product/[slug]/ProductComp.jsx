@@ -116,6 +116,16 @@ export default function ProductComp({ slug }) {
       const data = await response.data;
       if (data.success) {
         toast.success(data.message);
+       
+  if (typeof window !== "undefined" && window.fbq) {
+    window.fbq("track", "AddToCart", {
+  content_ids: [productData._id],
+  content_name: productData.title,
+  value: productData.sellingPrice,
+  currency: "INR",
+});
+  }
+
         router.push("/cart");
       } else {
         toast.error(data.message);
