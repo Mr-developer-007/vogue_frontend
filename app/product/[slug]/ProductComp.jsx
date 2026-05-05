@@ -351,7 +351,7 @@ export default function ProductComp({ slug }) {
               <button
                 disabled={productData.quantity <= 0}
                 onClick={handleAddToCart}
-                className={`flex-1 h-14 flex items-center justify-center gap-3 text-sm font-bold uppercase tracking-widest rounded-full transition-all duration-300
+                className={`flex-1  py-4 md:h-14 flex items-center justify-center gap-3 text-sm font-bold uppercase tracking-widest rounded-full transition-all duration-300
                   ${productData.quantity > 0
                     ? 'bg-gray-900 text-white hover:bg-[var(--primary)] hover:shadow-xl hover:shadow-[var(--primary)]/20'
                     : 'bg-gray-100 text-gray-400 cursor-not-allowed'}`}

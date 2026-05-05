@@ -41,7 +41,8 @@ const CartSummary = ({ setCheckoutData, checkoutData, handelCheckout, handelAddD
           ...prev,
           orderItems: orderItemsPayload,
           itemsPrice: data.items.totalPrice,
-          totalPrice: data.items.totalPrice + 99 // Shipping logic
+          totalPrice: data.items.totalPrice 
+          // + 99 // Shipping logic
         }));
       }
     } catch (error) {

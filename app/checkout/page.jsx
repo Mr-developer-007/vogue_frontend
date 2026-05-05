@@ -109,7 +109,7 @@ return
       quantity: item.quantity
     })),
     content_type: "product",
-    value: verifyData.order.totalPrice, // ⚠️ divide if Razorpay amount
+    value: verifyData.order.totalPrice, 
     currency: "INR",
   });
 }
