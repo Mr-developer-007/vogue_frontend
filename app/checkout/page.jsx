@@ -93,9 +93,26 @@ return
       });
 
       const verifyData = await verifyresponse.data;
-      console.log(verifyData)
-      if(data.success){
+     console.log(verifyData,"purchage")
+      if(verifyData.success){
         await axios.delete(`${base_url}/cart/delete`)
+
+
+
+  if (typeof window !== "undefined" && window.fbq) {
+  window.fbq("track", "Purchase", {
+    content_ids: verifyData.order.orderItems.map(
+                (item) => item.product
+              ), 
+    contents: verifyData.order.orderItems.map(item => ({
+      id: item.product,
+      quantity: item.quantity
+    })),
+    content_type: "product",
+    value: verifyData.order.totalPrice, // ⚠️ divide if Razorpay amount
+    currency: "INR",
+  });
+}
 router.push("/");
       }
       // 
