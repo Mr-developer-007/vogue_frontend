@@ -9,6 +9,14 @@ const nextConfig = {
       },
     ],
   },
+   async rewrites() {
+    return [
+      {
+        source: "/product-feed.xml",
+        destination: "https://api.thevoguewardrobe.com/product-feed.xml",
+      },
+    ];
+  },
 };
 
 

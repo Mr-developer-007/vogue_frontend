@@ -113,10 +113,12 @@ return
     currency: "INR",
   });
 }
+
 router.push("/");
+
       }
-      // 
-    },
+     
+    }
   };
     const razor = new (window).Razorpay(options);
   razor.open();
