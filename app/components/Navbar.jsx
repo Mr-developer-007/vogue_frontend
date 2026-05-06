@@ -215,9 +215,9 @@ const Navbar = () => {
              </button>
              <Link href={user ? "/cart" : "/login"} className={`relative ${hoverColorClass} transition-colors`}>
                 <HiOutlineShoppingBag size={24} strokeWidth={1.5} />
-                <span className="absolute -top-1.5 -right-1.5 bg-indigo-500 text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-black shadow-[0_0_10px_rgba(99,102,241,0.8)]">
+                {/* <span className="absolute -top-1.5 -right-1.5 bg-indigo-500 text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-black shadow-[0_0_10px_rgba(99,102,241,0.8)]">
                   2
-                </span>
+                </span> */}
              </Link>
           </div>
 

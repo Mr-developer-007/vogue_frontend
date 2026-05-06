@@ -202,7 +202,7 @@ export default function ProductComp({ slug }) {
                       <img
                         src={`${img_url}/${img}`}
                         alt={productData.title}
-                        className="w-full h-full object-contain p-8 mix-blend-multiply"
+                        className="w-full h-full object-contain md:p-8 mix-blend-multiply"
                         onError={(e) => { e.target.src = "https://via.placeholder.com/800x1000?text=No+Image"; }}
                       />
                     </div>

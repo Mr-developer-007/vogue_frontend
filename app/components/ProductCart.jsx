@@ -33,7 +33,7 @@ export default function ProductCart({ product }) {
         
         {/* --- Image Section --- */}
         <div className="relative w-full  bg-[#FBFBFA] rounded-t-3xl overflow-hidden">
-          <img src={imgPath} alt={product?.title} loading="lazy" className="w-full h-[350px] object-fit  mix-blend-multiply transition-transform duration-500 " />
+          <img src={imgPath} alt={product?.title} loading="lazy" className="w-full md:h-[350px] object-fit  mix-blend-multiply transition-transform duration-500 " />
           
           {discount > 0 && (
             <span className="absolute top-4 left-4 bg-[var(--primary)] text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-md uppercase">
