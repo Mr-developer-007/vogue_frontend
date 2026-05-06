@@ -171,6 +171,20 @@ const CartSummary = ({ setCheckoutData, checkoutData, handelCheckout, handelAddD
           )}
         </div>
 
+
+
+
+
+        <div className="border-t border-gray-200 border-dashed pt-6 flex gap-10  justify-between items-center">
+          <input value={couponCode} onChange={(e)=>setCouponCode(e.target.value)} type="text" placeholder='Coupon code...'  className='w-full px-2 py-1 border border-gray-400 rounded-xl'  />
+          <button onClick={handelAddCouponCode} className='cursor-pointer bg-amber-600 text-white px-3 h-full' >Apply</button>
+        </div>
+
+
+
+
+
+
         <div className="border-t border-gray-200 pt-6 flex justify-between items-end">
           <div>
             <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Total</span>

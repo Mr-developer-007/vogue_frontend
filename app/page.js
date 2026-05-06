@@ -9,6 +9,7 @@ import HeritageStory from "./components/HeritageStory";
 import FeaturesStrip from "./components/FeaturesStrip";
 import VideoReviews from "./components/VideoReviews";
 import BlogSection from "./components/BlogSection";
+import Popup from "./components/Popup";
 
 export default function page() {
   return (
@@ -25,6 +26,7 @@ export default function page() {
 {/* <VideoReviews /> */}
 <BlogSection />
 <HappyClients />
+<Popup />
  </div>
   );
 } 
