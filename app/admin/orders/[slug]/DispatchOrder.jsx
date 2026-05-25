@@ -16,8 +16,9 @@ const handelDispatch = async()=>{
         const data = await response.data;
         console.log(data)
     } catch (error) {
-        
+        console.log(error)
     }
+
 }
 
   return (
@@ -38,7 +39,7 @@ const handelDispatch = async()=>{
               
            
 <div className='text-center'>
-<button onClick={()=>handelDispatch()} className=" cursor-pointer px-6 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium rounded-full shadow-[0_4px_14px_0_rgba(147,51,234,0.39)] hover:shadow-[0_6px_20px_rgba(147,51,234,0.23)] hover:scale-[1.02] transition-all duration-200 ease-in-out active:scale-95">
+<button onClick={handelDispatch} className=" cursor-pointer px-6 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium rounded-full shadow-[0_4px_14px_0_rgba(147,51,234,0.39)] hover:shadow-[0_6px_20px_rgba(147,51,234,0.23)] hover:scale-[1.02] transition-all duration-200 ease-in-out active:scale-95">
   Ready for Dispatch
 </button>
 </div>

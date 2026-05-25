@@ -15,6 +15,7 @@ import {
 import Link from 'next/link'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
+import DispatchOrder from './DispatchOrder'
 
 const OrderCompo = ({ slug }) => {
   const [loading, setLoading] = useState(true)
@@ -427,7 +428,7 @@ try {
                 <FiCreditCard className="text-gray-500" /> Shipment details
               </h2>
             </div>
-            <div className="p-6 text-sm text-gray-600 space-y-3">
+            {/* <div className="p-6 text-sm text-gray-600 space-y-3">
              
              <input type="text" name="" id=""  placeholder='length' />
             <input type="text" name="" id=""  placeholder='breadth' />
@@ -442,7 +443,9 @@ try {
   Ready for Dispatch
 </button>
 </div>
-            </div>
+            </div> */}
+
+            <DispatchOrder orderid={slug} />
           </div>
 
 

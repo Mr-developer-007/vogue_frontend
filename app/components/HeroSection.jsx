@@ -114,19 +114,19 @@ const allBanners =[
     playsInline 
     className="absolute top-0 left-0 w-full  z-0 hidden md:block"
   >
-    <source src="/video/video1.mp4" type="video/mp4" />
+    <source src="/video/video4.mp4" type="video/mp4" />
     <track kind="captions" />
     Your browser does not support the video tag.
   </video>
   
-  <video 
+  <video  
     autoPlay 
     loop 
     muted 
     playsInline 
     className="absolute top-0 left-0 w-full  z-0  md:hidden"
   >
-    <source src="/video/video2.mp4" type="video/mp4" />
+    <source src="/video/video4.mp4" type="video/mp4" />
     <track kind="captions" />
     Your browser does not support the video tag.
   </video>

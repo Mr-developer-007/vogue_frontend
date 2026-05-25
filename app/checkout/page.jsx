@@ -65,6 +65,7 @@ const handelCheckout=async()=>{
 toast.error("Address not found")
 return
     }
+    loadRazorpay()
     const lastData= {...checkoutData,totalPrice: checkoutData.totalPrice - checkoutData.discountPrice}
     const response = await axios.post(`${base_url}/order/create`,lastData)
     const data = await response.data;
@@ -120,6 +121,8 @@ router.push("/");
      
     }
   };
+
+
     const razor = new (window).Razorpay(options);
   razor.open();
   } catch (error) {
@@ -128,7 +131,21 @@ router.push("/");
 }
 
 
+const loadRazorpay = () => {
+  return new Promise((resolve) => {
+    if (window.Razorpay) {
+      resolve(true);
+      return;
+    }
 
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+
+    document.body.appendChild(script);
+  });
+};
   return (
     <div className='flex flex-col  md:flex-row container mx-auto gap-4 p-4 md:p-5 relative'>
 
