@@ -105,7 +105,7 @@ const allBanners =[
   <div className="absolute inset-0 bg-black/40 z-10 pointer-events-none"></div>
 
 
-  <div className=" hidden md:block w-full h-full">
+  <div className="block w-full h-full">
               <img 
                 src={`/banner/desktop/4.webp`} 
                
@@ -127,7 +127,7 @@ const allBanners =[
     Your browser does not support the video tag.
   </video> */}
   
-  <video  
+  {/* <video  
     autoPlay 
     loop 
     muted 
@@ -137,7 +137,7 @@ const allBanners =[
     <source src="/video/video4.mp4" type="video/mp4" />
     <track kind="captions" />
     Your browser does not support the video tag.
-  </video>
+  </video> */}
 
 
   {/* Hero Content */}

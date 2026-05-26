@@ -24,9 +24,9 @@ export default function page() {
 
 <FeaturesStrip />
 {/* <VideoReviews /> */}
-<BlogSection />
+{/* <BlogSection />
 <HappyClients />
-<Popup />
+<Popup /> */}
  </div>
   );
 } 
