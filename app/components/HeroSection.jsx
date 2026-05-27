@@ -98,14 +98,14 @@ const allBanners =[
 
 
 
-<div className="relative w-full   h-[700px] md:h-[750px] overflow-hidden bg-black">
+<div className="relative w-full   h-[700px] md:h-[700px] overflow-hidden bg-black">
 
 
 
   <div className="absolute inset-0 bg-black/40 z-10 pointer-events-none"></div>
 
-
-  <div className="block w-full h-full">
+{/* 
+  <div className=" w-full h-full hidden md:block">
               <img 
                 src={`/banner/desktop/4.webp`} 
                
@@ -113,21 +113,21 @@ const allBanners =[
                 loading="eager"
               />
             
-            </div>
+            </div> */}
 
-  {/* <video 
+  <video 
     autoPlay 
     loop 
     muted 
     playsInline 
     className="absolute top-0 left-0 w-full  z-0 hidden md:block"
   >
-    <source src="/video/video4.mp4" type="video/mp4" />
+    <source src="/video/video1.mp4" type="video/mp4" />
     <track kind="captions" />
     Your browser does not support the video tag.
-  </video> */}
+  </video>
   
-  {/* <video  
+  <video  
     autoPlay 
     loop 
     muted 
@@ -137,7 +137,7 @@ const allBanners =[
     <source src="/video/video4.mp4" type="video/mp4" />
     <track kind="captions" />
     Your browser does not support the video tag.
-  </video> */}
+  </video>
 
 
   {/* Hero Content */}
