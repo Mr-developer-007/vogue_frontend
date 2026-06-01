@@ -110,7 +110,7 @@ const OrderCompo = () => {
                   {order?.trackingid  && <div>
                     
                     <p>Track your order</p>
-                    <p className="text-blue-600">{order?.trackingid}</p>
+                    <a target="_blank" href={`https://shiprocket.co/tracking/${order?.trackingid}`} className="text-blue-600">{order?.trackingid}</a>
                     </div>}
              
                 </div>

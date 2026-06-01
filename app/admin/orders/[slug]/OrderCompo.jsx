@@ -445,8 +445,10 @@ try {
 </div>
             </div> */}
 
+{!order?.trackingid && 
             <DispatchOrder orderid={slug} />
-          </div>
+}
+            </div>
 
 
 

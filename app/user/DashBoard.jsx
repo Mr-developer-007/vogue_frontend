@@ -79,9 +79,9 @@ console.log(user)
          
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
-                { label: 'Total Orders', value: '12', icon: <FiPackage />, color: 'text-blue-600', bg: 'bg-blue-50' },
-                { label: 'Awaiting Delivery', value: '2', icon: <FaClock />, color: 'text-orange-600', bg: 'bg-orange-50' },
-                { label: 'Saved Items', value: '45', icon: <FaHeart />, color: 'text-red-600', bg: 'bg-red-50' },
+                { label: 'Total Orders', value: orders.length, icon: <FiPackage />, color: 'text-blue-600', bg: 'bg-blue-50' },
+                // { label: 'Awaiting Delivery', value: '2', icon: <FaClock />, color: 'text-orange-600', bg: 'bg-orange-50' },
+                // { label: 'Saved Items', value: '45', icon: <FaHeart />, color: 'text-red-600', bg: 'bg-red-50' },
               ].map((stat, i) => (
                 <div key={i} className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center gap-4">
                   <div className={`p-3 rounded-lg ${stat.bg} ${stat.color}`}>{stat.icon}</div>
