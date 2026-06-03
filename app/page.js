@@ -10,6 +10,7 @@ import FeaturesStrip from "./components/FeaturesStrip";
 import VideoReviews from "./components/VideoReviews";
 import BlogSection from "./components/BlogSection";
 import Popup from "./components/Popup";
+import VideoCompo from "./components/VideoCompo";
 
 export default function page() {
   return (
@@ -18,6 +19,7 @@ export default function page() {
 <OurCollection />
 
 <OurProducts />
+<VideoCompo />
 <HeritageStory />
 {/* <Category /> */}
 

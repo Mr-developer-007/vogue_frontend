@@ -26,6 +26,7 @@ import { ImBlogger2 } from "react-icons/im";
 import axios from "axios";
 import { base_url } from "@/app/components/urls";
 import { toast } from "react-toastify";
+import { FaPhotoVideo } from "react-icons/fa";
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -48,6 +49,7 @@ const [isCollapsed,setIsCollapsed]=useState(false)
     { name: "All Products", icon: <RiStore2Line size={22} />, path: "/admin/products" },
     { name: "Create Product", icon: <RiAddCircleLine size={22} />, path: "/admin/products/create" },
     { name: "Orders", icon: <RiShoppingBag3Line size={22} />, path: "/admin/orders" },
+     { name: "Videos", icon: <FaPhotoVideo size={22} />, path: "/admin/video" },
     { name: "Customers", icon: <RiUserHeartLine size={22} />, path: "/admin/customers" },
      { name: "Query", icon: <MdOutlineQueryBuilder size={22} />, path: "/admin/contacts" },
           { name: "Coupon Code", icon: <RiCoupon3Fill size={22} />, path: "/admin/coupon-code" },

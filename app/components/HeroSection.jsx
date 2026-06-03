@@ -1,154 +1,94 @@
 "use client"
 
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
+import React from 'react';
+import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
-import { FaArrowRight } from 'react-icons/fa';
 
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
-import axios from 'axios';
-import { base_url, img_url } from './urls';
 
 const HeroSlider = () => {
-  
-
-const allBanners =[
-  {imagedesktop:"1.webp",
-     imageMobile:"1.webp"},
-  {
-    imagedesktop:"2.webp",
-        imageMobile:"2.webp"
-
-  },
-  {
-    imagedesktop:"3.webp",
-    imageMobile:"3.webp"
-  }
-]
+  const allBanners = ["1.webp", "2.webp", "3.webp"];
 
   return (
-    <div className="w-full  relative overflow-hidden ">
-      {/* <Swiper
-        spaceBetween={0}
-     
-        loop={true}
+    <div className="w-full flex flex-col">
       
-        autoplay={{
-          delay: 4000,
-       
-        }}
-        pagination={{
-          clickable: true,
-        }}
-        modules={[Autoplay, Pagination]}
-        className="w-full h-full"
-      >
-        {allBanners.length >0 && allBanners?.map((slide,index) => (
-          <SwiperSlide key={index} className="relative w-full h-full">
-         
-            <div className=" hidden md:block w-full h-full">
-              <img 
-                src={`/banner/desktop/${slide.imagedesktop}`} 
-               
-                className="w-full h-full"
-                loading="eager"
+      {/* Slider Section */}
+      <div className="w-full relative  hidden md:block md:h-[700px] overflow-hidden">
+        <Swiper
+          spaceBetween={0}
+          loop={true}
+          autoplay={{
+            delay: 4000,
+            disableOnInteraction: false, // Keeps autoplaying after user swipes
+          }}
+          pagination={{
+            clickable: true,
+          }}
+          modules={[Autoplay, Pagination]}
+          className="w-full h-full"
+        >
+          {allBanners.length > 0 && allBanners.map((slide, index) => (
+            <SwiperSlide key={index} className="relative w-full h-full">
+              
+              <Image 
+                src={`/banner/mobile/${slide}`} 
+                alt={`Hero Banner ${index + 1}`}
+                fill
+                priority={index === 0} // Load the first image instantly
+                className=" object-center"
               />
-            
-            </div>
+              
+              {/* Optional: Subtle gradient overlay to ensure pagination/text always pops */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none"></div>
 
-            <div className="  md:hidden absolute inset-0 w-full h-full">
-              <img 
-                src={`/banner/mobile/${slide.imageMobile}`} 
-             
-                className="w-full h-full "
-                loading="eager"
-              />
-             
-            </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
 
-           
-          </SwiperSlide>
-        ))}
-      </Swiper>
+        <style jsx global>{`
+          .swiper-pagination-bullet {
+            background: white;
+            opacity: 0.5;
+            width: 8px;
+            height: 8px;
+            margin: 0 6px !important;
+            transition: all 0.3s ease;
+          }
+          
+          .swiper-pagination-bullet-active {
+            background: white;
+            opacity: 1;
+            width: 28px;
+            border-radius: 4px;
+          }
+          
+          .swiper-pagination {
+            bottom: 24px !important;
+            z-index: 20;
+          }
+        `}</style>
+      </div>
 
-     
-      <style jsx global>{`
-        .swiper-pagination-bullet {
-          background: white;
-          opacity: 0.5;
-          width: 10px;
-          height: 10px;
-          margin: 0 6px !important;
-        }
+      {/* Mobile Video Section */}
+      <div className="relative w-full h-[750px] overflow-hidden bg-neutral-950 md:hidden">
         
-        .swiper-pagination-bullet-active {
-          background: black;
-          opacity: 1;
-          width: 30px;
-          border-radius: 5px;
-        }
+        <div className="absolute inset-0 bg-black/30 z-10 pointer-events-none"></div>
         
-        .swiper-pagination {
-          bottom: 20px !important;
-        }
-      `}</style> */}
-
-
-
-<div className="relative w-full   h-[700px] md:h-[700px] overflow-hidden bg-black">
-
-
-
-  <div className="absolute inset-0 bg-black/40 z-10 pointer-events-none"></div>
-
-{/* 
-  <div className=" w-full h-full hidden md:block">
-              <img 
-                src={`/banner/desktop/4.webp`} 
-               
-                className="w-full h-full"
-                loading="eager"
-              />
-            
-            </div> */}
-
-  <video 
-    autoPlay 
-    loop 
-    muted 
-    playsInline 
-    className="absolute top-0 left-0 w-full  z-0 hidden md:block"
-  >
-    <source src="/video/video1.mp4" type="video/mp4" />
-    <track kind="captions" />
-    Your browser does not support the video tag.
-  </video>
-  
-  <video  
-    autoPlay 
-    loop 
-    muted 
-    playsInline 
-    className="absolute top-0 left-0 w-full  z-0  md:hidden"
-  >
-    <source src="/video/video4.mp4" type="video/mp4" />
-    <track kind="captions" />
-    Your browser does not support the video tag.
-  </video>
-
-
-  {/* Hero Content */}
-  {/* <div className="h-full  flex flex-col justify-end pb-10  items-center text-white text-center px-4">
-   
-    <Link href={"/products"} className=" relative z-20  px-10 py-4 bg-white/10 backdrop-blur-md border border-white/40 hover:bg-white hover:text-black transition-all duration-500 font-bold uppercase tracking-widest text-sm shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-      Explore Products
-    </Link>
-  </div> */}
-</div>
-
+        <video  
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        >
+          <source src="/video/video4.mp4" type="video/mp4" />
+          <track kind="captions" />
+          Your browser does not support the video tag.
+        </video>
+        
+      </div>
 
     </div>
   );
