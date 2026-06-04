@@ -115,7 +115,7 @@ const CartSummary = ({ setCheckoutData, checkoutData, handelCheckout, handelAddD
             {/* Product Image */}
             <div className="relative h-24 w-20 flex-shrink-0 rounded-xl bg-[#FBFBFA] border border-gray-100 overflow-hidden">
               <img
-                src={item.product.images?.[0] ? `${img_url}/${item.product.images[0]}` : '/placeholder.jpg'}
+                src={item.product.thumbnail ? `${img_url}/${item.product.images[0]}` : '/placeholder.jpg'}
                 alt={item.product.title}
                 className="h-full w-full object-contain p-2 mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
               />

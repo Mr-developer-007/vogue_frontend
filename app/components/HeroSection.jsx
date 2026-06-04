@@ -81,8 +81,16 @@ const HeroSlider = () => {
 
      
       <div className="relative w-full h-[750px] overflow-hidden bg-neutral-950 md:hidden">
+
+        <img 
+                src={`/banner/mobile/4.webp`} 
+                alt={`Hero Banner `}
+                
+                priority 
+                className=" w-full object-cover"
+              />
         
-        <div className="absolute inset-0 bg-black/30 z-10 pointer-events-none"></div>
+        {/* <div className="absolute inset-0 bg-black/30 z-10 pointer-events-none"></div>
         
         <video  
           autoPlay 
@@ -94,7 +102,7 @@ const HeroSlider = () => {
           <source src="/video/video4.mp4" type="video/mp4" />
           <track kind="captions" />
           Your browser does not support the video tag.
-        </video>
+        </video> */}
         
       </div>
 

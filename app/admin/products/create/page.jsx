@@ -38,9 +38,11 @@ const ProductForm = () => {
     color:"#000",
     specifications: {},
     features: [],
+
     categories: [],
     tags: [],
     images: [],
+    thumbnail:null,
     size:[ ],
     seo: {
       metaTitle: '',
@@ -245,6 +247,8 @@ const handleRemoveSize = (index) => {
   formData.append("shortDescription", productData.shortDescription);
   formData.append("productfor", productData.productfor);
     formData.append("color", productData.color);
+        formData.append("thumbnail", productData.thumbnail);
+
 
   formData.append("status", productData.status);
 
@@ -631,6 +635,64 @@ getCategory()
                     </div>
                   </div>
                 </div>
+
+
+
+
+
+
+
+
+<div className="bg-white border border-gray-200 rounded-xl p-6">
+                  <div className="flex items-center gap-2 mb-6">
+                    <FiGrid className="text-green-600 text-xl" />
+                    <h2 className="text-xl font-bold text-gray-800">Thumbnail</h2>
+                  </div>
+                  
+
+
+
+                  <div className='w-full'>
+                    
+<label htmlFor="thumbnail" className="w-full flex flex-col p-10 border-2 border-dashed border-gray-300 rounded-xl  text-center hover:border-indigo-400 transition-colors">
+
+ <FiUpload className="mx-auto text-3xl text-gray-400 mb-4" />
+                  <p className="text-gray-600 mb-2">Drag & drop Thumbnail here or click to browse</p>
+                  <p className="text-sm text-gray-500 mb-4">Supports JPG, PNG, WEBP up to 5MB</p>
+
+
+
+  
+</label>
+<input type="file" name="" id="thumbnail" hidden accept='image'  onChange={(e)=>setProductData(prev=>({...prev,thumbnail:e.target.files[0]}))}/>
+
+
+
+
+
+
+                  </div>
+                
+                </div>
+
+
+<div>
+  {productData.thumbnail && 
+  
+<img src={URL.createObjectURL(productData.thumbnail)} />
+  
+  }
+</div>
+
+
+
+
+
+
+
+
+
+
               </div>
 
               {/* Right Column - Sidebar */}

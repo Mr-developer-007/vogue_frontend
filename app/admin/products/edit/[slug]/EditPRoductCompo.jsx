@@ -28,7 +28,8 @@ import {
   MdSquareFoot,
   MdOutlineSearch,
   MdSearch,
-  MdOutlineColorLens
+  MdOutlineColorLens,
+  MdCancel
 } from "react-icons/md";
 import { 
   FaBox, 
@@ -267,6 +268,9 @@ const EditProductCompo = ({ slug }) => {
       );
     }
 
+    if(productData?.newthumbnail){
+       formData.append("newthumbnail", productData?.newthumbnail);
+    }
     // 🔹 New images
     if (productData.newImages?.length) {
       productData.newImages.forEach((file) => {
@@ -847,6 +851,153 @@ const EditProductCompo = ({ slug }) => {
                 </button>
               </div>
             </div>
+
+
+
+
+
+
+
+
+
+
+
+  <div className="space-y-6">
+              <div className="flex items-center gap-3 border-b pb-4">
+                <MdImage className="text-yellow-600 text-xl" />
+                <h2 className="text-xl font-bold text-gray-900">Product Thumbnail</h2>
+              </div>
+              
+              {/* Current Images */}
+              {/* <div>
+                <h3 className="text-lg font-semibold text-gray-800 mb-4">Current Images</h3>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-6">
+                  {productData.images.map((item, index) => (
+                    <div key={index} className="relative group rounded-lg overflow-hidden border border-gray-200">
+                      <img
+                        src={`${img_url}/${item}`}
+                        alt={`Product ${index + 1}`}
+                        className="w-full h-48 object-cover"
+                      />
+                      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <button
+                          type="button"
+                          onClick={() => handelDeleteoldImage(item)}
+                          className="p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                        >
+                          <MdDelete className="text-xl" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div> */}
+              
+
+{
+  productData?.thumbnail && !productData?.newthumbnail
+
+
+  &&  <label htmlFor='newthumbnail'> <img  src={`${img_url}/${productData?.thumbnail}`}  className='h-72' />
+
+  </label>
+
+}
+
+{
+  !productData?.thumbnail 
+
+
+  &&  <label htmlFor='newthumbnail' className='border-2 border-dashed flex justify-center items-center  '> 
+<div className='h-72 w-20 flex justify-center items-center'>
+<p className='text-nowrap'>Upload Image</p>
+</div>
+  </label>
+
+}
+
+
+{
+   productData?.newthumbnail
+
+
+  &&  <div className='relative w-fit'> 
+  
+    <MdCancel onClick={()=>setProductData(prev=>({...prev,newthumbnail:null}))}  className='absolute  text-xl top-2 right-2 text-red-600 cursor-pointer' />
+
+  
+  <img  src={URL.createObjectURL(productData.newthumbnail)}  className='h-72' />
+</div>
+  
+
+}
+
+
+<input type="file"  accept='images/*' name="" id="newthumbnail"  hidden onChange={(e)=>setProductData(prev=>({...prev,newthumbnail:e.target.files[0]}))}  />
+
+
+              {/* New Images */}
+              {/* {productData?.newImages && (
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4">New Images to Upload</h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-6">
+                    {productData.newImages.map((item, index) => (
+                      <div key={index} className="relative group rounded-lg overflow-hidden border border-gray-200">
+                        <img
+                          src={URL.createObjectURL(item)}
+                          alt={`New ${index + 1}`}
+                          className="w-full h-48 object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+                          <button
+                            type="button"
+                            onClick={() => handelDeletenewImage(item)}
+                            className="p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                          >
+                            <MdDelete className="text-xl" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+             
+              <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-500 transition-colors">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={addNewImage}
+                  multiple
+                  className="hidden"
+                  id="image-upload"
+                />
+                <label htmlFor="image-upload" className="cursor-pointer">
+                  <div className="flex flex-col items-center">
+                    <MdUpload className="text-5xl text-gray-400 mb-4" />
+                    <div className="text-lg font-medium text-gray-700 mb-2">
+                      Click to upload or drag and drop
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      PNG, JPG, WEBP up to 5MB each
+                    </div>
+                  </div>
+                </label>
+              </div> */}
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
             {/* Images Management */}
             <div className="space-y-6">

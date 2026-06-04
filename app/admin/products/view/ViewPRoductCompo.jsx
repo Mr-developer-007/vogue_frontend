@@ -208,6 +208,35 @@ const ViewProductCompo = ({slug}) => {
               </div>
 
               {/* Product Images */}
+              {productData?.thumbnail  && 
+
+ <div className="p-6 border-b border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                  <FaImage /> Product Thumbnail Images
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  
+                    <div  className="relative group">
+                      <img
+                        src={`${img_url}/${productData.thumbnail}`}
+                        alt={`Product`}
+                        className="w-full h-48 object-cover rounded-lg border border-gray-200"
+                      />
+                      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <button className="bg-white p-2 rounded-full shadow-lg">
+                          <FaEye className="text-gray-700" />
+                        </button>
+                      </div>
+                      <div className="text-xs text-gray-500 mt-2 text-center">
+                        Image 
+                      </div>
+                    </div>
+                 
+                </div>
+              </div>
+
+              }
+
               <div className="p-6 border-b border-gray-200">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
                   <FaImage /> Product Images

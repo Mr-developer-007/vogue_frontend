@@ -13,8 +13,8 @@ export default function ProductCart({ product }) {
   
   // Dynamic color & image parsing
   const themeColor = product?.color || '#B5945C';
-  const imgPath = product?.images?.[0] 
-    ? `${img_url?.replace(/\/$/, "")}/${product.images[0].replace(/^\//, "")}` 
+  const imgPath = product?.thumbnail
+    ? `${img_url?.replace(/\/$/, "")}/${product.thumbnail}` 
     : "https://images.unsplash.com/photo-1560769629-975ec94e6a86?q=80&w=1964&auto=format&fit=crop";
   
   const discount = product?.compareAtPrice && product?.sellingPrice 

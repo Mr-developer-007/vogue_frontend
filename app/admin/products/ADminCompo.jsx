@@ -100,7 +100,7 @@ const ADminCompo = () => {
                       <div className="flex-shrink-0 h-12 w-12">
                         <img
                           className="h-12 w-12 rounded-lg object-cover"
-                          src= { `${img_url}/${product.images[0]}` || '/placeholder-image.jpg'}
+                          src= { `${img_url}/${product.thumbnail}` || '/placeholder-image.jpg'}
                           alt={product.title}
                         />
                       </div>
