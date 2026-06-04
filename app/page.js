@@ -19,8 +19,9 @@ export default function page() {
 <OurCollection />
 
 <OurProducts />
-<VideoCompo />
+
 <HeritageStory />
+<VideoCompo />
 {/* <Category /> */}
 
 

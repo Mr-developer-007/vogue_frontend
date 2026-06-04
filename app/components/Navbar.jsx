@@ -1,38 +1,45 @@
 "use client"
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { IoMenu, IoClose, IoChevronDown } from "react-icons/io5";
-import { HiOutlineShoppingBag, HiOutlineHeart, HiOutlineUser, HiOutlineSearch } from "react-icons/hi";
-import axios from 'axios';
-import { base_url } from './urls';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategory } from './Store/slices/CategorySlice';
-import SearchSection from './SearchSection';
-import { usePathname } from 'next/navigation';
+import axios from 'axios';
+import { base_url } from './urls';
+import { HiOutlineShoppingBag, HiOutlineUser, HiMenu, HiX } from 'react-icons/hi';
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMobileCatOpen, setIsMobileCatOpen] = useState(false); 
   const [user, setUser] = useState(false);
-  const [searchToggle, setSearchToggle] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false); 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
-  const path = usePathname();
-  const { categories, loading } = useSelector(state => state.category);
-  const wishlist = useSelector(state => state.wishlist.items);
-   
   const dispatch = useDispatch();
+  const { categories, loading } = useSelector(state => state.category);
+  const wishlist = useSelector(state => state.wishlist?.items || []);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-    if (isMenuOpen) setIsMobileCatOpen(false); 
-  };
+  const path = usePathname();
+  const isHomePage = path === "/";
+
+  // --- Dynamic Styling Based on Scroll & Page ---
+  let navBackgroundClass = "";
+  let textColorClass = "";
+
+  if (isHomePage) {
+    navBackgroundClass = isScrolled 
+      ? 'fixed top-0 bg-black backdrop-blur-xl saturate-150 border-b border-white/10 shadow-md' 
+      : 'fixed top-0 bg-transparent border-b border-transparent';
+    
+    // Text is black when not scrolled, white when scrolled (matching the black bg)
+    textColorClass = isScrolled ? 'text-white' : 'text-black'; 
+  } else {
+    navBackgroundClass = 'sticky top-0 bg-white border-b border-gray-100 shadow-sm';
+    textColorClass = 'text-black'; // Using strict black instead of gray-900 for a sharper look
+  }
 
   const fetchUser = async () => {
     try {
       const response = await axios.get(`${base_url}/user/user/get`);
-      const data = await response.data;
-      if (data.success) {
+      if (response.data.success) {
         setUser(true);
       }
     } catch (error) {
@@ -47,244 +54,112 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 50);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: 'About us', path: '/about' },
-    { name: 'Blogs', path: '/blog' },
-  ];
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [path]);
 
-  // --- CLEAN CONDITIONAL STYLING LOGIC ---
-  const isHomePage = path === "/";
-
-  // 1. Background & Position
-  let navBackgroundClass = "";
-  if (isHomePage) {
-    navBackgroundClass = isScrolled 
-      ? 'fixed top-0 bg-black backdrop-blur-xl saturate-150 border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)]' 
-      : 'fixed top-2 bg-transparent border-b border-transparent';
-  } else {
-    // Other pages: Solid white, sticky so it doesn't cover top page content
-    navBackgroundClass = 'sticky top-0 bg-white border-b border-gray-100 shadow-sm';
-  }
-
-  // 2. Text, Logo, and Icon Colors
-  const textColorClass = isHomePage ? 'text-white' : 'text-gray-900';
-  const hoverColorClass = isHomePage ? 'hover:text-indigo-400' : 'hover:text-indigo-600';
-  const borderDividerClass = isHomePage ? 'border-white/20 ' : 'border-gray-200';
-  const logoClass = isHomePage ? 'brightness-0 invert opacity-90 hover:opacity-100' : 'opacity-100';
+  // Premium Text Classes (Reusable)
+  const premiumTextClass = "font-medium hover:text-indigo-500 transition-colors uppercase text-ase tracking-[0.15em]";
 
   return (
-    <header className={`w-full z-50 font-sans transition-all duration-500 ease-in-out selection:bg-indigo-500/30 selection:text-white ${navBackgroundClass}`}>
-      
-      {searchToggle &&  <SearchSection onClose={() => setSearchToggle(false)} />}
-      
-      <div className="container mx-auto px-4">
-        {/* Relative container ensures absolute positioned desktop elements stay aligned to container bounds */}
-        <div className="flex justify-between items-center h-20 relative w-full">
+    <header className={`  text-xl font-serif w-full z-50   ${navBackgroundClass} ${textColorClass}`}>
+      <div className='container mx-auto px-4 md:px-6 flex items-center justify-between h-24 relative'>
+        
+        {/* 1. MOBILE MENU TOGGLE (Left) */}
+        <div className="flex lg:hidden items-center flex-1">
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+            className="hover:text-indigo-500 transition-colors focus:outline-none"
+            aria-label="Toggle Menu"
+          >
+            {isMobileMenuOpen ? <HiX size={30} /> : <HiMenu size={30} />}
+          </button>
+        </div>
 
-          {/* Mobile Menu Toggle (Only visible on mobile) */}
-          <div className="flex items-center lg:hidden z-10">
-            <button 
-              onClick={toggleMenu} 
-              className={`${textColorClass} ${hoverColorClass} transition-colors duration-300 text-3xl focus:outline-none`}
+        {/* 2. DESKTOP LEFT LINKS */}
+        <div className='hidden lg:flex flex-1 gap-8 items-center'> 
+          <Link href="/" className={premiumTextClass}>
+            Home
+          </Link>
+          {!loading && categories?.map((item) => (
+            <Link 
+              key={item._id} 
+              href={`/products?category=${item._id}`}
+              className={premiumTextClass}
             >
-              {isMenuOpen ? <IoClose /> : <IoMenu />}
-            </button>
-          </div>
+              {item.title}
+            </Link>
+          ))}
+        </div>
 
-          {/* LOGO SECTION 
-            Mobile: Normal flex item (centers nicely due to flex justify-between)
-            Desktop: Absolute positioned to swap places seamlessly
-          */}
-          <div className={`
-            flex items-center justify-center lg:justify-start z-50 transition-all duration-700 ease-in-out
-            lg:absolute lg:top-1/2 lg:-translate-y-1/2 
-            ${isScrolled ? 'lg:left-1/2 lg:-translate-x-1/2 scale-110' : 'lg:left-0 lg:translate-x-0'}
-          `}>
-            <Link href="/" onClick={() => setIsMenuOpen(false)}>
-              <img 
-                src="/logo.webp" 
-                alt="Brand Logo" 
-                className={`h-8 lg:h-10 object-contain cursor-pointer transition-all duration-500 ${logoClass}`} 
-              />
+        {/* 3. CENTER LOGO */}
+        <div className='flex justify-center flex-shrink-0'>
+          <Link href="/">
+            <img 
+              src="/logo.webp" 
+              alt="Brand Logo" 
+              // Changed logic: Inverts to white ONLY when scrolled on homepage (black bg)
+              className={`w-32 md:w-40 object-contain transition-all duration-300 ${isHomePage && isScrolled ? 'brightness-0 invert' : ''}`} 
+            />
+          </Link>
+        </div>
+
+        {/* 4. DESKTOP RIGHT LINKS & ICONS */}
+        <div className='flex flex-1 gap-6 items-center justify-end'>
+          <div className='hidden xl:flex gap-8 mr-4 items-center text-nowrap'>
+            <Link href="https://www.shiprocket.in/shipment-tracking/" target='_blank' rel="noreferrer" className={premiumTextClass}>
+              Track Order
+            </Link>
+            <Link href="/returns" className={premiumTextClass}>
+             Returns 
             </Link>
           </div>
-
-          {/* NAVIGATION LINKS - DESKTOP 
-            Desktop: Absolute positioned to animate left when scrolled
-          */}
-          <nav className={`
-            hidden lg:flex items-center space-x-10 
-            absolute top-1/2 -translate-y-1/2 transition-all duration-700 ease-in-out z-40
-            ${isScrolled ? 'left-0 translate-x-0' : 'left-1/2 -translate-x-1/2'}
-          `}>
-            
-            <Link href="/" className={`${textColorClass} ${hoverColorClass} font-bold text-[13px] uppercase tracking-widest transition-all duration-300 relative group whitespace-nowrap opacity-80 hover:opacity-100`}>
-              Home
-              <span className="absolute -bottom-2 left-1/2 w-0 h-[2px] bg-indigo-500 transition-all duration-300 group-hover:w-full group-hover:left-0 rounded-full shadow-[0_0_10px_rgba(99,102,241,0.5)]"></span>
-            </Link>
-
-            {/* Category Dropdown */}
-            <div className="relative group">
-              <span className={`${textColorClass} ${hoverColorClass} font-bold text-[13px] uppercase tracking-widest transition-all duration-300 cursor-pointer flex items-center gap-1 whitespace-nowrap opacity-80 hover:opacity-100`}>
-                Category
-              </span>
-              <span className="absolute -bottom-2 left-1/2 w-0 h-[2px] bg-indigo-500 transition-all duration-300 group-hover:w-full group-hover:left-0 rounded-full shadow-[0_0_10px_rgba(99,102,241,0.5)]"></span>
-
-              {/* Glass Dropdown Box */}
-              <div className="absolute top-full -left-4 pt-6 w-auto min-w-[16rem] opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-out z-50">
-                <div className="bg-white/90 backdrop-blur-2xl border border-gray-200 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] overflow-hidden">
-                  <div className="h-1 w-full bg-gradient-to-r from-indigo-500 to-purple-500"></div>
-                  <div className="p-2 flex flex-col">
-                    {!loading && categories?.length > 0 ? (
-                      categories.map((item, index) => (
-                        <Link 
-                          key={index} 
-                          href={`/products?category=${item._id}`}
-                          className="group/link flex items-center justify-between px-4 py-3 text-xs font-bold text-gray-700 uppercase tracking-widest hover:bg-indigo-50 hover:text-indigo-600 transition-all duration-300 rounded-xl whitespace-nowrap gap-4"
-                        >
-                          <span className="transform transition-transform duration-300 whitespace-nowrap group-hover/link:translate-x-1">
-                            {item.title}
-                          </span>
-                          <span className="opacity-0 -translate-x-4 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all duration-300 text-indigo-500 font-black">
-                            →
-                          </span>
-                        </Link>
-                      ))
-                    ) : (
-                      <div className="px-4 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest animate-pulse whitespace-nowrap">
-                        Loading...
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Dynamic Links */}
-            {navLinks.map((link, index) => (
-              <Link 
-                key={index} 
-                href={link.path} 
-                className={`${textColorClass} ${hoverColorClass} font-bold text-[13px] uppercase tracking-widest transition-all duration-300 relative group whitespace-nowrap opacity-80 hover:opacity-100`}
-              >
-                {link.name}
-                <span className="absolute -bottom-2 left-1/2 w-0 h-[2px] bg-indigo-500 transition-all duration-300 group-hover:w-full group-hover:left-0 rounded-full shadow-[0_0_10px_rgba(99,102,241,0.5)]"></span>
-              </Link>
-            ))}
-          </nav>
-
-          {/* ICONS - DESKTOP (Always positioned strictly to the right) */}
-          <div className={`
-            hidden lg:flex justify-end items-center space-x-6 z-40 
-            absolute right-0 top-1/2 -translate-y-1/2 ${textColorClass} opacity-90
-          `}>
-            <button onClick={() => setSearchToggle(true)} className={`${hoverColorClass} hover:scale-110 transition-all duration-300`}>
-              <HiOutlineSearch size={22} strokeWidth={1.5} />
-            </button>
-            <Link href={user ? "/wishlist" : "/login"} className={`${hoverColorClass} relative hover:scale-110 transition-all duration-300`}>
-              <HiOutlineHeart size={22} strokeWidth={1.5} />
-              { wishlist.length >0 &&
-                 <span className="absolute -top-1.5 -right-1.5 bg-purple-500 text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-black shadow-[0_0_10px_rgba(99,102,241,0.8)]">
-                {wishlist.length}
-                </span>
-              }
-            </Link>
-            <Link href={user ? "/user" : "/login"} className={`${hoverColorClass} hover:scale-110 transition-all duration-300`}>
-              <HiOutlineUser size={22} strokeWidth={1.5} />
-            </Link>
-            <Link href={user ? "/cart" : "/login"} className={`relative ${hoverColorClass} hover:scale-110 transition-all duration-300 flex items-center gap-2 border-l ${borderDividerClass} pl-6`}>
-              <HiOutlineShoppingBag size={22} strokeWidth={1.5} />
-            </Link>
-          </div>
-
-          {/* ICONS - MOBILE (Normal flex flow item) */}
-          <div className={`flex justify-end lg:hidden z-10 ${textColorClass} space-x-4 opacity-90`}>
-             <button onClick={() => setSearchToggle(true)} className={`${hoverColorClass} transition-colors`}>
-              <HiOutlineSearch size={24} strokeWidth={1.5} />
-             </button>
-             <Link href={user ? "/cart" : "/login"} className={`relative ${hoverColorClass} transition-colors`}>
-                <HiOutlineShoppingBag size={24} strokeWidth={1.5} />
-                {/* <span className="absolute -top-1.5 -right-1.5 bg-indigo-500 text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-black shadow-[0_0_10px_rgba(99,102,241,0.8)]">
-                  2
-                </span> */}
-             </Link>
-          </div>
-
+          
+          <Link href={user ? "/user" : "/login"} className="hover:text-indigo-500 hover:scale-110 transition-all">
+            <HiOutlineUser size={26}/> 
+          </Link>
+          <Link href={user ? "/cart" : "/login"} className="hover:text-indigo-500 hover:scale-110 transition-all relative">
+            <HiOutlineShoppingBag size={26} />
+          </Link>
         </div>
       </div>
 
-     {/* Mobile Menu Dropdown... (Rest of your component remains identically intact) */}
-     <div className={`lg:hidden absolute w-full bg-white/95 backdrop-blur-2xl border-b border-gray-200 shadow-[0_8px_32px_rgba(0,0,0,0.1)] overflow-hidden transition-all duration-500 ease-in-out origin-top ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}`}>
-        <div className="px-6 py-8 flex flex-col h-[calc(100vh-100px)] overflow-y-auto">
+      {/* 5. MOBILE DROPDOWN MENU */}
+      <div className={`lg:hidden absolute w-full bg-white shadow-xl border-t border-gray-100 overflow-hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-screen py-6 opacity-100' : 'max-h-0 py-0 opacity-0'}`}>
+        <div className="flex flex-col px-6 space-y-5 text-black">
+          <Link href="/" className="font-medium text-lg uppercase  hover:text-indigo-600 border-b pb-3">
+            Home
+          </Link>
           
-          <div className="space-y-6 flex-grow">
-            <Link href="/" onClick={() => setIsMenuOpen(false)} className="block text-2xl font-black text-gray-900 uppercase tracking-widest hover:text-indigo-600 transition-colors whitespace-nowrap">
-              Home
-            </Link>
-
-            <div>
-              <button 
-                onClick={() => setIsMobileCatOpen(!isMobileCatOpen)}
-                className="w-full flex items-center justify-between text-2xl font-black text-gray-900 uppercase tracking-widest hover:text-indigo-600 transition-colors whitespace-nowrap"
-              >
-                Category
-                <IoChevronDown className={`transform transition-transform duration-300 flex-shrink-0 ${isMobileCatOpen ? 'rotate-180 text-indigo-600' : ''}`} size={24}/>
-              </button>
-              
-              <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isMobileCatOpen ? 'max-h-96 mt-4 opacity-100' : 'max-h-0 opacity-0'}`}>
-                <div className="flex flex-col space-y-3 pl-4 border-l-2 border-indigo-200">
-                  {!loading && categories?.length > 0 ? (
-                    categories.map((item, index) => (
-                      <Link 
-                        key={index} 
-                        href={`/products?category=${item._id}`}
-                        onClick={() => {setIsMenuOpen(false); setIsMobileCatOpen(false);}}
-                        className="text-sm font-bold text-gray-600 uppercase tracking-widest hover:text-indigo-600 hover:translate-x-1 transition-all duration-300 py-1 whitespace-nowrap"
-                      >
-                        {item.title}
-                      </Link>
-                    ))
-                  ) : (
-                    <span className="text-sm font-bold text-gray-400 uppercase tracking-widest whitespace-nowrap">Loading...</span>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {navLinks.map((link, index) => (
+          <div className="font-semibold text-sm text-gray-400 uppercase  mt-2">Categories</div>
+          <div className="flex flex-col space-y-4 pl-2">
+            {!loading && categories?.map((item) => (
               <Link 
-                key={index} 
-                href={link.path} 
-                onClick={() => setIsMenuOpen(false)}
-                className="block text-2xl font-black text-gray-900 uppercase tracking-widest hover:text-indigo-600 transition-colors whitespace-nowrap"
+                key={item._id} 
+                href={`/products?category=${item._id}`}
+                className="font-medium text-base uppercase  hover:text-indigo-600 transition-colors"
               >
-                {link.name}
+                {item.title}
               </Link>
             ))}
           </div>
-          
-          <div className="mt-8 pt-8 border-t border-gray-200 grid grid-cols-2 gap-4 pb-8">
-             <Link href={user ? "/user" : "/login"} onClick={() => setIsMenuOpen(false)} className="flex items-center justify-center space-x-2 bg-gray-900 text-white py-4 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-indigo-600 transition-all duration-300 whitespace-nowrap">
-               <HiOutlineUser size={18}/> <span>Account</span>
-             </Link>
-             <Link href={user ? "/wishlist" : "/login"} onClick={() => setIsMenuOpen(false)} className="flex items-center justify-center space-x-2 bg-white/50 backdrop-blur-md border border-gray-300 text-gray-800 py-4 rounded-2xl text-xs font-black uppercase tracking-widest hover:border-indigo-600 hover:text-indigo-600 hover:shadow-lg transition-all duration-300 whitespace-nowrap">
-               <HiOutlineHeart size={18}/> <span>Wishlist</span>
-             </Link>
-          </div>
 
+          <div className="font-semibold text-sm text-gray-400 uppercase  mt-4 pt-5 border-t">Quick Links</div>
+          <Link href="https://www.shiprocket.in/shipment-tracking/" target='_blank' className="font-medium text-base uppercase  hover:text-indigo-600">
+            Track Order
+          </Link>
+          <Link href="/returns" className="font-medium text-base uppercase  hover:text-indigo-600 pb-4 border-b">
+            Returns And Exchange
+          </Link>
         </div>
-      </div> 
+      </div>
     </header>
   );
 };

@@ -1,161 +1,141 @@
-"use client"
-import React, { useState } from 'react'
+import React from 'react';
 import { 
-  HiOutlineRefresh, 
-  HiOutlineTruck, 
-  HiOutlineCash, 
-  HiOutlineCheckCircle,
-  HiChevronDown,
-  HiChevronUp
-} from 'react-icons/hi'
+  FaBoxOpen, 
+  FaRegTimesCircle, 
+  FaMoneyBillWave, 
+  FaExclamationTriangle, 
+  FaExchangeAlt 
+} from 'react-icons/fa';
 
-const ReturnsPage = () => {
-  // State for the interactive FAQ accordion
-  const [openFaq, setOpenFaq] = useState(null)
-
-  const toggleFaq = (index) => {
-    setOpenFaq(openFaq === index ? null : index)
-  }
-
-  const faqs = [
-    {
-      question: "How long does it take to process a refund?",
-      answer: "Once we receive your return, please allow 3-5 business days for our team to inspect the item and process your refund. The funds will automatically be applied to your original payment method, which can take an additional 2-7 days depending on your bank."
-    },
-    {
-      question: "Do I have to pay for return shipping?",
-      answer: "We offer free return shipping for exchanges or items that arrived damaged. For standard returns (refund to original payment method), a flat fee of ₹100 will be deducted from your total refund amount."
-    },
-    {
-      question: "Can I return items bought on sale?",
-      answer: "Items marked as 'Final Sale' or purchased during major clearance events cannot be returned or exchanged unless they arrive defective."
-    },
-    {
-      question: "How do I exchange for a different size?",
-      answer: "The fastest way to ensure you get the size you want is to initiate a return for your current item and place a new order for the correct size. Alternatively, you can select 'Exchange' in our return portal, though inventory is not guaranteed until the return is processed."
-    }
-  ]
-
+const RefundPolicy = () => {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-16 font-sans">
-      
-      {/* Header Section */}
-      <div className="text-center mb-16">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Returns & Exchanges</h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          We want you to love your purchase. If you're not completely satisfied, we gladly accept most returns by mail within 30 days of purchase.
-        </p>
-        <div className="mt-8">
-          <button className="bg-gray-900 text-white px-8 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors shadow-sm">
-            Start a Return
-          </button>
-        </div>
-      </div>
-
-      {/* Policy Highlights Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-        <div className="bg-gray-50 p-6 rounded-2xl text-center">
-          <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm text-gray-800">
-            <HiOutlineRefresh size={24} />
-          </div>
-          <h3 className="font-semibold text-gray-900 mb-2">30-Day Window</h3>
-          <p className="text-sm text-gray-600">Return your items within 30 days of the delivery date.</p>
+    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-sans">
+      <div className="max-w-4xl mx-auto">
+        
+        {/* Header Section */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight mb-2">
+            Refund & Return Policy
+          </h1>
+          <p className="text-sm text-gray-500 font-medium mb-6">
+            Last Updated: June 2026
+          </p>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            At <span className="font-semibold text-gray-900">The Vogue Wardrobe</span>, customer satisfaction is our priority. If you're not completely satisfied with your purchase, we're here to help.
+          </p>
         </div>
 
-        <div className="bg-gray-50 p-6 rounded-2xl text-center">
-          <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm text-gray-800">
-            <HiOutlineCheckCircle size={24} />
-          </div>
-          <h3 className="font-semibold text-gray-900 mb-2">Item Condition</h3>
-          <p className="text-sm text-gray-600">Items must be unworn, unwashed, and have original tags attached.</p>
-        </div>
-
-        <div className="bg-gray-50 p-6 rounded-2xl text-center">
-          <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm text-gray-800">
-            <HiOutlineCash size={24} />
-          </div>
-          <h3 className="font-semibold text-gray-900 mb-2">Fast Refunds</h3>
-          <p className="text-sm text-gray-600">Refunds are processed within 3-5 days of receiving your return.</p>
-        </div>
-      </div>
-
-      {/* How it Works Section */}
-      <div className="mb-20">
-        <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">How It Works</h2>
-        <div className="relative">
-          {/* Connecting Line (Desktop only) */}
-          <div className="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-gray-100 -translate-y-1/2 z-0"></div>
+        {/* Policy Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
-            {/* Step 1 */}
-            <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm text-center">
-              <div className="w-10 h-10 bg-gray-900 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4">1</div>
-              <h4 className="font-semibold text-gray-900 mb-2">Request</h4>
-              <p className="text-sm text-gray-600">Click "Start a Return" above and enter your order number and email.</p>
+          {/* Eligibility for Refund */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-md transition-shadow">
+            <div className="flex items-center mb-4">
+              <div className="bg-green-100 p-3 rounded-full text-green-600 mr-4">
+                <FaBoxOpen size={24} />
+              </div>
+              <h2 className="text-xl font-bold text-gray-900">Eligibility for Refund</h2>
             </div>
-
-            {/* Step 2 */}
-            <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm text-center">
-              <div className="w-10 h-10 bg-gray-900 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4">2</div>
-              <h4 className="font-semibold text-gray-900 mb-2">Pack</h4>
-              <p className="text-sm text-gray-600">Print your prepaid shipping label and pack your items securely.</p>
-            </div>
-
-            {/* Step 3 */}
-            <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm text-center">
-              <div className="w-10 h-10 bg-gray-900 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4">3</div>
-              <h4 className="font-semibold text-gray-900 mb-2">Ship</h4>
-              <p className="text-sm text-gray-600">Drop your package off at any authorized shipping location.</p>
-            </div>
+            <p className="text-gray-600 mb-4">
+              You may request a refund within <strong className="text-gray-900">7 days</strong> of receiving your order. To be eligible, the product must meet the following criteria:
+            </p>
+            <ul className="space-y-2 text-gray-600 list-disc list-inside marker:text-green-500">
+              <li>Must be unused and unwashed</li>
+              <li>Original tags must remain attached</li>
+              <li>Must be in original packaging</li>
+              <li>Should not show signs of wear or damage</li>
+            </ul>
           </div>
-        </div>
-      </div>
 
-      {/* FAQ Accordion */}
-      <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
-        <div className="border border-gray-200 rounded-2xl overflow-hidden bg-white">
-          {faqs.map((faq, index) => (
-            <div 
-              key={index}
-              className={`border-b border-gray-200 last:border-0 ${openFaq === index ? 'bg-gray-50' : 'bg-white'}`}
-            >
-              <button
-                onClick={() => toggleFaq(index)}
-                className="w-full text-left px-6 py-5 flex items-center justify-between focus:outline-none"
-              >
-                <span className="font-medium text-gray-900">{faq.question}</span>
-                <span className="text-gray-400 ml-4">
-                  {openFaq === index ? <HiChevronUp size={20} /> : <HiChevronDown size={20} />}
-                </span>
-              </button>
-              
-              {/* Expandable Content */}
-              <div 
-                className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                  openFaq === index ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
-                }`}
-              >
-                <div className="px-6 pb-5 text-gray-600 text-sm leading-relaxed">
-                  {faq.answer}
-                </div>
+          {/* Non-Refundable Items */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-md transition-shadow">
+            <div className="flex items-center mb-4">
+              <div className="bg-red-100 p-3 rounded-full text-red-600 mr-4">
+                <FaRegTimesCircle size={24} />
+              </div>
+              <h2 className="text-xl font-bold text-gray-900">Non-Refundable Items</h2>
+            </div>
+            <p className="text-gray-600 mb-4">
+              Please note that refunds will <strong className="text-red-600">not</strong> be applicable for the following:
+            </p>
+            <ul className="space-y-2 text-gray-600 list-disc list-inside marker:text-red-500">
+              <li>Products damaged due to customer misuse</li>
+              <li>Products returned without original tags</li>
+              <li>Products returned after the 7-day window</li>
+              <li>Gift cards and promotional items</li>
+            </ul>
+          </div>
+
+          {/* Refund Process */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:col-span-2 hover:shadow-md transition-shadow">
+            <div className="flex items-center mb-4">
+              <div className="bg-blue-100 p-3 rounded-full text-blue-600 mr-4">
+                <FaMoneyBillWave size={24} />
+              </div>
+              <h2 className="text-xl font-bold text-gray-900">Refund Process</h2>
+            </div>
+            <p className="text-gray-600 mb-4">Once the returned item is received and inspected:</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h3 className="font-semibold text-gray-900 mb-1">1. Approval Notification</h3>
+                <p className="text-sm text-gray-600">Refund approval will be communicated via email or WhatsApp.</p>
+              </div>
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h3 className="font-semibold text-gray-900 mb-1">2. Processing Time</h3>
+                <p className="text-sm text-gray-600">Approved refunds will be processed within 5-7 working days.</p>
+              </div>
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h3 className="font-semibold text-gray-900 mb-1">Prepaid Orders</h3>
+                <p className="text-sm text-gray-600">Credited directly back to the original payment method.</p>
+              </div>
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h3 className="font-semibold text-gray-900 mb-1">COD Orders</h3>
+                <p className="text-sm text-gray-600">Processed via bank transfer or UPI after receiving customer details.</p>
               </div>
             </div>
-          ))}
+          </div>
+
+          {/* Damaged or Incorrect Products */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-md transition-shadow">
+            <div className="flex items-center mb-4">
+              <div className="bg-orange-100 p-3 rounded-full text-orange-600 mr-4">
+                <FaExclamationTriangle size={24} />
+              </div>
+              <h2 className="text-xl font-bold text-gray-900">Damaged or Incorrect Items</h2>
+            </div>
+            <p className="text-gray-600">
+              If you receive a damaged, defective, or wrong item, please contact us within <strong className="text-gray-900">48 hours</strong> of delivery. 
+              <br/><br/>
+              Providing photos or an unboxing video will help us ensure a faster resolution. We will arrange a replacement at no additional cost to you.
+            </p>
+          </div>
+
+          {/* Exchange Approval */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-md transition-shadow">
+            <div className="flex items-center mb-4">
+              <div className="bg-purple-100 p-3 rounded-full text-purple-600 mr-4">
+                <FaExchangeAlt size={24} />
+              </div>
+              <h2 className="text-xl font-bold text-gray-900">Exchange Approvals</h2>
+            </div>
+            <p className="text-gray-600">
+              Our team may request product images to verify the condition of the item before approving an exchange request. 
+              This helps us maintain our quality standards and process your request smoothly.
+            </p>
+          </div>
+
         </div>
-      </div>
 
-      {/* Support Contact Footer */}
-      <div className="mt-16 text-center bg-gray-50 rounded-2xl p-8">
-        <p className="text-gray-900 font-medium mb-2">Still have questions?</p>
-        <p className="text-gray-600 text-sm mb-4">Our support team is here to help.</p>
-        <a href="mailto:support@yourstore.com" className="text-gray-900 font-semibold underline hover:text-gray-600 transition-colors">
-          Contact Support
-        </a>
-      </div>
+        {/* Footer/Contact CTA */}
+        <div className="mt-12 text-center">
+          <p className="text-gray-600">
+            Need further assistance? <a href="mailto:support@thevoguewardrobe.com" className="text-blue-600 font-semibold hover:underline">Contact our Support Team</a>.
+          </p>
+        </div>
 
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default ReturnsPage
+export default RefundPolicy;

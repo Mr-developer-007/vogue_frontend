@@ -12,11 +12,11 @@ const HeroSlider = () => {
   const allBanners = ["1.webp", "2.webp", "3.webp"];
 
   return (
-    <div className="w-full flex flex-col">
+    <div className="w-full">
       
       {/* Slider Section */}
-      <div className="w-full relative  hidden md:block md:h-[700px] overflow-hidden">
-        <Swiper
+      <div className="w-full relative  hidden md:block ">
+        {/* <Swiper
           spaceBetween={0}
           loop={true}
           autoplay={{
@@ -40,7 +40,7 @@ const HeroSlider = () => {
                 className=" object-center"
               />
               
-              {/* Optional: Subtle gradient overlay to ensure pagination/text always pops */}
+            
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none"></div>
 
             </SwiperSlide>
@@ -68,10 +68,18 @@ const HeroSlider = () => {
             bottom: 24px !important;
             z-index: 20;
           }
-        `}</style>
+        `}</style> */}
+
+         <img 
+                src={`/banner/desktop/7.webp`} 
+                alt={`Hero Banner `}
+                
+                priority 
+                className=" w-full object-cover"
+              />
       </div>
 
-      {/* Mobile Video Section */}
+     
       <div className="relative w-full h-[750px] overflow-hidden bg-neutral-950 md:hidden">
         
         <div className="absolute inset-0 bg-black/30 z-10 pointer-events-none"></div>

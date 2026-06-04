@@ -4,6 +4,7 @@ import axios from 'axios';
 import { base_url, img_url } from '@/app/components/urls';
 // Importing icons for table headers and actions
 import { FiEdit, FiTrash2, FiPlus, FiImage, FiFileText, FiTag } from 'react-icons/fi';
+import Link from 'next/link';
 
 const AdminBlogTable = () => {
   // State to hold your blog data and loading status
@@ -41,10 +42,10 @@ const AdminBlogTable = () => {
             <h1 className="text-2xl font-bold text-gray-900">Manage Blogs</h1>
             <p className="text-sm text-gray-500 mt-1">View, edit, or delete your blog entries.</p>
           </div>
-          <button className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-lg shadow-sm transition-colors text-sm font-medium">
+          <Link  href={"/admin/blog/create"} className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-lg shadow-sm transition-colors text-sm font-medium">
             <FiPlus className="text-lg" />
             Add New Blog
-          </button>
+          </Link>
         </div>
 
        
@@ -142,12 +143,12 @@ const AdminBlogTable = () => {
                       {/* Actions Column */}
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div className="flex justify-end gap-3">
-                          <button 
+                          {/* <button 
                             className="text-indigo-600 hover:text-indigo-900 p-2 hover:bg-indigo-50 rounded-lg transition-colors"
                             title="Edit"
                           >
                             <FiEdit className="text-lg" />
-                          </button>
+                          </button> */}
                           <button 
                             className="text-red-600 hover:text-red-900 p-2 hover:bg-red-50 rounded-lg transition-colors"
                             title="Delete"
