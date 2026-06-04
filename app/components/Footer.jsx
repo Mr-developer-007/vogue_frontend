@@ -73,6 +73,9 @@ const Footer = () => {
                     <FooterLink href="/new">New Arrivals</FooterLink>
                   </>
                 )}
+                <FooterLink href="/privacy-policy">PRIVACY POLICY</FooterLink>
+                <FooterLink href="/terms">TERMS & CONDITIONS</FooterLink>
+                <FooterLink href="/exchange-policy">EXCHANGE POLICY</FooterLink>
               </ul>
             </div>
 
@@ -80,7 +83,7 @@ const Footer = () => {
             <div>
               <h4 className="text-white font-serif text-sm mb-6 tracking-[0.15em] uppercase">Support</h4>
               <ul className="space-y-4">
-                <FooterLink href="/track">Track Order</FooterLink>
+                <FooterLink href="https://www.shiprocket.in/shipment-tracking/">Track Order</FooterLink>
                 <FooterLink href="/shipping">Shipping Policy</FooterLink>
                 <FooterLink href="/returns">Returns</FooterLink>
                 <FooterLink href="/size-guide">Size Guide</FooterLink>
@@ -113,9 +116,9 @@ const Footer = () => {
             </form>
 
             <div className="text-[11px] font-medium tracking-[0.1em] text-stone-500 uppercase space-y-2">
-              <p>Creative District, Sector 17, CH</p>
+              
               <a href="mailto:support@yourbrand.com" className="block hover:text-white transition-colors duration-300">
-                thevoguewardrobeofficial@gmail.com
+               support@thevoguewardrobe.com
               </a>
             </div>
           </div>
@@ -156,7 +159,7 @@ const FooterLink = ({ href, children }) => (
       href={href} 
       className="group relative inline-block text-[13px] text-stone-400 hover:text-white transition-colors duration-300"
     >
-       <span className="uppercase tracking-widest">{children}</span>
+       <span className="uppercase tracking-widest text-nowrap">{children}</span>
        {/* Elegant Animated Underline */}
        <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-white transition-all duration-300 ease-out group-hover:w-full"></span>
     </Link>
