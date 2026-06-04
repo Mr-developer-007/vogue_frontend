@@ -113,7 +113,7 @@ const OurCollection = () => {
                       <motion.img
                         src={`${img_url}/${item.image}`}
                         alt={item.title}
-                        className="absolute inset-0 w-full h-full object-cover object-bottom"
+                        className="absolute inset-0 w-full h-full object-cover object-top"
                         initial={{ scale: 1 }}
                         whileHover={{ scale: 1.08 }}
                         transition={{ duration: 0.6, ease: 'easeOut' }}
