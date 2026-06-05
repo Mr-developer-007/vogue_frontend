@@ -34,7 +34,7 @@ const CartSummary = ({ setCheckoutData, checkoutData, handelCheckout, handelAddD
           quantity: pdata.quantity,
           price: pdata.price,
           size: pdata.size,
-          image: pdata.product.images[0]
+          image: pdata.product.thumbnail
         }));
 
         setCheckoutData(prev => ({
@@ -42,7 +42,7 @@ const CartSummary = ({ setCheckoutData, checkoutData, handelCheckout, handelAddD
           orderItems: orderItemsPayload,
           itemsPrice: data.items.totalPrice,
           totalPrice: data.items.totalPrice 
-          // + 99 // Shipping logic
+           + 99 // Shipping logic
         }));
       }
     } catch (error) {

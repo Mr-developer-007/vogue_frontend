@@ -108,7 +108,7 @@ fetchWishlist(state)
            
               <div className="relative h-64 overflow-hidden bg-stone-200">
                 <img 
-                  src={`${img_url}/${item.images[0]}`} 
+                  src={`${img_url}/${item.thumbnail}`} 
                   alt={item.title} 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />

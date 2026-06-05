@@ -285,7 +285,7 @@ const handelremoveProduct = async(id)=>{
   return(
     <div className="flex  items-center justify-between ">
       <div className=" flex  items-center  gap-3">
-      <img src={`${img_url}/${item.images[0]}`} alt="" className="h-20 w-20 rounded-full" />
+      <img src={`${img_url}/${item.thumbnail}`} alt="" className="h-20 w-20 rounded-full" />
 <p className="text-xl">{item.title}</p>
 
 </div>

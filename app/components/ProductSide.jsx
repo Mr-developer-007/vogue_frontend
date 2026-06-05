@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { base_url, img_url } from './urls';
 import { addToWishlist, removeFromWishlist } from './Store/slices/WishlistSlice';
+axios.defaults.withCredentials = true
 
 const ProductSide = ({ productData }) => {
   const [showSizeGuide, setShowSizeGuide] = useState(false);
