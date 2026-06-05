@@ -71,7 +71,7 @@ const HeroSlider = () => {
         `}</style> */}
 
          <img 
-                src={`/banner/desktop/7.webp`} 
+                src={`/banner/desktop/8.webp`} 
                 alt={`Hero Banner `}
                 
                 priority 
