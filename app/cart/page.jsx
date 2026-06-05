@@ -135,7 +135,7 @@ const handelMovetowishlist=async(id)=>{
                 {/* Product Image */}
                 <div className="w-full sm:w-32 h-52 md:h-32 bg-stone-100 rounded-lg overflow-hidden shrink-0">
                   <img 
-                    src={`${img_url}/${item.product.images[0]}`} 
+                    src={`${img_url}/${item.product.thumbnail}`} 
                     alt={item.title} 
                     className="w-full h-full object-contain omd:bject-cover"
                   />
