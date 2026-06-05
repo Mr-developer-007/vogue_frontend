@@ -138,7 +138,7 @@ const handelMovetowishlist=async(id)=>{
                     src={`${img_url}/${item.product.thumbnail}`} 
                     alt={item.title} 
                     className="w-full h-full object-contain omd:bject-cover"
-                  />
+                  />   
                 </div>
 
                 {/* Product Info */}
