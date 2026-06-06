@@ -15,7 +15,7 @@ import {
 
 const BrandStory = () => {
   return (
-    <section className="relative py-28 md:py-36 bg-[#050505] overflow-hidden font-sans selection:bg-amber-900/50 selection:text-amber-100">
+    <section className="relative py-28 md:py-36  overflow-hidden font-sans selection:bg-amber-900/50 selection:text-amber-100">
       {/* Subtle radial glow in the center for depth */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-neutral-900/20 via-transparent to-transparent pointer-events-none" />
 
