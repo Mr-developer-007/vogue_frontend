@@ -171,7 +171,7 @@ const ContactPage = () => {
         },
         { 
           question: "How can I contact customer support?", 
-          answer: "Our support team is always happy to help. You can email us at support@thevoguewardrobe.com. Our standard response time is within 24-48 business hours." 
+          answer: "Our support team is always happy to help. You can email us at thevoguewardrobeofficial@gmail.com. Our standard response time is within 24-48 business hours." 
         },
         { 
           question: "Do you offer free shipping?", 
@@ -199,7 +199,7 @@ const ContactPage = () => {
           <div className="absolute top-0 right-0 -mr-10 -mt-10 w-64 h-64 bg-black rounded-full opacity-30 blur-3xl pointer-events-none"></div>
           
           <div className="p-10 md:p-14">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 relative z-10">
               
               {/* Phone Info */}
               <div className="flex flex-col items-center text-center gap-4">
@@ -219,21 +219,11 @@ const ContactPage = () => {
                 </div>
                 <div>
                   <p className="text-sm text-stone-400 uppercase tracking-wider mb-2 font-medium">Email</p>
-                  <p className="text-white hover:text-indigo-400 transition-colors text-lg">support@thevoguewardrobe.com</p>
+                  <p className="text-white hover:text-indigo-400 transition-colors text-lg">thevoguewardrobeofficial@gmail.com</p>
                 </div>
               </div>
 
-              {/* Location Info */}
-              <div className="flex flex-col items-center text-center gap-4">
-                <div className="bg-black p-4 rounded-full text-white shadow-lg">
-                  <FaMapMarkerAlt size={24} />
-                </div>
-                <div>
-                  <p className="text-sm text-stone-400 uppercase tracking-wider mb-2 font-medium">Headquarters</p>
-                  <p className="text-white text-lg">The Vogue Wardrobe</p>
-                  <p className="text-white text-lg">Punjab, India</p>
-                </div>
-              </div>
+             
 
             </div>
 

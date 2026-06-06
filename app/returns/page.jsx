@@ -129,7 +129,7 @@ const RefundPolicy = () => {
         {/* Footer/Contact CTA */}
         <div className="mt-12 text-center">
           <p className="text-gray-600">
-            Need further assistance? <a href="mailto:support@thevoguewardrobe.com" className="text-blue-600 font-semibold hover:underline">Contact our Support Team</a>.
+            Need further assistance? <a href="mailto:thevoguewardrobeofficial@gmail.com" className="text-blue-600 font-semibold hover:underline">Contact our Support Team</a>.
           </p>
         </div>
 

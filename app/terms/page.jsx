@@ -222,8 +222,8 @@ const TermsAndConditions = () => {
             <div className="bg-white/10 rounded-xl p-6 backdrop-blur-sm border border-white/10 flex flex-col sm:flex-row gap-6 sm:gap-12 text-left sm:text-center w-full  justify-center">
               <div>
                 <p className="text-xs text-stone-400 uppercase tracking-widest mb-1">Email</p>
-                <a href="mailto:support@thevoguewardrobe.com" className="text-lg font-medium hover:text-indigo-300 transition-colors">
-                  support@thevoguewardrobe.com
+                <a href="mailto:thevoguewardrobeofficial@gmail.com" className="text-lg font-medium hover:text-indigo-300 transition-colors">
+                  thevoguewardrobeofficial@gmail.com
                 </a>
               </div>
               <div className="hidden sm:block w-px bg-white/20"></div>

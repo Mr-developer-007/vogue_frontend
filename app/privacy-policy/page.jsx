@@ -144,8 +144,8 @@ const PrivacyPolicy = () => {
             
             <div className="bg-white/10 rounded-xl p-6 backdrop-blur-sm border border-white/10 w-full max-w-sm">
               <p className="text-xs text-stone-400 uppercase tracking-widest mb-1">Email Support</p>
-              <a href="mailto:support@thevoguewardrobe.com" className="text-lg md:text-xl font-medium hover:text-indigo-300 transition-colors block truncate">
-                support@thevoguewardrobe.com
+              <a href="mailto:thevoguewardrobeofficial@gmail.com" className="text-lg md:text-xl font-medium hover:text-indigo-300 transition-colors block truncate">
+                thevoguewardrobeofficial@gmail.com
               </a>
             </div>
           </div>

@@ -118,7 +118,7 @@ const Footer = () => {
             <div className="text-[11px] font-medium tracking-[0.1em] text-stone-500 uppercase space-y-2">
               
               <a href="mailto:support@yourbrand.com" className="block hover:text-white transition-colors duration-300">
-               support@thevoguewardrobe.com
+               thevoguewardrobeofficial@gmail.com
               </a>
             </div>
           </div>
@@ -132,7 +132,7 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             
             <p className="text-[11px] text-stone-500 font-medium tracking-widest uppercase">
-              &copy; {new Date().getFullYear()} Your Brand. All rights reserved.
+              &copy; {new Date().getFullYear()} Vogue Wardrobe. All rights reserved.
             </p>
 
             {/* Subtle Payment Icons */}

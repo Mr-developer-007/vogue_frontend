@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Navigation, Thumbs, Zoom } from 'swiper/modules';
+import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import {
   FaRegHeart,
   FaHeart,
@@ -45,6 +45,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToWishlist, removeFromWishlist } from '@/app/components/Store/slices/WishlistSlice';
 import ProductGallery from '@/app/components/ProductGallery';
 import ProductSide from '@/app/components/ProductSide';
+import OurProducts from '@/app/components/OurProducts';
 
 // ─────── Animation Variants ───────
 const fadeUp = {
@@ -62,8 +63,11 @@ const imageReveal = {
   visible: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } },
 };
 
+
+
+
 export default function ProductComp({ slug }) {
- 
+ const [zoomImgUrl,setZoomImgurl]=useState()
 
   const [productData, setProductData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -518,14 +522,15 @@ export default function ProductComp({ slug }) {
 <div className='container  mx-auto grid  grid-cols-1  md:grid-cols-2 gap-10 my-4 '>
 
 
-<ProductGallery productData={productData} />
+<ProductGallery productData={productData}  setZoomImgurl={setZoomImgurl}/>
+
 
 <ProductSide  productData={productData}/>
 
 
 </div>
 
-
+{/* <OurProducts /> */}
 
     </div>
   );
