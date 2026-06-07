@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { base_url, img_url } from './urls';
 import { addToWishlist, removeFromWishlist } from './Store/slices/WishlistSlice';
+import ReviewSection from './ReviewSection';
 axios.defaults.withCredentials = true
 
 const ProductSide = ({ productData }) => {
@@ -469,6 +470,8 @@ const ProductSide = ({ productData }) => {
           </motion.div>
         )}
       </AnimatePresence>
+
+       <ReviewSection  productid={productData._id}/>
     </div>
   )
 }

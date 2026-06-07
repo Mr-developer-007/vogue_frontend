@@ -7,6 +7,7 @@ import 'swiper/css';
 import 'swiper/css/thumbs';
 import 'swiper/css/pagination';
 import { img_url } from './urls';
+import ReviewSection from './ReviewSection';
 
 const ProductGallery = ({ productData ,setZoomImgurl}) => {
   const [selectedImage, setSelectedImage] = useState(0);
@@ -112,6 +113,9 @@ const ProductGallery = ({ productData ,setZoomImgurl}) => {
           ))}
         </Swiper>
       </div>
+
+
+     
     </div>
   );
 };

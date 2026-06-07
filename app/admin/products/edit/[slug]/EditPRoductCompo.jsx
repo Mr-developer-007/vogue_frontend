@@ -44,6 +44,7 @@ import { HiOutlineCollection, HiOutlineStatusOnline } from "react-icons/hi";
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { TbDimensions } from 'react-icons/tb';
+import ReviewSectionCreate from './ReviewSectionCreate';
 
 const EditProductCompo = ({ slug }) => {
   const router = useRouter();
@@ -1460,6 +1461,15 @@ const EditProductCompo = ({ slug }) => {
             </div>
           </div>
         </form>
+
+
+        <div>
+{productData?._id &&
+<ReviewSectionCreate   productid={productData?._id} />
+
+}
+
+        </div>
       </div>
     </div>
   );

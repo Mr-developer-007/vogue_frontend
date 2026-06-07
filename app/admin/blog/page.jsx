@@ -5,6 +5,7 @@ import { base_url, img_url } from '@/app/components/urls';
 // Importing icons for table headers and actions
 import { FiEdit, FiTrash2, FiPlus, FiImage, FiFileText, FiTag } from 'react-icons/fi';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
 
 const AdminBlogTable = () => {
   // State to hold your blog data and loading status
@@ -31,6 +32,24 @@ const AdminBlogTable = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+
+  const handelDelete = async(id)=>{
+
+    try {
+      const response = await axios.delete(`${base_url}/blog/delete/${id}`);
+      const data= await response.data;
+      if(data.success){
+       fetchData()
+       toast.success(data.message) 
+      }else{
+        toast.error(data.error)
+      }
+    } catch (error) {
+      toast.error(error.response.data.error)
+    }
+
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 sm:p-8">
@@ -150,8 +169,9 @@ const AdminBlogTable = () => {
                             <FiEdit className="text-lg" />
                           </button> */}
                           <button 
-                            className="text-red-600 hover:text-red-900 p-2 hover:bg-red-50 rounded-lg transition-colors"
-                            title="Delete"
+                          onClick={()=>handelDelete(item._id)}
+                            className=" cursor-pointer text-red-600 hover:text-red-900 p-2 hover:bg-red-50 rounded-lg transition-colors"
+                           
                           >
                             <FiTrash2 className="text-lg" />
                           </button>

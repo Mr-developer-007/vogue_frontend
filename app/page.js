@@ -24,10 +24,11 @@ export default function page() {
 <VideoCompo />
 {/* <Category /> */}
 
-
+<BlogSection />
 <FeaturesStrip />
+
 {/* <VideoReviews /> */}
-{/* <BlogSection />
+{/* 
 <HappyClients />
 <Popup /> */}
  </div>
