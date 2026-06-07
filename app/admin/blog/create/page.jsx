@@ -4,6 +4,7 @@ import axios from 'axios';
 import { FiType, FiAlignLeft, FiTag, FiFileText, FiImage, FiUploadCloud } from 'react-icons/fi';
 import { base_url } from '@/app/components/urls';
 import { toast } from 'react-toastify';
+import RichEditor from '@/app/components/RichEditor';
 
 
 const Page = () => {
@@ -106,13 +107,17 @@ const Page = () => {
           />
 
           {/* Description */}
-          <textarea
+          {/* <textarea
             name="des"
             value={formData.des}
             onChange={handleChange}
             placeholder="Description"
             className="w-full p-3 border rounded-xl"
-          />
+          /> */}
+
+
+<RichEditor  content={formData.des} setContent={(e)=>setFormData(prev=>({...prev,des:e}))} />
+
 
           {/* Image */}
           <input

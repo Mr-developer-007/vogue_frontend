@@ -53,7 +53,7 @@ const BrandStory = () => {
               </div>
 
               {/* Secondary Detail Image – Matted Gallery Style */}
-              <div className="absolute bottom-0 right-0 w-1/2 h-1/2 z-20 bg-[#050505] p-2 md:p-3 border border-neutral-800 shadow-2xl md:block hidden">
+              <div className="absolute bottom-0 right-0 w-1/2 h-1/2 z-20  p-2 md:p-3 border border-neutral-800 shadow-2xl md:block hidden">
                 <div className="relative w-full h-full overflow-hidden">
                   <Image
                     src="/siteimages/t2.webp"
@@ -65,18 +65,7 @@ const BrandStory = () => {
                 </div>
               </div>
 
-              {/* Minimalist Seal */}
-              <div className="absolute top-0 left-0 md:-left-8 z-30 bg-[#050505] border border-amber-900/30 p-5 shadow-2xl flex flex-col items-center justify-center gap-2 backdrop-blur-md">
-                <HiOutlineShieldCheck size={24} className="text-amber-500/80" />
-                <div className="text-center">
-                  <p className="text-[9px] uppercase tracking-[0.3em] text-neutral-400">
-                    Bespoke
-                  </p>
-                  <p className="text-xs font-serif italic text-amber-500/90 mt-1">
-                    Quality
-                  </p>
-                </div>
-              </div>
+             
             </div>
           </div>
 

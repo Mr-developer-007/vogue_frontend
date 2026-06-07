@@ -1,14 +1,26 @@
-import React from 'react';
+"use client"
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { HiArrowRight } from "react-icons/hi";
 import TagLineCompo from './TagLineCompo';
 import axios from 'axios';
 import { base_url, img_url } from './urls';
 
-const BlogSection = async () => {
+const BlogSection =  () => {
+ const [data,setData]=useState()
 
+  const fetchBlog= async()=>{
+
+ 
   const response = await axios.get(`${base_url}/blog/get?limit=3`);
-  const { data } = response.data;
+  const info=  await response.data.data;
+  setData(info)
+   }
+
+
+   useEffect(()=>{
+    fetchBlog()
+   },[])
 
   return (
     <section className="py-28 bg-gradient-to-b from-white via-stone-50 to-white border-b border-stone-200">

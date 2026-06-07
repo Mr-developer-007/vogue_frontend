@@ -7,15 +7,16 @@ import { Autoplay, Pagination } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
+import Link from 'next/link';
 
 const HeroSlider = () => {
-  const allBanners = ["1.webp", "2.webp", "3.webp"];
+ 
 
   return (
     <div className="w-full">
       
       {/* Slider Section */}
-      <div className="w-full relative  hidden md:block ">
+      <Link href={'/products'} className="w-full relative  hidden md:block ">
         {/* <Swiper
           spaceBetween={0}
           loop={true}
@@ -77,13 +78,13 @@ const HeroSlider = () => {
                 priority 
                 className=" w-full object-cover"
               />
-      </div>
+      </Link>
 
      
-      <div className="relative w-full h-[750px] overflow-hidden bg-neutral-950 md:hidden">
+      <Link href={'/products'} className="relative w-full h-[750px] overflow-hidden bg-neutral-950 md:hidden">
 
         <img 
-                src={`/banner/mobile/4.webp`} 
+                src={`/banner/mobile/5.webp`} 
                 alt={`Hero Banner `}
                 
                 priority 
@@ -104,7 +105,7 @@ const HeroSlider = () => {
           Your browser does not support the video tag.
         </video> */}
         
-      </div>
+      </Link>
 
     </div>
   );

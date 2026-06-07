@@ -96,7 +96,7 @@ const BlogSinglePage = async ({ params }) => {
             <div dangerouslySetInnerHTML={{ __html: post.des }} />
             Otherwise, just render the text:
           */}
-          <p className="whitespace-pre-wrap">{post.des}</p>
+          <div className="whitespace-pre-wrap"  dangerouslySetInnerHTML={{__html:post.des}}></div>
         </div>
         
       </div>
