@@ -49,7 +49,6 @@ const BrandStory = () => {
                   priority
                 />
                 {/* Cinematic shadow overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
               </div>
 
               {/* Secondary Detail Image – Matted Gallery Style */}
