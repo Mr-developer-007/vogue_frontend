@@ -110,7 +110,7 @@ export default function ProductCart({ product }) {
                 )}
               </div>
               {discount > 0 && (
-                <span className="text-[10px] font-bold uppercase text-[var(--primary)] mt-1">
+                <span className="text-[10px] font-bold uppercase  mt-1">
                   {discount}% OFF
                 </span>
               )}

@@ -33,39 +33,27 @@ const BrandStory = () => {
         <div className="grid md:grid-cols-2 gap-10 ">
           
           {/* 1. Visual Composition – High-End Editorial Style */}
-          <div className="w-full  relative">
-            <div className="relative h-[500px] md:h-[650px] w-full">
+          <div className="w-full  relative flex items-center">
+           
               {/* Outer architectural accent frame */}
-              <div className="absolute -inset-4 border border-neutral-800/60 rounded-sm pointer-events-none hidden md:block" />
 
               {/* Main Image */}
-              <div className=" top-0 left-0 w-[80%] h-[85%] z-10 shadow-2xl bg-neutral-900 border border-neutral-800 group overflow-hidden">
-                <Image
-                  src="/siteimages/t1.webp"
-                  alt="Vogue Wardrobe Premium Streetwear"
-                  fill
-                  // sizes="(max-width: 768px) 85vw, 40vw"
-                  className="object-center object-contain  "
-                  priority
-                />
+              <div className="  bg-neutral-900 border border-neutral-800 group overflow-hidden">
+                <video
+  src="/video/1.mp4"
+  className="object-center object-contain"
+  autoPlay
+  loop
+  muted
+  playsInline
+/>
                 {/* Cinematic shadow overlay */}
               </div>
 
-              {/* Secondary Detail Image – Matted Gallery Style */}
-              <div className="absolute bottom-0 right-0 w-1/2 h-1/2 z-20  p-2 md:p-3 border border-neutral-800 shadow-2xl md:block hidden">
-                <div className="relative w-full h-full overflow-hidden">
-                  <Image
-                    src="/siteimages/t2.webp"
-                    alt="Fabric detail"
-                    fill
-                    sizes="(max-width: 1024px) 0vw, 25vw"
-                    className="object-cover transition-transform duration-1000 hover:scale-110"
-                  />
-                </div>
-              </div>
+              
 
              
-            </div>
+          
           </div>
 
           {/* 2. Content Section – Stark, high-contrast typography */}
