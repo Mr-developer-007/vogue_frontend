@@ -72,7 +72,7 @@ const HeroSlider = () => {
         `}</style> */}
 
          <img 
-                src={`/banner/desktop/9.webp`} 
+                src={`/banner/IMG_20260611_222114.png`} 
                 alt={`Hero Banner `}
                 
                 priority 
@@ -84,7 +84,7 @@ const HeroSlider = () => {
       <Link href={'/products'} className="relative w-full h-[750px] overflow-hidden bg-neutral-950 md:hidden">
 
         <img 
-                src={`/banner/desktop/9.webp`} 
+                src={`/banner/IMG_20260611_222114.png`} 
                 alt={`Hero Banner `}
                 
                 priority 
