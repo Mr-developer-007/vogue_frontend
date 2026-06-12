@@ -15,7 +15,7 @@ import {
 
 const BrandStory = () => {
   return (
-    <section className="relative py-28 md:py-36  overflow-hidden font-sans selection:bg-amber-900/50 selection:text-amber-100">
+    <section className="relative py-28 md:py-36  overflow-hidden font-sans selection:bg-amber-900/50 ">
       {/* Subtle radial glow in the center for depth */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-neutral-900/20 via-transparent to-transparent pointer-events-none" />
 
@@ -39,14 +39,17 @@ const BrandStory = () => {
 
               {/* Main Image */}
               <div className="  bg-neutral-900 border border-neutral-800 group overflow-hidden">
-                <video
+                {/* <video
   src="/video/1.mp4"
   className="object-center object-contain"
   autoPlay
   loop
   muted
   playsInline
-/>
+/> */}
+
+<img src="/banner/12.jpeg" alt=""  />
+
                 {/* Cinematic shadow overlay */}
               </div>
 
@@ -61,13 +64,13 @@ const BrandStory = () => {
             <header className="mb-12">
               <div className="flex items-center gap-4 mb-8">
                 <div className="h-px w-10 bg-amber-500/50" />
-                <span className="text-[10px] font-medium tracking-[0.3em] text-amber-500/80 uppercase">
+                <span className="text-[10px] font-medium tracking-[0.3em]  uppercase">
                   Vogue Wardrobe
                 </span>
               </div>
 
               <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-normal leading-[1.15] tracking-tight">
-                Engineered for <span className="italic text-amber-500">Comfort.</span>
+                Engineered for <span className="italic ">Comfort.</span>
                 <br />
                 <span className="">Styled for Life.</span>
               </h2>
@@ -108,7 +111,7 @@ const BrandStory = () => {
               ].map((feature, idx) => (
                 <div key={idx} className="group border-t border-neutral-800 pt-5">
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="text-amber-500/70 transition-colors duration-300 group-hover:text-amber-400">
+                    <div className=" transition-colors duration-300 group-hover:text-amber-400">
                       <feature.icon size={20} />
                     </div>
                     <h4 className="font-serif text-lg  tracking-wide">
@@ -140,7 +143,7 @@ const BrandStory = () => {
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-12">
               <Link
                 href="/about"
-                className="group relative inline-flex items-center justify-center gap-4 border border-amber-500/40 bg-transparent text-amber-500 px-8 py-4 text-[11px] font-medium uppercase tracking-[0.2em] hover:bg-amber-500 hover:text-black transition-all duration-500"
+                className="group relative inline-flex items-center justify-center gap-4 border border-amber-500/40 bg-transparent  px-8 py-4 text-[11px] font-medium uppercase tracking-[0.2em] hover:bg-amber-500 hover:text-black transition-all duration-500"
               >
                 <span>Discover the Fabric</span>
                 <HiArrowRight
